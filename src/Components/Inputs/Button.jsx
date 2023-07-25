@@ -8,15 +8,16 @@ const variants = {
   orange: "bg-orange-700 hover:bg-orange-900",
 };
 
-const Button = (props) => {
+const Button = (propss) => {
+  let { className, ...props } = propss;
+
   return (
     <button
       className={`
-      ${
-        variants[props.variant]
-      } px-8 py-3 text-white rounded-lg text-sm font-medium transition duration-300 w-full ${
-        props.className
-      }`}
+    ${
+      variants[props.variant]
+    } px-8 py-3 text-white rounded-lg text-sm font-medium transition duration-300 w-full ${className}`}
+      {...props}
     >
       <div className="flex items-center justify-center">
         <div>{props.children}</div>

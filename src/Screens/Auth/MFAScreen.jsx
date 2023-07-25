@@ -16,9 +16,11 @@ const MFAScreen = (props) => {
 
       <Input id="mfaCode" label="Two Factor Authentication (2FA) Code" />
 
-      <Button className="mt-8" variant="indigo">
-        Verify
-      </Button>
+      <Link to={routes.dashboardHomeScreen}>
+        <Button className="mt-8" variant="indigo">
+          Verify
+        </Button>
+      </Link>
 
       <Link to={routes.loginScreen} className="w-full text-center mt-4 block">
         <ButtonLink>Wrong account? Try again</ButtonLink>
