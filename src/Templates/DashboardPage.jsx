@@ -45,6 +45,14 @@ const DashboardPage = (props) => {
     [onLaunchGotUser, loggedIn]
   );
 
+  const onClickLogout = (_) => {
+    console.log("logout");
+    auth.actions
+      .logout()
+      .then((res) => {})
+      .catch((res) => {});
+  };
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -123,7 +131,11 @@ const DashboardPage = (props) => {
             </p>
             <SideNavItem name="Settings" icon={Icons.settings} />
             {/* <Link to={routes.loginScreen}> */}
-            <SideNavItem name="Logout" icon={Icons.logout} />
+            <SideNavItem
+              name="Logout"
+              icon={Icons.logout}
+              onClick={onClickLogout}
+            />
             {/* </Link> */}
           </div>
         </div>
@@ -209,14 +221,13 @@ const DashboardPage = (props) => {
               icon={Icons.settings}
               tip="Settings"
             />
-            <Link to={routes.loginScreen}>
-              <SideNavItem
-                minimised
-                name="Logout"
-                icon={Icons.logout}
-                tip="Logout"
-              />
-            </Link>
+            <SideNavItem
+              minimised
+              name="Logout"
+              icon={Icons.logout}
+              tip="Logout"
+              onClick={onClickLogout}
+            />
           </div>
         </div>
       ) : (

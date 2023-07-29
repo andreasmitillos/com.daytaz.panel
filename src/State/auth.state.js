@@ -53,6 +53,24 @@ const actions = {
     }
   },
 
+  logout: () => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/identity/revoke")
+        .then((response) => {
+          if (response.data.status.code == "device_revoked") {
+            console.log("Saving user details");
+            data.onLaunchGotUser = true;
+            data.loggedIn = false;
+            data.user = {};
+          }
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
+
   // used to retrieve the profile of the user
   getProfile: () => {
     return new Promise((resolve, reject) => {

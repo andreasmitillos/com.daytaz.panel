@@ -3,9 +3,9 @@ import React, { useState } from "react";
 const SideNavItem = (props) => {
   const [expanded, setExpanded] = useState(false);
 
-  // let clicked = () => {
-  //   if (props.expandable) setExpanded(!expanded);
-  // };
+  let clicked = () => {
+    if (props.expandable) setExpanded(!expanded);
+  };
 
   return (
     <div className="group relative w-full">
@@ -17,7 +17,7 @@ const SideNavItem = (props) => {
             ? "bg-gray-100/[0.8] dark:bg-gray-800 text-indigo-600 dark:text-white"
             : "hover:text-indigo-600 text-gray-700 dark:text-gray-400 dark:hover:text-white"
         } ${props.minimised ? "justify-center" : ""}`}
-        onClick={props.onClick}
+        onClick={props.expandable ? clicked : props.onClick}
       >
         <div>
           {props.icon || (

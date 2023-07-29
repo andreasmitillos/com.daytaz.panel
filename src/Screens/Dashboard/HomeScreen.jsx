@@ -17,7 +17,8 @@ const HomeScreen = (props) => {
       <h1 className="text-2xl font-bold">
         Hi, {user.prefix || ""} {user.firstName}!
       </h1>
-      asd
+      <p>You are a {user.authLevel}</p>
+      {user.email}
     </DashboardPage>
   );
 };
