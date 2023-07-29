@@ -1,14 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import logo from "../Assets/logo_no_text.png";
 import SideNavItem from "../Components/Navbar/SideNavItem";
 import routes from "../Routes";
 import Icons from "../Components/Navbar/SideNavIcons";
-import Button from "../Components/Inputs/Button";
 import { Link } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
+
+import { auth } from "../State/index.js";
+import { subscribe } from "valtio";
+import DynamicForm from "../Components/Forms/DynamicForm";
 
 const DashboardPage = (props) => {
   const [menuShow, toggleMenuShow] = useState(false);
+  const [user, setUser] = useState(auth.data.user);
+
+  const [loggedIn, setLoggedIn] = useState(auth.data.loggedIn);
+  const [onLaunchGotUser, setOnLaunchGotUser] = useState(
+    auth.data.onLaunchGotUser
+  );
+
+  subscribe(auth.data, () => {
+    setUser(auth.data.user);
+    setLoggedIn(auth.data.loggedIn);
+    setOnLaunchGotUser(auth.data.onLaunchGotUser);
+  });
+
+  useEffect(() => {
+    auth.actions
+      .firstTimeGetUser()
+      .then((res) => {})
+      .catch((err) => {});
+  }, []);
+
+  useEffect(
+    (_) => {
+      if (onLaunchGotUser) {
+        if (!loggedIn) {
+          navigate(routes.loginScreen);
+        }
+      }
+    },
+    [onLaunchGotUser, loggedIn]
+  );
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    auth.actions
+      .firstTimeGetUser()
+      .then((res) => {})
+      .catch((err) => {});
+  }, []);
 
   let toggleMenu = () => {
     toggleMenuShow(!menuShow);
@@ -24,7 +68,7 @@ const DashboardPage = (props) => {
         >
           <div className="flex items-top mb-1 pb-10">
             <div className="px-2">
-              <img src={logo} className="w-12" />
+              <img alt="DaytaZ Logo" src={logo} className="w-12" />
               {/* <p className="text-xs font-light text-gray-400">V.A.0.1</p> */}
             </div>
 
@@ -78,9 +122,9 @@ const DashboardPage = (props) => {
               My Account
             </p>
             <SideNavItem name="Settings" icon={Icons.settings} />
-            <Link to={routes.loginScreen}>
-              <SideNavItem name="Logout" icon={Icons.logout} />
-            </Link>
+            {/* <Link to={routes.loginScreen}> */}
+            <SideNavItem name="Logout" icon={Icons.logout} />
+            {/* </Link> */}
           </div>
         </div>
       ) : (
@@ -180,13 +224,17 @@ const DashboardPage = (props) => {
       )}
 
       {/* ml-0 md:ml-72 */}
-      <div className={`ml-20`}>
-        <div
-          className="h-screen w-screen fixed dark:bg-gray-950/[0.8] bg-gray-200/[0.8]"
-          hidden={!menuShow}
-        />
-        <div className="p-5">{props.children}</div>
-      </div>
+      {user.id ? (
+        <div className={`ml-20`}>
+          <div
+            className="h-screen w-screen fixed dark:bg-gray-950/[0.8] bg-gray-200/[0.8]"
+            hidden={!menuShow}
+          />
+          <div className="p-5">{props.children}</div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

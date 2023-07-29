@@ -3,9 +3,9 @@ import React, { useState } from "react";
 const SideNavItem = (props) => {
   const [expanded, setExpanded] = useState(false);
 
-  let clicked = () => {
-    if (props.expandable) setExpanded(!expanded);
-  };
+  // let clicked = () => {
+  //   if (props.expandable) setExpanded(!expanded);
+  // };
 
   return (
     <div className="group relative w-full">
@@ -17,7 +17,7 @@ const SideNavItem = (props) => {
             ? "bg-gray-100/[0.8] dark:bg-gray-800 text-indigo-600 dark:text-white"
             : "hover:text-indigo-600 text-gray-700 dark:text-gray-400 dark:hover:text-white"
         } ${props.minimised ? "justify-center" : ""}`}
-        onClick={() => clicked()}
+        onClick={props.onClick}
       >
         <div>
           {props.icon || (
@@ -85,8 +85,9 @@ const SideNavItem = (props) => {
         typeof props.expandable[0].name !== "undefined"
           ? props.expandable.map((item) => (
               <div
+                key={item.name}
                 className={`hover:text-indigo-600 text-gray-700 dark:text-gray-400 dark:hover:text-white ${
-                  item == props.expandable[props.expandable.length - 1]
+                  item === props.expandable[props.expandable.length - 1]
                     ? "mb-2"
                     : ""
                 } text-sm flex items-center hover:bg-gray-100/[0.8] hover:dark:bg-gray-800 p-2 rounded-md pl-11 cursor-pointer`}
@@ -97,7 +98,7 @@ const SideNavItem = (props) => {
           : ""}
       </div>
       {props.minimised ? (
-        <div class="pointer-events-none absolute -top-8 left-auto w-max opacity-0 transition-opacity group-hover:opacity-100 bg-gray-200 rounded-md p-1 text-sm z-50 dark:bg-gray-800">
+        <div className="pointer-events-none absolute -top-8 left-auto w-max opacity-0 transition-opacity group-hover:opacity-100 bg-gray-200 rounded-md p-1 text-sm z-50 dark:bg-gray-800">
           {props.tip}
         </div>
       ) : (

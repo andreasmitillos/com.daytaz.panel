@@ -1,49 +1,83 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AuthTemplate from "../../Templates/AuthTemplate";
 import Input from "../../Components/Inputs/Input";
 import Button from "../../Components/Inputs/Button";
 import ButtonLink from "../../Components/Inputs/ButtonLink";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import routes from "../../Routes";
+import { useNavigate } from "react-router-dom";
+
+import { auth } from "../../State/index.js";
+import { subscribe } from "valtio";
+import DynamicForm from "../../Components/Forms/DynamicForm";
 
 const LoginScreen = (props) => {
+  // Access state
+
+  const [authData, setAuthData] = useState(auth.data);
+
+  const navigate = useNavigate();
+
+  const callBack = (response, values) => {
+    if (response.status.code === "user_login_success") {
+      navigate("/");
+    }
+    switch (response.status?.code) {
+      case "user_login_success":
+        navigate(routes.dashboardHomeScreen);
+        console.log("take user to the dashboard page");
+        break;
+
+      case "user_login_mfa_required":
+        auth.data.user = response.user;
+        auth.data.mfaLoginDetails = values;
+        navigate(routes.mfaScreen);
+        break;
+    }
+  };
+
+  subscribe(auth.data, () => {
+    setAuthData(auth.data);
+  });
+
   return (
     <AuthTemplate>
       <h2 className="font-bold text-2xl py-8 dark:text-white">
         Sign in to your account
       </h2>
 
-      {/* Email Address */}
-      <Input id="email" type="email" label="Email Address" />
-
-      {/* Password Field */}
-      <Input
-        id="password"
-        type="password"
-        label="Password"
-        labelRight={
-          <div className="text-right">
-            <Link
-              to={routes.forgotPasswordScreen}
-              className="font-medium text-sm mb-2 block"
-            >
-              <ButtonLink>Forgot your password?</ButtonLink>
-            </Link>
-          </div>
-        }
+      <DynamicForm
+        button="Sign In"
+        buttonVariant="blue"
+        buttonCallBack={callBack}
+        buttonOnClick={auth.actions.login}
+        fields={[
+          {
+            key: "email",
+            type: "email",
+            label: "Email Address",
+          },
+          {
+            key: "password",
+            type: "password",
+            label: "Password",
+            labelRight: (
+              <div className="text-right">
+                <Link
+                  to={routes.forgotPasswordScreen}
+                  className="font-medium text-sm mb-2 block"
+                >
+                  <ButtonLink>Forgot your password?</ButtonLink>
+                </Link>
+              </div>
+            ),
+          },
+        ]}
       />
 
-      {/* Sign In Button */}
-      <Link to={routes.mfaScreen}>
-        <Button variant="blue" className="mt-8">
-          Sign In
-        </Button>
-      </Link>
-
-      {/* Register Button */}
       <Link
         to={routes.registerScreen}
-        className="w-full text-center mt-4 block"
+        className="w-full text-center mt-4 block mb-8"
       >
         <ButtonLink>Don't have an account? Sign Up now</ButtonLink>
       </Link>

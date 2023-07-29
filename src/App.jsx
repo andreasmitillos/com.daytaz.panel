@@ -6,7 +6,7 @@ import LoginScreen from "./Screens/Auth/LoginScreen";
 import RegisterScreen from "./Screens/Auth/RegisterScreen";
 import MFAScreen from "./Screens/Auth/MFAScreen";
 import ForgotPasswordScreen from "./Screens/Auth/ForgotPasswordScreen";
-import HomeScreen from "./Screens/Auth/Dashboard/HomeScreen";
+import HomeScreen from "./Screens/Dashboard/HomeScreen";
 
 function App() {
   return (
