@@ -32,7 +32,6 @@ const AuthTemplate = (props) => {
   useEffect(
     (_) => {
       if (onLaunchGotUser) {
-        console.log(finishedGettingUser);
         if (loggedIn & finishedGettingUser) {
           navigate(routes.dashboardHomeScreen);
         }

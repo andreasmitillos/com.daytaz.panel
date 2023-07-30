@@ -49,7 +49,6 @@ const DashboardPage = (props) => {
   );
 
   const onClickLogout = (_) => {
-    console.log("logout");
     auth.actions
       .logout()
       .then((res) => {})

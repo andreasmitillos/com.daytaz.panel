@@ -32,7 +32,6 @@ const LoginScreen = (props) => {
     switch (response.status?.code) {
       case "user_login_success":
         navigate(routes.dashboardHomeScreen);
-        console.log("take user to the dashboard page");
         break;
 
       case "user_login_mfa_required":
