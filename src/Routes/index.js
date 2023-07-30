@@ -6,6 +6,7 @@ const routes = {
   registerScreen: "/auth/register",
   mfaScreen: "/auth/mfa",
   forgotPasswordScreen: "/auth/forgotPassword",
+  verifyEmailScreen: "/auth/verifyEmail",
 
   // Dashboard Routes
   dashboardHomeScreen: "/",

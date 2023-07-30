@@ -5,16 +5,23 @@ import Button from "../../Components/Inputs/Button";
 import ButtonLink from "../../Components/Inputs/ButtonLink";
 import { Link, redirect } from "react-router-dom";
 import routes from "../../Routes";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { auth } from "../../State/index.js";
 import { subscribe } from "valtio";
 import DynamicForm from "../../Components/Forms/DynamicForm";
 
+import Alert from "../../Components/Alerts/Alert";
+
 const LoginScreen = (props) => {
   // Access state
-
   const [authData, setAuthData] = useState(auth.data);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [from, setFrom] = useState("");
+  useEffect(() => {
+    setFrom(searchParams.get("from"));
+    setSearchParams({});
+  }, []);
 
   const navigate = useNavigate();
 
@@ -45,6 +52,20 @@ const LoginScreen = (props) => {
       <h2 className="font-bold text-2xl py-8 dark:text-white">
         Sign in to your account
       </h2>
+
+      {from == "email_verified_already" ? (
+        <Alert variant="blue">Email Already Verified. Please sign in!</Alert>
+      ) : (
+        ""
+      )}
+
+      {from == "email_verify_success" ? (
+        <Alert variant="green">
+          Great! Your email address has been verified. You may now login.
+        </Alert>
+      ) : (
+        ""
+      )}
 
       <DynamicForm
         button="Sign In"

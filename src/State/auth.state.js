@@ -6,6 +6,8 @@ const data = proxy({
   mfaLoginDetails: {},
   onLaunchGotUser: false,
   loggedIn: true,
+  registerUser: {},
+  finishedGettingUser: false,
 });
 const actions = {
   // login user
@@ -16,7 +18,6 @@ const actions = {
       fetchApi("post", "/identity/login", values)
         .then((response) => {
           if (response.data.status.code == "user_login_success") {
-            console.log("Saving user details");
             data.onLaunchGotUser = true;
             data.loggedIn = true;
             data.user = response.data.user;
@@ -29,20 +30,49 @@ const actions = {
     );
   },
 
+  //
+  register: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/identity/register", values)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
+  verifyEmail: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/identity/verifyEmail", values)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
   firstTimeGetUser: () => {
     let tempOnLaunchGotUser = data.onLaunchGotUser;
     data.onLaunchGotUser = true;
 
     if (!tempOnLaunchGotUser) {
+      data.loggedIn = false;
       return new Promise((resolve, reject) => {
         actions
           .getProfile()
           .then((res) => {
             data.user = res.data.user;
+            data.loggedIn = true;
+            data.finishedGettingUser = true;
             resolve(res);
           })
           .catch((error) => {
             data.loggedIn = false;
+            data.finishedGettingUser = true;
             reject("error");
           });
       });
@@ -58,7 +88,6 @@ const actions = {
       fetchApi("post", "/identity/revoke")
         .then((response) => {
           if (response.data.status.code == "device_revoked") {
-            console.log("Saving user details");
             data.onLaunchGotUser = true;
             data.loggedIn = false;
             data.user = {};

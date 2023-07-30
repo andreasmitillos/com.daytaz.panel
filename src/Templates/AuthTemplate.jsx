@@ -8,7 +8,9 @@ import { subscribe } from "valtio";
 
 const AuthTemplate = (props) => {
   const navigate = useNavigate();
-
+  const [finishedGettingUser, setFinishGettingUser] = useState(
+    auth.data.finishedGettingUser
+  );
   const [loggedIn, setLoggedIn] = useState(auth.data.loggedIn);
   const [onLaunchGotUser, setOnLaunchGotUser] = useState(
     auth.data.onLaunchGotUser
@@ -24,17 +26,19 @@ const AuthTemplate = (props) => {
   subscribe(auth.data, () => {
     setLoggedIn(auth.data.loggedIn);
     setOnLaunchGotUser(auth.data.onLaunchGotUser);
+    setFinishGettingUser(auth.data.finishedGettingUser);
   });
 
   useEffect(
     (_) => {
       if (onLaunchGotUser) {
-        if (loggedIn) {
+        console.log(finishedGettingUser);
+        if (loggedIn & finishedGettingUser) {
           navigate(routes.dashboardHomeScreen);
         }
       }
     },
-    [onLaunchGotUser, loggedIn]
+    [onLaunchGotUser, loggedIn, finishedGettingUser]
   );
 
   return (

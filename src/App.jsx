@@ -7,8 +7,15 @@ import RegisterScreen from "./Screens/Auth/RegisterScreen";
 import MFAScreen from "./Screens/Auth/MFAScreen";
 import ForgotPasswordScreen from "./Screens/Auth/ForgotPasswordScreen";
 import HomeScreen from "./Screens/Dashboard/HomeScreen";
+import VerifyEmailScreen from "./Screens/Auth/VerifyEmail";
+
+import { auth } from "./State/index";
+import { subscribe } from "valtio";
 
 function App() {
+  // subscribe(auth.data, (_) => {
+  //   console.log(auth.data);
+  // });
   return (
     <div className="">
       <Routes>
@@ -20,7 +27,10 @@ function App() {
           path={DRoutes.forgotPasswordScreen}
           element={<ForgotPasswordScreen />}
         />
-
+        <Route
+          path={DRoutes.verifyEmailScreen}
+          element={<VerifyEmailScreen />}
+        />
         <Route path={DRoutes.dashboardHomeScreen} element={<HomeScreen />} />
       </Routes>
     </div>

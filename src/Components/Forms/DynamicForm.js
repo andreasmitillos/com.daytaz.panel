@@ -35,7 +35,7 @@ const DynamicForm = (props) => {
         .buttonOnClick(valuesToSend)
         .then((res) => {
           onButtonClickParent(res, tempValues);
-          setSuccessMessage(res.status.message);
+          setSuccessMessage(res.status?.message);
           setValues({});
           setButtonLoading(false);
         })
@@ -51,7 +51,7 @@ const DynamicForm = (props) => {
             setErrors({ [errorKey]: errorMessage });
           }
 
-          setErrorMessage(error.status.message);
+          setErrorMessage(error.status?.message);
         });
     }
   };

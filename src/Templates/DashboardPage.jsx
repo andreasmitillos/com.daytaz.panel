@@ -15,7 +15,9 @@ import DynamicForm from "../Components/Forms/DynamicForm";
 const DashboardPage = (props) => {
   const [menuShow, toggleMenuShow] = useState(false);
   const [user, setUser] = useState(auth.data.user);
-
+  const [finishedGettingUser, setFinishGettingUser] = useState(
+    auth.data.finishedGettingUser
+  );
   const [loggedIn, setLoggedIn] = useState(auth.data.loggedIn);
   const [onLaunchGotUser, setOnLaunchGotUser] = useState(
     auth.data.onLaunchGotUser
@@ -25,6 +27,7 @@ const DashboardPage = (props) => {
     setUser(auth.data.user);
     setLoggedIn(auth.data.loggedIn);
     setOnLaunchGotUser(auth.data.onLaunchGotUser);
+    setFinishGettingUser(auth.data.finishedGettingUser);
   });
 
   useEffect(() => {
@@ -37,12 +40,12 @@ const DashboardPage = (props) => {
   useEffect(
     (_) => {
       if (onLaunchGotUser) {
-        if (!loggedIn) {
+        if (!loggedIn && finishedGettingUser) {
           navigate(routes.loginScreen);
         }
       }
     },
-    [onLaunchGotUser, loggedIn]
+    [onLaunchGotUser, loggedIn, finishedGettingUser]
   );
 
   const onClickLogout = (_) => {
