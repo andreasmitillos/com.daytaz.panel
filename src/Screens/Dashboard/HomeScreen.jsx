@@ -13,7 +13,7 @@ const HomeScreen = (props) => {
   });
 
   return (
-    <DashboardPage>
+    <DashboardPage currentTab="home">
       <h1 className="text-2xl font-bold">
         Hi, {user.prefix || ""} {user.firstName}!
       </h1>

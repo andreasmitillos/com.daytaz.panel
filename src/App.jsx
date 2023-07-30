@@ -7,6 +7,7 @@ import RegisterScreen from "./Screens/Auth/RegisterScreen";
 import MFAScreen from "./Screens/Auth/MFAScreen";
 import ForgotPasswordScreen from "./Screens/Auth/ForgotPasswordScreen";
 import HomeScreen from "./Screens/Dashboard/HomeScreen";
+import ProfileScreen from "./Screens/Dashboard/ProfileScreen";
 import VerifyEmailScreen from "./Screens/Auth/VerifyEmail";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           element={<VerifyEmailScreen />}
         />
         <Route path={DRoutes.dashboardHomeScreen} element={<HomeScreen />} />
+        <Route path={DRoutes.profileScreen} element={<ProfileScreen />} />
       </Routes>
     </div>
   );

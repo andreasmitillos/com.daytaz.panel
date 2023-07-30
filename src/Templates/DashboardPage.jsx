@@ -111,7 +111,13 @@ const DashboardPage = (props) => {
               Main pages
             </p>
 
-            <SideNavItem name="Home" icon={Icons.home} current />
+            <Link to={routes.dashboardHomeScreen}>
+              <SideNavItem
+                name="Home"
+                icon={Icons.home}
+                current={props.currentTab == "home"}
+              />
+            </Link>
             <SideNavItem
               name="Restaurants"
               icon={Icons.restaurants}
@@ -134,7 +140,13 @@ const DashboardPage = (props) => {
             <p className="font-bold text-xs mb-3 mt-[3.125rem] text-gray-400 px-2">
               My Account
             </p>
-            <SideNavItem name="Settings" icon={Icons.settings} />
+            <Link to={routes.profileScreen}>
+              <SideNavItem
+                name="Settings"
+                icon={Icons.settings}
+                current={props.currentTab == "profile"}
+              />
+            </Link>
             {/* <Link to={routes.loginScreen}> */}
             <SideNavItem
               name="Logout"
@@ -177,13 +189,15 @@ const DashboardPage = (props) => {
             Main pages
           </p> */}
 
-            <SideNavItem
-              name="Home"
-              icon={Icons.home}
-              current
-              minimised
-              tip="Home"
-            />
+            <Link to={routes.dashboardHomeScreen}>
+              <SideNavItem
+                name="Home"
+                icon={Icons.home}
+                current={props.currentTab == "home"}
+                minimised
+                tip="Home"
+              />
+            </Link>
             <SideNavItem
               name="Restaurants"
               icon={Icons.restaurants}
@@ -220,12 +234,15 @@ const DashboardPage = (props) => {
             {/* <p className="font-bold text-xs mb-3 mt-12 text-gray-400 px-2">
             My Account
           </p> */}
-            <SideNavItem
-              minimised
-              name="Settings"
-              icon={Icons.settings}
-              tip="Settings"
-            />
+            <Link to={routes.profileScreen}>
+              <SideNavItem
+                minimised
+                name="Settings"
+                icon={Icons.settings}
+                tip="Settings"
+                current={props.currentTab == "profile"}
+              />
+            </Link>
             <SideNavItem
               minimised
               name="Logout"
@@ -266,6 +283,7 @@ const DashboardPage = (props) => {
                     Home
                   </a>
                 </li>
+
                 {/* <li>
                   <div class="flex items-center">
                     <svg
@@ -287,10 +305,10 @@ const DashboardPage = (props) => {
                       href="#"
                       class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white"
                     >
-                      Projects
+                      Profile
                     </a>
                   </div>
-                </li>
+                </li> */}
                 <li aria-current="page">
                   <div class="flex items-center">
                     <svg
@@ -309,194 +327,13 @@ const DashboardPage = (props) => {
                       />
                     </svg>
                     <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">
-                      Flowbite
+                      Profile
                     </span>
                   </div>
-                </li> */}
+                </li>
               </ol>
             </nav>
             <div className="mt-5">{props.children}</div>
-
-            <div className="grid grid-cols-6 gap-4 mt-5">
-              <div className="xl:col-span-2 lg:col-span-3 md:col-span-6 col-span-6">
-                {/* <GeneralCard
-                  title="My Profile"
-                  subTitle="Find information about your profile listed below."
-                >
-                  <Input label="First Name" value={user.firstName} disabled />
-                  <Input label="First Name" value={user.lastName} disabled />
-                  <Input label="First Name" value={user.email} disabled />
-                  <Input label="2FA Enabled" value={user.mfaEnabled} disabled />
-                  <Input label="Permissions" value={user.authLevel} disabled />
-                </GeneralCard> */}
-
-                <GeneralCard
-                  title="My Profile"
-                  subTitle="Find information about your profile listed below."
-                >
-                  <ul class="divide-y divide-gray-200 dark:divide-gray-700">
-                    <li class="pt-4 pb-4">
-                      <div class="flex items-center space-x-4">
-                        <div class="flex-shrink-0"></div>
-                        <div class="flex-1 min-w-0">
-                          <p class="text-base font-semibold text-gray-900 truncate dark:text-white">
-                            First Name
-                          </p>
-                        </div>
-                        <div class="inline-flex items-center">
-                          <p>{user.firstName}</p>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li class="pt-4 pb-4">
-                      <div class="flex items-center space-x-4">
-                        <div class="flex-shrink-0"></div>
-                        <div class="flex-1 min-w-0">
-                          <p class="text-base font-semibold text-gray-900 truncate dark:text-white">
-                            Last Name
-                          </p>
-                        </div>
-                        <div class="inline-flex items-center">
-                          <p>{user.lastName}</p>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li class="pt-4 pb-4">
-                      <div class="flex items-center space-x-4">
-                        <div class="flex-shrink-0"></div>
-                        <div class="flex-1 min-w-0">
-                          <p class="text-base font-semibold text-gray-900 truncate dark:text-white">
-                            Email
-                          </p>
-                        </div>
-                        <div class="inline-flex items-center">
-                          <p>{user.email}</p>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li class="pt-4 pb-4">
-                      <div class="flex items-center space-x-4">
-                        <div class="flex-shrink-0"></div>
-                        <div class="flex-1 min-w-0">
-                          <p class="text-base font-semibold text-gray-900 truncate dark:text-white">
-                            Email Verified
-                          </p>
-                        </div>
-                        <div class="inline-flex items-center">
-                          {/* <p>{user.email}</p> */}
-                          <label class="relative inline-flex items-center cursor-not-allowed">
-                            <input
-                              type="checkbox"
-                              value=""
-                              class="sr-only peer"
-                              checked={user.emailVerified}
-                            />
-                            <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li class="pt-4 pb-4">
-                      <div class="flex items-center space-x-4">
-                        <div class="flex-shrink-0"></div>
-                        <div class="flex-1 min-w-0">
-                          <p class="text-base font-semibold text-gray-900 truncate dark:text-white">
-                            Two Factor Authentication (2FA)
-                          </p>
-                        </div>
-                        <div class="inline-flex items-center">
-                          {/* <p>{user.email}</p> */}
-                          <label class="relative inline-flex items-center cursor-not-allowed">
-                            <input
-                              type="checkbox"
-                              value=""
-                              class="sr-only peer"
-                              checked={user.mfaEnabled}
-                            />
-                            <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </GeneralCard>
-              </div>
-
-              <div className="xl:col-span-4 lg:col-span-3 md:col-span-6 col-span-6">
-                <GeneralCard
-                  title="Devices"
-                  subTitle="These are the devices that are signed in to your account"
-                >
-                  <ul class="divide-y divide-gray-200 dark:divide-gray-700">
-                    {user.devices?.map((device) => (
-                      <li class="pt-4 pb-4">
-                        <div class="flex items-center space-x-4">
-                          <div class="flex-shrink-0">
-                            {device.deviceType == "phone" ? (
-                              <svg
-                                class="w-6 h-6 dark:text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-                                ></path>
-                              </svg>
-                            ) : (
-                              ""
-                            )}
-
-                            {device.deviceType == "desktop" ? (
-                              <svg
-                                class="w-6 h-6 dark:text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                ></path>
-                              </svg>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                          <div class="flex-1 min-w-0">
-                            <p class="text-base font-semibold text-gray-900 truncate dark:text-white">
-                              {device.agentVersion}
-                            </p>
-                            {/* <p class="text-sm font-normal text-gray-500 truncate dark:text-gray-400">
-                              {device.agent} - {device.ip}
-                            </p> */}
-                            <p class="text-sm font-normal text-gray-500 truncate dark:text-gray-400">
-                              Last Accessed:{" "}
-                              {new Date(device.updatedAt).toDateString()} at{" "}
-                              {new Date(device.updatedAt).toLocaleTimeString()}
-                            </p>
-                          </div>
-                          <div class="inline-flex items-center">
-                            <NewButton />
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </GeneralCard>
-              </div>
-            </div>
 
             {/* <div className="grid grid-cols-6">
               <div class="p-4 mb-4 mt-5 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">

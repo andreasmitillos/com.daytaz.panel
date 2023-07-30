@@ -10,6 +10,7 @@ const routes = {
 
   // Dashboard Routes
   dashboardHomeScreen: "/",
+  profileScreen: "/profile",
 };
 
 export default routes;

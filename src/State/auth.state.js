@@ -8,6 +8,7 @@ const data = proxy({
   loggedIn: true,
   registerUser: {},
   finishedGettingUser: false,
+  currentDeviceId: "",
 });
 const actions = {
   // login user
@@ -105,6 +106,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       fetchApi("post", "/identity/profile")
         .then((response) => {
+          data.user = response.data.user;
+          data.currentDeviceId = response.data.currentDeviceId;
           resolve(response);
         })
         .catch((error) => {
