@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AuthTemplate from "../../Templates/AuthTemplate";
-import Input from "../../Components/Inputs/Input";
-import Button from "../../Components/Inputs/Button";
 import ButtonLink from "../../Components/Inputs/ButtonLink";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import routes from "../../Routes";
 import { useNavigate, useSearchParams } from "react-router-dom";
 

@@ -9,9 +9,6 @@ import ForgotPasswordScreen from "./Screens/Auth/ForgotPasswordScreen";
 import HomeScreen from "./Screens/Dashboard/HomeScreen";
 import VerifyEmailScreen from "./Screens/Auth/VerifyEmail";
 
-import { auth } from "./State/index";
-import { subscribe } from "valtio";
-
 function App() {
   // subscribe(auth.data, (_) => {
   //   console.log(auth.data);
