@@ -173,7 +173,7 @@ const ProfileScreen = (props) => {
                         ""
                       )}
                       {currentDeviceId == device.id ? (
-                        <span class="w-4 h-4 absolute -top-2 -right-1.5 bg-green-500 rounded-full border-white dark:border-gray-800 border-4"></span>
+                        <span class="w-4 h-4 absolute -top-2 -right-1.5 bg-green-500 rounded-full border-white dark:border-gray-800 border-4 "></span>
                       ) : (
                         ""
                       )}

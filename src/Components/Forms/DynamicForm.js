@@ -109,6 +109,7 @@ const DynamicForm = (props) => {
           value={values[field.key] || ""}
           onChange={(e) => onFieldChange(field.key, e.target.value)}
           disabled={buttonLoading}
+          labelRight={field.labelRight}
         />
       ))}
 

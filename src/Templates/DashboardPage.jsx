@@ -73,93 +73,94 @@ const DashboardPage = (props) => {
 
   return (
     <div className="dark:bg-gray-900 dark:text-white min-h-screen">
-      {menuShow ? (
-        <div
-          className={`dark:bg-gray-900 bg-white border-r dark:border-gray-700 w-72 p-6 h-screen fixed z-40 pt-4 overflow-y-auto pb-72 ${
-            menuShow ? "" : "hidden"
-          } md:block`}
-        >
-          <div className="flex items-top mb-1 pb-10">
-            <div className="px-2">
-              <img alt="DaytaZ Logo" src={logo} className="w-12" />
-              {/* <p className="text-xs font-light text-gray-400">V.A.0.1</p> */}
-            </div>
+      {/* {menuShow ? ( */}
+      <div
+        className={`dark:bg-gray-900 bg-white border-r dark:border-gray-700 w-72 p-6 h-screen fixed z-40 pt-4 overflow-y-auto pb-72 ${
+          menuShow ? "" : ""
+        } md:block ease-in-out duration-300 ${
+          menuShow ? "translate-x-0" : "-translate-x-72"
+        }`}
+      >
+        <div className="flex items-top mb-1 pb-10">
+          <div className="px-2">
+            <img alt="DaytaZ Logo" src={logo} className="w-12" />
+            {/* <p className="text-xs font-light text-gray-400">V.A.0.1</p> */}
+          </div>
 
-            <div
-              onClick={() => toggleMenu()}
-              className="hover:text-indigo-600 text-gray-700 dark:text-gray-400 dark:hover:text-white ml-auto cursor-pointer hover:bg-gray-100/[0.8] hover:dark:bg-gray-800 p-2 rounded-md h-full"
+          <div
+            onClick={() => toggleMenu()}
+            className="hover:text-indigo-600 text-gray-700 dark:text-gray-400 dark:hover:text-white ml-auto cursor-pointer hover:bg-gray-100/[0.8] hover:dark:bg-gray-800 p-2 rounded-md h-full"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
-                />
-              </svg>
-            </div>
-          </div>
-
-          <div className="mt-3">
-            <p className="font-bold text-xs mb-3 text-gray-400 px-2">
-              Main pages
-            </p>
-
-            <Link to={routes.dashboardHomeScreen}>
-              <SideNavItem
-                name="Home"
-                icon={Icons.home}
-                current={props.currentTab == "home"}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
               />
-            </Link>
-            <SideNavItem
-              name="Restaurants"
-              icon={Icons.restaurants}
-              expandable={[
-                { name: "Create Restaurant", to: routes.index },
-                { name: "List Restaurants", to: routes.index },
-              ]}
-            />
-            <SideNavItem
-              name="Users"
-              icon={Icons.people}
-              expandable={[{ name: "Create User" }, { name: "List of Users" }]}
-            />
-            <SideNavItem name="CMS" icon={Icons.info} />
-            <SideNavItem name="Projects" icon={Icons.folder} />
-            <SideNavItem name="Documents" icon={Icons.document} />
-          </div>
-
-          <div>
-            <p className="font-bold text-xs mb-3 mt-[3.125rem] text-gray-400 px-2">
-              My Account
-            </p>
-            <Link to={routes.profileScreen}>
-              <SideNavItem
-                name="Settings"
-                icon={Icons.settings}
-                current={props.currentTab == "profile"}
-              />
-            </Link>
-            {/* <Link to={routes.loginScreen}> */}
-            <SideNavItem
-              name="Logout"
-              icon={Icons.logout}
-              onClick={onClickLogout}
-            />
-            {/* </Link> */}
+            </svg>
           </div>
         </div>
-      ) : (
-        ""
-      )}
 
+        <div className="mt-3">
+          <p className="font-bold text-xs mb-3 text-gray-400 px-2">
+            Main pages
+          </p>
+
+          <Link to={routes.dashboardHomeScreen}>
+            <SideNavItem
+              name="Home"
+              icon={Icons.home}
+              current={props.currentTab == "home"}
+            />
+          </Link>
+          <SideNavItem
+            name="Restaurants"
+            icon={Icons.restaurants}
+            expandable={[
+              { name: "Create Restaurant", to: routes.index },
+              { name: "List Restaurants", to: routes.index },
+            ]}
+          />
+          <SideNavItem
+            name="Users"
+            icon={Icons.people}
+            expandable={[{ name: "Create User" }, { name: "List of Users" }]}
+          />
+          <SideNavItem name="CMS" icon={Icons.info} />
+          <SideNavItem name="Projects" icon={Icons.folder} />
+          <SideNavItem name="Documents" icon={Icons.document} />
+        </div>
+
+        <div>
+          <p className="font-bold text-xs mb-3 mt-[3.125rem] text-gray-400 px-2">
+            My Account
+          </p>
+          <Link to={routes.profileScreen}>
+            <SideNavItem
+              name="Settings"
+              icon={Icons.settings}
+              current={props.currentTab == "profile"}
+            />
+          </Link>
+          {/* <Link to={routes.loginScreen}> */}
+          <SideNavItem
+            name="Logout"
+            icon={Icons.logout}
+            onClick={onClickLogout}
+          />
+          {/* </Link> */}
+        </div>
+      </div>
+      {/* ) : (
+        ""
+      )} */}
       {!menuShow ? (
         <div
           className={`dark:bg-gray-900 bg-white border-r dark:border-gray-700 w-18 p-4 h-screen fixed z-40 overflow-y-auto pb-72 md:block`}
@@ -255,15 +256,14 @@ const DashboardPage = (props) => {
       ) : (
         ""
       )}
-
       {/* ml-0 md:ml-72 */}
       {user.id ? (
         <div className={`ml-20`} onClick={(_) => toggleMenuShow(false)}>
           <div
-            className="h-screen w-screen fixed dark:bg-gray-950/[0.8] bg-gray-200/[0.8]"
+            className="h-screen w-screen fixed dark:bg-gray-950/[0.8] bg-gray-200/[0.8] z-30"
             hidden={!menuShow}
           />
-          <div className="p-5 pt-6">
+          <div className={`p-5 pt-6`}>
             <nav class="flex" aria-label="Breadcrumb">
               <ol class="inline-flex items-center space-x-1 md:space-x-3">
                 <li class="inline-flex items-center">
