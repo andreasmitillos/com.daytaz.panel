@@ -3,6 +3,7 @@ import fetchApi from "./fetch";
 
 const data = proxy({
   users: [],
+  retrievedUsers: {},
 });
 const actions = {
   getUsers: () => {
@@ -10,6 +11,19 @@ const actions = {
       fetchApi("get", "/users", {})
         .then((response) => {
           data.users = response.data?.users;
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
+  getUser: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/users/get", values)
+        .then((response) => {
+          data.retrievedUsers[values.userId] = response.data.user;
           resolve(response.data);
         })
         .catch((error) => {

@@ -37,14 +37,14 @@ const GeneralModal = (props) => {
 
       <div
         className="fixed top-0 right-0 z-40 w-screen h-screen bg-gray-900/40 dark:bg-black/50 "
-        hidden={!toggle}
+        hidden={!toggle || props.disabled}
         style={{ backdropFilter: "blur(1px)" }}
         onClick={() => setToggle(!toggle)}
       ></div>
 
       <div
         className="fixed top-0 right-0 z-50 w-screen max-h-full overflow-y-auto transition-opacity"
-        hidden={!toggle}
+        hidden={!toggle || props.disabled}
       >
         <div className="grid grid-cols-8 p-4">
           <div className="col-span-1" onClick={() => setToggle(!toggle)}></div>

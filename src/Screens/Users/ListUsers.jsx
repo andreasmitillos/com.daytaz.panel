@@ -6,6 +6,8 @@ import { subscribe } from "valtio";
 import GeneralTable from "../../Components/Table/GeneralTable";
 import LoadingBox from "../../Components/LoadingBox";
 import NewButton from "../../Components/Inputs/NewButton";
+import { Link } from "react-router-dom";
+import routes from "../../Routes";
 
 const ListUsers = (props) => {
   const [user, setUser] = useState(auth.data.user);
@@ -126,9 +128,11 @@ const ListUsers = (props) => {
                     />
                   </svg>
                 ),
-                <NewButton variant="transparent" addClassName="mb-0">
-                  View
-                </NewButton>,
+                <Link to={`/users/${x.id}`}>
+                  <NewButton variant="transparent" addClassName="mb-0">
+                    View
+                  </NewButton>
+                </Link>,
               ])}
             />
           )}

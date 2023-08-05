@@ -19,6 +19,7 @@ const routes = {
   // Users Routes
   listUsersScreen: "/users",
   createUserScreen: "/users/create",
+  individualUserScreen: "/users/:userId",
 };
 
 export default routes;

@@ -15,6 +15,7 @@ import CreateRestaurantScreen from "./Screens/Restaurants/CreateRestaurant";
 
 import ListUsersScreen from "./Screens/Users/ListUsers";
 import CreateUserScreen from "./Screens/Users/CreateUser";
+import IndividualUserScreen from "./Screens/Users/IndividualUserScreen";
 
 function App() {
   // subscribe(auth.data, (_) => {
@@ -49,6 +50,10 @@ function App() {
 
         <Route path={DRoutes.listUsersScreen} element={<ListUsersScreen />} />
         <Route path={DRoutes.createUserScreen} element={<CreateUserScreen />} />
+        <Route
+          path={DRoutes.individualUserScreen}
+          element={<IndividualUserScreen />}
+        />
       </Routes>
     </div>
   );
