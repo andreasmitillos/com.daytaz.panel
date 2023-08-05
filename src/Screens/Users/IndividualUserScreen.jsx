@@ -49,9 +49,6 @@ const IndividualUserScreen = (props) => {
           : "Individual User"
       }`}
     >
-      <h2 className="font-extrabold text-4xl">
-        {currentUser?.firstName + " " + currentUser?.lastName}
-      </h2>
       <div className="grid grid-cols-6 gap-4 mt-5">
         {loading || !currentUser?.id ? (
           <div className="col-span-6">
@@ -59,6 +56,11 @@ const IndividualUserScreen = (props) => {
           </div>
         ) : (
           <>
+            <div className="col-span-6">
+              <h2 className="font-extrabold text-4xl">
+                {currentUser?.firstName + " " + currentUser?.lastName}
+              </h2>
+            </div>
             <div className="xl:col-span-2 lg:col-span-3 md:col-span-6 col-span-6">
               <GeneralCard
                 title="User Profile"
