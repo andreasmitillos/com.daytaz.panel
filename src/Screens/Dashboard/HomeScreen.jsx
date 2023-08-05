@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import DashboardPage from "../../Templates/DashboardPage";
-import { useNavigate } from "react-router-dom";
 
 import { auth } from "../../State/index.js";
 import { subscribe } from "valtio";
-import DynamicForm from "../../Components/Forms/DynamicForm";
 
 const HomeScreen = (props) => {
   const [user, setUser] = useState(auth.data.user);

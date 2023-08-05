@@ -10,6 +10,12 @@ import HomeScreen from "./Screens/Dashboard/HomeScreen";
 import ProfileScreen from "./Screens/Dashboard/ProfileScreen";
 import VerifyEmailScreen from "./Screens/Auth/VerifyEmail";
 
+import ListRestaurantsScreen from "./Screens/Restaurants/ListRestaurants";
+import CreateRestaurantScreen from "./Screens/Restaurants/CreateRestaurant";
+
+import ListUsersScreen from "./Screens/Users/ListUsers";
+import CreateUserScreen from "./Screens/Users/CreateUser";
+
 function App() {
   // subscribe(auth.data, (_) => {
   //   console.log(auth.data);
@@ -31,6 +37,18 @@ function App() {
         />
         <Route path={DRoutes.dashboardHomeScreen} element={<HomeScreen />} />
         <Route path={DRoutes.profileScreen} element={<ProfileScreen />} />
+
+        <Route
+          path={DRoutes.listRestaurantsScreen}
+          element={<ListRestaurantsScreen />}
+        />
+        <Route
+          path={DRoutes.createRestaurantScreen}
+          element={<CreateRestaurantScreen />}
+        />
+
+        <Route path={DRoutes.listUsersScreen} element={<ListUsersScreen />} />
+        <Route path={DRoutes.createUserScreen} element={<CreateUserScreen />} />
       </Routes>
     </div>
   );

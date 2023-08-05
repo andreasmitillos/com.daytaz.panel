@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SideNavItem = (props) => {
   const [expanded, setExpanded] = useState(false);
@@ -84,16 +85,17 @@ const SideNavItem = (props) => {
         typeof props.expandable[0] !== "undefined" &&
         typeof props.expandable[0].name !== "undefined"
           ? props.expandable.map((item) => (
-              <div
-                key={item.name}
-                className={`hover:text-indigo-600 text-gray-700 dark:text-gray-400 dark:hover:text-white ${
-                  item === props.expandable[props.expandable.length - 1]
-                    ? "mb-2"
-                    : ""
-                } text-sm flex items-center hover:bg-gray-100/[0.8] hover:dark:bg-gray-800 p-2 rounded-md pl-11 cursor-pointer`}
-              >
-                {item.name}
-              </div>
+              <Link key={item.name} to={item.to}>
+                <div
+                  className={`hover:text-indigo-600 text-gray-700 dark:text-gray-400 dark:hover:text-white ${
+                    item === props.expandable[props.expandable.length - 1]
+                      ? "mb-2"
+                      : ""
+                  } text-sm flex items-center hover:bg-gray-100/[0.8] hover:dark:bg-gray-800 p-2 rounded-md pl-11 cursor-pointer`}
+                >
+                  {item.name}
+                </div>
+              </Link>
             ))
           : ""}
       </div>

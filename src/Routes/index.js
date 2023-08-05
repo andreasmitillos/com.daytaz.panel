@@ -11,6 +11,14 @@ const routes = {
   // Dashboard Routes
   dashboardHomeScreen: "/",
   profileScreen: "/profile",
+
+  // Restaurant Routes
+  listRestaurantsScreen: "/restaurants",
+  createRestaurantScreen: "/restaurants/create",
+
+  // Users Routes
+  listUsersScreen: "/users",
+  createUserScreen: "/users/create",
 };
 
 export default routes;

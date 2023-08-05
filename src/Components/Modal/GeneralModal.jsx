@@ -52,8 +52,8 @@ const GeneralModal = (props) => {
             {props.children}
             {/* <div className="flex justify-center w-full">
               <div className="max-w-2xl dark:bg-gray-700 bg-white rounded-lg shadow w-full">
-                <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white mr-12">
+                <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mr-12">
                     {props.title || "General Modal"}
                   </h3>
                   <button
@@ -62,7 +62,7 @@ const GeneralModal = (props) => {
                     onClick={(_) => setToggle(false)}
                   >
                     <svg
-                      class="w-3 h-3"
+                      className="w-3 h-3"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -70,16 +70,16 @@ const GeneralModal = (props) => {
                     >
                       <path
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                       />
                     </svg>
-                    <span class="sr-only">Close modal</span>
+                    <span className="sr-only">Close modal</span>
                   </button>
                 </div>
-                <div class="p-6 space-y-6">{props.children}</div>
+                <div className="p-6 space-y-6">{props.children}</div>
               </div>
             </div> */}
           </div>
@@ -97,8 +97,8 @@ const GeneralModal = (props) => {
       >
         <div className="flex justify-center ">
           <div className="max-w-2xl dark:bg-gray-700 bg-white rounded-lg shadow ">
-            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mr-12">
+            <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mr-12">
                 {props.title || "General Modal"}
               </h3>
               <button
@@ -107,7 +107,7 @@ const GeneralModal = (props) => {
                 onClick={(_) => setToggle(false)}
               >
                 <svg
-                  class="w-3 h-3"
+                  className="w-3 h-3"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -115,16 +115,16 @@ const GeneralModal = (props) => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                   />
                 </svg>
-                <span class="sr-only">Close modal</span>
+                <span className="sr-only">Close modal</span>
               </button>
             </div>
-            <div class="p-6 space-y-6">{props.children}</div>
+            <div className="p-6 space-y-6">{props.children}</div>
           </div>
         </div>
       </div>
