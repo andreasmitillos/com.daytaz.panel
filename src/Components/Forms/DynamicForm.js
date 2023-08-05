@@ -99,24 +99,29 @@ const DynamicForm = (props) => {
       ) : (
         ""
       )}
-      {props.fields.map((field) => (
-        <Input
-          error={errors[field.key]}
-          key={field.key}
-          id={field.key}
-          type={field.type}
-          label={field.label}
-          value={values[field.key] || ""}
-          onChange={(e) => onFieldChange(field.key, e.target.value)}
-          disabled={buttonLoading}
-          labelRight={field.labelRight}
-        />
-      ))}
+      {props.fields.map((field) =>
+        field.key ? (
+          <Input
+            error={errors[field.key]}
+            key={field.key}
+            id={field.key}
+            type={field.type}
+            label={field.label}
+            value={field.value || values[field.key]}
+            onChange={(e) => onFieldChange(field.key, e.target.value)}
+            disabled={buttonLoading || field.disabled}
+            labelRight={field.labelRight}
+            additionalInputClass={field.extraClass}
+          />
+        ) : (
+          ""
+        )
+      )}
 
       <Button
         variant={props.buttonVariant}
         className="mt-8"
-        onClick={onButtonClick}
+        onClick={buttonLoading ? () => "" : onButtonClick}
         loading={buttonLoading}
       >
         {props.button}

@@ -27,6 +27,11 @@ const LoginScreen = (props) => {
     if (response.status.code === "user_login_success") {
       navigate("/");
     }
+
+    if (response.status.code === "forgot_password_change_success") {
+      navigate("/");
+    }
+
     switch (response.status?.code) {
       case "user_login_success":
         navigate(routes.dashboardHomeScreen);
@@ -59,6 +64,15 @@ const LoginScreen = (props) => {
       {from == "email_verify_success" ? (
         <Alert variant="green">
           Great! Your email address has been verified. You may now login.
+        </Alert>
+      ) : (
+        ""
+      )}
+
+      {from == "forgot_password_change_success" ? (
+        <Alert variant="green">
+          Great! Your password was changed successfully. You can now login using
+          your new credentials.
         </Alert>
       ) : (
         ""

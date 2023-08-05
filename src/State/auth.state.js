@@ -96,7 +96,7 @@ const actions = {
           resolve(response);
         })
         .catch((error) => {
-          reject(error);
+          reject(error?.response?.data);
         });
     });
   },
@@ -111,8 +111,53 @@ const actions = {
           resolve(response);
         })
         .catch((error) => {
-          reject(error);
+          reject(error?.response?.data);
         });
+    });
+  },
+
+  // get the qr code
+  requestMfaToken: () => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/identity/2fa/request")
+        .then((response) => resolve(response.data))
+        .catch((error) => reject(error?.response?.data));
+    });
+  },
+
+  // toggle mfa
+  toggleMfa: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/identity/2fa/toggle", values)
+        .then((response) => resolve(response.data))
+        .catch((error) => reject(error?.response?.data));
+    });
+  },
+
+  // request forgot password code
+  requestForgotPassword: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/identity/forgotPassword/request", values)
+        .then((response) => resolve(response.data))
+        .catch((error) => reject(error.response?.data));
+    });
+  },
+
+  // verify forgot password 2fa and email verification
+  verifyForgotPassword: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/identity/forgotPassword/verify", values)
+        .then((response) => resolve(response.data))
+        .catch((error) => reject(error.response?.data));
+    });
+  },
+
+  // change forgot password
+  changeForgotPassword: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/identity/forgotPassword/change", values)
+        .then((response) => resolve(response.data))
+        .catch((error) => reject(error.response?.data));
     });
   },
 };

@@ -5,6 +5,8 @@ import NewButton from "../../Components/Inputs/NewButton";
 
 import { auth } from "../../State/index";
 import { subscribe } from "valtio";
+import RevokeDeviceModal from "../../Components/Modal/RevokeDeviceModal";
+import MfaModal from "../../Components/Modal/MfaModal";
 
 const ProfileScreen = (props) => {
   const [user, setUser] = useState(auth.data.user);
@@ -18,7 +20,6 @@ const ProfileScreen = (props) => {
   });
 
   useEffect(() => {
-    console.log("getting user details");
     auth.actions
       .getProfile()
       .then((res) => {})
@@ -27,6 +28,7 @@ const ProfileScreen = (props) => {
 
   return (
     <DashboardPage currentTab="profile">
+      <h2 className="font-extrabold text-4xl">Profle Settings</h2>
       <div className="grid grid-cols-6 gap-4 mt-5">
         <div className="xl:col-span-2 lg:col-span-3 md:col-span-6 col-span-6">
           <GeneralCard
@@ -86,7 +88,11 @@ const ProfileScreen = (props) => {
                   </div>
                   <div class="inline-flex items-center">
                     {/* <p>{user.email}</p> */}
-                    <label class="relative inline-flex items-center cursor-not-allowed">
+
+                    <label
+                      class="relative inline-flex items-center cursor-not-allowed"
+                      onClick={(_) => console.log("2fa")}
+                    >
                       <input
                         type="checkbox"
                         value=""
@@ -109,7 +115,8 @@ const ProfileScreen = (props) => {
                   </div>
                   <div class="inline-flex items-center">
                     {/* <p>{user.email}</p> */}
-                    <label class="relative inline-flex items-center cursor-not-allowed">
+                    <MfaModal user={user} />
+                    {/* <label class="relative inline-flex items-center cursor-pointer">
                       <input
                         type="checkbox"
                         value=""
@@ -117,7 +124,7 @@ const ProfileScreen = (props) => {
                         checked={user.mfaEnabled}
                       />
                       <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                    </label>
+                    </label> */}
                   </div>
                 </div>
               </li>
@@ -130,7 +137,7 @@ const ProfileScreen = (props) => {
             title="Devices"
             subTitle="These are the devices that are signed in to your account"
           >
-            <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+            <ul class="divide-y divide-gray-200 dark:divide-gray-700 ">
               {user.devices?.map((device) => (
                 <li class="pt-4 pb-4">
                   <div class="flex items-center space-x-4">
@@ -196,9 +203,19 @@ const ProfileScreen = (props) => {
                         ${new Date(device.updatedAt).toLocaleTimeString()}`}
                       </p>
                     </div>
-                    <div class="inline-flex items-center">
-                      <NewButton />
-                    </div>
+                    {currentDeviceId == device.id ? (
+                      ""
+                    ) : (
+                      <div class="inline-flex items-center">
+                        <RevokeDeviceModal
+                          buttonText="Revoke"
+                          buttonVariant="transparent"
+                          device={device}
+                        >
+                          Revoke device
+                        </RevokeDeviceModal>
+                      </div>
+                    )}
                   </div>
                 </li>
               ))}

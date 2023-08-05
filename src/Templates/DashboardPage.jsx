@@ -26,6 +26,8 @@ const DashboardPage = (props) => {
     auth.data.onLaunchGotUser
   );
 
+  const [logoutLoading, setLogoutLoading] = useState(false);
+
   subscribe(auth.data, () => {
     setUser(auth.data.user);
     setLoggedIn(auth.data.loggedIn);
@@ -52,10 +54,15 @@ const DashboardPage = (props) => {
   );
 
   const onClickLogout = (_) => {
+    setLogoutLoading(true);
     auth.actions
       .logout()
-      .then((res) => {})
-      .catch((res) => {});
+      .then((res) => {
+        setLogoutLoading(false);
+      })
+      .catch((res) => {
+        setLogoutLoading(false);
+      });
   };
 
   const navigate = useNavigate();
@@ -152,8 +159,9 @@ const DashboardPage = (props) => {
           {/* <Link to={routes.loginScreen}> */}
           <SideNavItem
             name="Logout"
-            icon={Icons.logout}
+            icon={logoutLoading ? Icons.loading : Icons.logout}
             onClick={onClickLogout}
+            disabled={logoutLoading}
           />
           {/* </Link> */}
         </div>
@@ -196,6 +204,7 @@ const DashboardPage = (props) => {
                 icon={Icons.home}
                 current={props.currentTab == "home"}
                 minimised
+                loading
                 tip="Home"
               />
             </Link>
@@ -247,9 +256,10 @@ const DashboardPage = (props) => {
             <SideNavItem
               minimised
               name="Logout"
-              icon={Icons.logout}
+              icon={logoutLoading ? Icons.loading : Icons.logout}
               tip="Logout"
               onClick={onClickLogout}
+              disabled={logoutLoading}
             />
           </div>
         </div>

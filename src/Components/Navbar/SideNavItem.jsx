@@ -10,7 +10,7 @@ const SideNavItem = (props) => {
   return (
     <div className="group relative w-full">
       <div
-        className={` ${
+        className={`${props.disabled ? "cursor-wait" : ""} ${
           expanded && !props.minimised ? "" : "mb-2"
         } text-sm font-bold flex items-center hover:bg-gray-100/[0.8] hover:dark:bg-gray-800 p-2 rounded-md cursor-pointer ${
           props.current

@@ -45,7 +45,7 @@ const Input = (props) => {
           props.error
             ? "border-red-500 dark:border-red-500 text-red-900 dark:text-red-500 focus:ring-red-500  dark:bg-gray-700 focus:border-red-500"
             : ""
-        }`}
+        } ${props.additionalInputClass}`}
         required
         {...props}
       />

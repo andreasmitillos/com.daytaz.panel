@@ -5,6 +5,7 @@ const variants = {
   blue: "bg-blue-700 hover:bg-blue-900",
   indigo: "bg-indigo-700 hover:bg-indigo-900",
   orange: "bg-orange-700 hover:bg-orange-900",
+  green: "bg-green-600 hover:bg-green-900",
 };
 
 const loadingVariants = {
@@ -12,6 +13,7 @@ const loadingVariants = {
   blue: "bg-blue-500",
   indigo: "bg-indigo-500",
   orange: "bg-orange-500",
+  green: "bg-green-500",
 };
 
 const Button = (propss) => {
