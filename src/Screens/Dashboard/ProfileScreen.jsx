@@ -35,6 +35,27 @@ const ProfileScreen = (props) => {
             title="My Profile"
             subTitle="Find information about your profile listed below."
           >
+            {user.authLevel == "superAdmin" ? (
+              <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded mr-2 dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  class="w-3 h-3 mr-1.5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
+                  />
+                </svg>
+                Super Admin
+              </span>
+            ) : (
+              ""
+            )}
             <ul className="divide-y divide-gray-200 dark:divide-gray-700">
               <li className="pt-4 pb-4">
                 <div className="flex items-center space-x-4">

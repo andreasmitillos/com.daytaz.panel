@@ -1,15 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DashboardPage from "../../Templates/DashboardPage";
 
-import { auth } from "../../State/index.js";
+import { auth, users } from "../../State/index.js";
 import { subscribe } from "valtio";
 import GeneralTable from "../../Components/Table/GeneralTable";
+import LoadingBox from "../../Components/LoadingBox";
+import NewButton from "../../Components/Inputs/NewButton";
 
 const ListUsers = (props) => {
   const [user, setUser] = useState(auth.data.user);
+  const [usersList, setUsersList] = useState(users.data.users);
+  const [loading, setLoading] = useState(true);
   subscribe(auth.data, () => {
     setUser(auth.data.user);
   });
+
+  subscribe(users.data, () => {
+    setUsersList(users.data.users);
+  });
+
+  useEffect(() => {
+    if (user.id) {
+      users.actions
+        .getUsers()
+        .then((res) => {
+          setLoading(false);
+        })
+        .catch((err) => {
+          setLoading(false);
+        });
+    }
+  }, [user.id]);
 
   return (
     <DashboardPage currentTab="users/list">
@@ -24,8 +45,93 @@ const ListUsers = (props) => {
       </p>
 
       <div className="grid grid-cols-6 mt-6">
-        <div className="xl:col-span-4 col-span-6 overflow-x-scroll rounded">
-          <GeneralTable />
+        <div className="xl:col-span-5 col-span-6 overflow-x-scroll rounded">
+          {loading ? (
+            <LoadingBox />
+          ) : (
+            <GeneralTable
+              header={[
+                "ID",
+                "First Name",
+                "Last Name",
+                "Email Address",
+                "2FA",
+                "Email Verified",
+                "Actions",
+              ]}
+              data={usersList.map((x) => [
+                x.id,
+                x.firstName,
+                x.lastName,
+                x.email,
+                x.mfaEnabled ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6 text-green-600 dark:text-green-400"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6 text-red-600 dark:text-red-400"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                ),
+                x.emailVerified ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6 text-green-600 dark:text-green-400"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6 text-red-600 dark:text-red-400"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                ),
+                <NewButton variant="transparent" addClassName="mb-0">
+                  View
+                </NewButton>,
+              ])}
+            />
+          )}
         </div>
       </div>
     </DashboardPage>

@@ -2,7 +2,7 @@ import React from "react";
 
 const Input = (props) => {
   return (
-    <div className="mb-4 ">
+    <div className={`${props.noMarginBottom ? "" : "mb-4"}`}>
       {props.label ? (
         <div>
           {props.labelRight ? (

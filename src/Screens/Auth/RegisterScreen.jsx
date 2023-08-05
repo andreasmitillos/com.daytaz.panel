@@ -34,8 +34,20 @@ const RegisterScreen = () => {
 
       <DynamicForm
         fields={[
-          { key: "firstName", type: "string", label: "First Name" },
-          { key: "lastName", type: "string", label: "Last Name" },
+          [
+            {
+              key: "firstName",
+              type: "string",
+              label: "First Name",
+              responsive: true,
+            },
+            {
+              key: "lastName",
+              type: "string",
+              label: "Last Name",
+              responsive: true,
+            },
+          ],
           { key: "email", type: "email", label: "Email Address" },
           { key: "password", type: "password", label: "Password" },
           {

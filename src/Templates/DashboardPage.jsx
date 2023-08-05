@@ -434,7 +434,7 @@ const DashboardPage = (props) => {
                 </li> */}
               </ol>
             </nav>
-            <div className="mt-5">{props.children}</div>
+            {user.id ? <div className="mt-5">{props.children}</div> : ""}
 
             {/* <div className="grid grid-cols-6">
               <div className="p-4 mb-4 mt-5 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">

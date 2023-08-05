@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Input from "../Inputs/Input";
-import Button from "../Inputs/Button";
+import NewButton from "../Inputs/NewButton";
 
 const DynamicForm = (props) => {
   const [values, setValues] = useState({});
@@ -99,8 +99,41 @@ const DynamicForm = (props) => {
       ) : (
         ""
       )}
-      {props.fields.map((field) =>
-        field.key ? (
+      {props.fields.map((field, index) =>
+        typeof field.length !== "undefined" ? (
+          <div key={index} className="grid grid-cols-6 gap-4 mb-4">
+            {field.map((smallerField) => (
+              <div
+                key={smallerField.key}
+                className={`${
+                  smallerField.responsive
+                    ? "sm:col-span-3 col-span-6"
+                    : "col-span-3"
+                } `}
+              >
+                {smallerField.key ? (
+                  <Input
+                    noMarginBottom
+                    error={errors[smallerField.key]}
+                    key={smallerField.key}
+                    id={smallerField.key}
+                    type={smallerField.type}
+                    label={smallerField.label}
+                    value={smallerField.value || values[smallerField.key]}
+                    onChange={(e) =>
+                      onFieldChange(smallerField.key, e.target.value)
+                    }
+                    disabled={buttonLoading || smallerField.disabled}
+                    labelRight={smallerField.labelRight}
+                    additionalInputClass={smallerField.extraClass}
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
+            ))}
+          </div>
+        ) : field.key ? (
           <Input
             error={errors[field.key]}
             key={field.key}
@@ -118,14 +151,14 @@ const DynamicForm = (props) => {
         )
       )}
 
-      <Button
+      <NewButton
         variant={props.buttonVariant}
-        className="mt-8"
         onClick={buttonLoading ? () => "" : onButtonClick}
         loading={buttonLoading}
+        addClassName="mt-8 w-full"
       >
         {props.button}
-      </Button>
+      </NewButton>
     </div>
   );
 };
