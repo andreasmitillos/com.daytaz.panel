@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 import { auth } from "../State/index.js";
 import { subscribe } from "valtio";
+import RestaurantSubMenu from "../Components/Navbar/RestaurantSubMenu";
 
 const DashboardPage = (props) => {
   const [menuShow, toggleMenuShow] = useState(false);
@@ -434,6 +435,7 @@ const DashboardPage = (props) => {
                 </li> */}
               </ol>
             </nav>
+
             {user.id ? <div className="mt-5">{props.children}</div> : ""}
 
             {/* <div className="grid grid-cols-6">

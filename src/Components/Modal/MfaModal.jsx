@@ -72,7 +72,7 @@ const SuccessModal = (props) => {
         </label>
       }
     >
-      <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow max-w-2xl mx-auto">
+      <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow max-w-2xl mx-auto">
         <div className="flex">
           <div
             className={`${
@@ -118,7 +118,7 @@ const SuccessModal = (props) => {
               {props.user.mfaEnabled ? "Disable" : "Enable"} Two Factor
               Authentication (2FA)
             </p>
-            <p className="text-gray-500 text-sm pt-2">
+            <p className="dark:text-slate-400 text-slate-500 text-sm pt-2">
               {props.user?.mfaEnabled ? (
                 <span>
                   Disabling two factor authentication makes it easier for people
@@ -143,7 +143,7 @@ const SuccessModal = (props) => {
               <h2 className="font-semibold mt-5 text-md">
                 Step 1: Enter the token generated
               </h2>
-              <p className="text-gray-500 text-sm pt-1">
+              <p className="dark:text-slate-400 text-slate-500 text-sm pt-1">
                 Please enter the token that is given by your Authenticator App
                 below.
               </p>
@@ -173,7 +173,7 @@ const SuccessModal = (props) => {
               Scan the following QR Code */}
                 Step 1: Scan the following QR Code
               </h2>
-              <p className="text-gray-500 text-sm pt-1">
+              <p className="dark:text-slate-400 text-slate-500 text-sm pt-1">
                 We recomend using{" "}
                 <span className="font-semibold">Google Authenticator</span>.
                 However, you may use any app you wish.
@@ -190,7 +190,7 @@ const SuccessModal = (props) => {
               <h2 className="font-semibold mt-5 text-md">
                 Step 2: Enter the token generated
               </h2>
-              <p className="text-gray-500 text-sm pt-1">
+              <p className="dark:text-slate-400 text-slate-500 text-sm pt-1">
                 Please enter the token that is given by your Authenticator App
                 below.
               </p>
@@ -215,7 +215,7 @@ const SuccessModal = (props) => {
           </div>
 
           <div
-            className="text-sm font-bold flex hover:bg-gray-100/[0.8] hover:dark:bg-gray-800 p-2 -mt-2 -mr-2 rounded-md cursor-pointer h-full"
+            className="text-sm font-bold flex hover:bg-gray-100/[0.8] hover:dark:bg-slate-700 p-2 -mt-2 -mr-2 rounded-md cursor-pointer h-full"
             onClick={(_) => setModalOpen(false)}
           >
             <svg

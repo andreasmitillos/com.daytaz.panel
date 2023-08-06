@@ -96,7 +96,7 @@ const GeneralModal = (props) => {
         hidden
       >
         <div className="flex justify-center ">
-          <div className="max-w-2xl dark:bg-gray-700 bg-white rounded-lg shadow ">
+          <div className="max-w-2xl dark:bg-slate-800 bg-white rounded-lg shadow ">
             <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mr-12">
                 {props.title || "General Modal"}

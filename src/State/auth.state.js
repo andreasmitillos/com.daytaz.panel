@@ -101,6 +101,18 @@ const actions = {
     });
   },
 
+  revokeDevice: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/identity/revoke", values)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
   // used to retrieve the profile of the user
   getProfile: () => {
     return new Promise((resolve, reject) => {

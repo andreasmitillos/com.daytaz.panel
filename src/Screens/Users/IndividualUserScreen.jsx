@@ -263,6 +263,7 @@ const IndividualUserScreen = (props) => {
                               buttonText="Revoke"
                               buttonVariant="transparent"
                               device={device}
+                              currentProfile={currentUser.id}
                             >
                               Revoke device
                             </RevokeDeviceModal>

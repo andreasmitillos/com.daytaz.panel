@@ -1,15 +1,40 @@
 import React, { useState } from "react";
 import GeneralModal from "./GeneralModal";
+import DynamicForm from "../Forms/DynamicForm";
+import { auth, users } from "../../State";
 
 const SuccessModal = (props) => {
   const [forceClose, setForceClose] = useState(0);
+
+  const callBack = () => {
+    if (props.currentProfile) {
+      users.actions
+        .getUser({ userId: props.currentProfile })
+        .then((res) => {
+          setForceClose(forceClose + 1);
+        })
+        .catch((err) => {
+          setForceClose(forceClose + 1);
+        });
+    } else {
+      auth.actions
+        .getProfile()
+        .then((res) => {
+          setForceClose(forceClose + 1);
+        })
+        .catch((err) => {
+          setForceClose(forceClose + 1);
+        });
+    }
+  };
+
   return (
     <GeneralModal
       buttonText={props.buttonText}
       buttonVariant={props.buttonVariant}
       forceClose={forceClose}
     >
-      <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow max-w-2xl mx-auto">
+      <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow max-w-2xl mx-auto">
         <div className="flex">
           <div className="text-red-600 bg-red-100 p-2 rounded-3xl h-full">
             <svg
@@ -28,24 +53,36 @@ const SuccessModal = (props) => {
             </svg>
           </div>
           <div className="pl-4 flex-1">
-            <p className="font-semibold ">Revoke access to device</p>
-            <p className="text-gray-500 text-sm pt-2">
+            <p className="font-semibold ">Revoke access to </p>
+            <p className="dark:text-slate-400 text-slate-500 text-sm pt-2">
               You are about to revoke access to the following device
             </p>
-            <p className="text-gray-500 text-sm pt-2">
+            <p className="dark:text-slate-400 text-slate-500 text-sm pt-2">
               {props.device?.deviceType.substr(0, 1).toUpperCase() +
                 props.device?.deviceType.substr(1).toLowerCase()}{" "}
               {props.device?.agent} - {props.device?.agentVersion}
             </p>
-            <p className="text-gray-500 text-sm pt-2">
+            <p className="dark:text-slate-400 text-slate-500 text-sm pt-2">
               This device last accessed your account on{" "}
               {new Date(props.device?.updatedAt).toDateString()} at{" "}
               {new Date(props.device?.updatedAt).toLocaleTimeString()}
             </p>
+
+            <div className="mt-8">
+              <DynamicForm
+                button="Revoke Access"
+                buttonVariant="transparent"
+                buttonCallBack={callBack}
+                buttonOnClick={auth.actions.revokeDevice}
+                fields={[]}
+                addButtonClassName="mt-0"
+                hiddenValues={{ deviceId: props.device?.id }}
+              />
+            </div>
           </div>
 
           <div
-            className="text-sm font-bold flex hover:bg-gray-100/[0.8] hover:dark:bg-gray-800 p-2 -mt-2 -mr-2 rounded-md cursor-pointer h-full"
+            className="text-sm font-bold flex hover:bg-gray-100/[0.8] hover:dark:bg-slate-700 p-2 -mt-2 -mr-2 rounded-md cursor-pointer h-full"
             onClick={(_) => setForceClose(forceClose + 1)}
           >
             <svg

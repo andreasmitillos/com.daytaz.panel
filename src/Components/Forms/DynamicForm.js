@@ -155,7 +155,7 @@ const DynamicForm = (props) => {
         variant={props.buttonVariant}
         onClick={buttonLoading ? () => "" : onButtonClick}
         loading={buttonLoading}
-        addClassName="mt-8 w-full"
+        addClassName={`mt-8 w-full ${props.addButtonClassName}`}
       >
         {props.button}
       </NewButton>

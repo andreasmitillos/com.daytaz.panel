@@ -42,7 +42,7 @@ const AuthTemplate = (props) => {
 
   return (
     <div
-      className={`sm:bg-[url(./Assets/background3.jpeg)] bg-fixed bg-cover min-h-screen bg-white`}
+      className={`sm:bg-[url(./Assets/background2.jpeg)] bg-fixed bg-cover min-h-screen bg-white`}
     >
       <div className="bg-black/40 dark:bg-black/70">
         <div className="w-full md:w-1/2 lg:w-1/2 xl:w-1/3 bg-white dark:bg-gray-900 min-h-screen">
