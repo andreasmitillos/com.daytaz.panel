@@ -62,7 +62,7 @@ const ListUsers = (props) => {
                 "Actions",
               ]}
               data={usersList.map((x) => [
-                x.id,
+                <span className="font-mono">{x.id}</span>,
                 x.firstName,
                 x.lastName,
                 x.email,

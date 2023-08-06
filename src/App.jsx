@@ -12,6 +12,7 @@ import VerifyEmailScreen from "./Screens/Auth/VerifyEmail";
 
 import ListRestaurantsScreen from "./Screens/Restaurants/ListRestaurants";
 import CreateRestaurantScreen from "./Screens/Restaurants/CreateRestaurant";
+import IndividualRestaurantScreen from "./Screens/Restaurants/IndividualRestaurantScreen";
 
 import ListUsersScreen from "./Screens/Users/ListUsers";
 import CreateUserScreen from "./Screens/Users/CreateUser";
@@ -46,6 +47,10 @@ function App() {
         <Route
           path={DRoutes.createRestaurantScreen}
           element={<CreateRestaurantScreen />}
+        />
+        <Route
+          path={DRoutes.individualRestaurantScreen}
+          element={<IndividualRestaurantScreen />}
         />
 
         <Route path={DRoutes.listUsersScreen} element={<ListUsersScreen />} />
