@@ -44,6 +44,30 @@ const actions = {
         });
     });
   },
+
+  addUser: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/restaurants/addUser", values)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
+  removeUser: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/restaurants/removeUser", values)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
 };
 
 export default { data, actions };

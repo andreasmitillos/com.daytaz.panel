@@ -19,6 +19,14 @@ const GeneralModal = (props) => {
   }, [toggle]);
 
   useEffect(() => {
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setToggle(false);
+      }
+    });
+  });
+
+  useEffect(() => {
     setToggle(props.modalOpen?.modalOpen);
   }, [props?.modalOpen?.modalOpen]);
 

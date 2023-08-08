@@ -61,7 +61,9 @@ const DynamicForm = (props) => {
       {errorMessage ? (
         <div
           id="alert-border-1"
-          className="flex items-center p-4 mb-8 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800"
+          className={`flex items-center p-4  text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 dark:bg-gray-800 dark:border-red-800 ${
+            props.onlyButton ? "" : "mb-8"
+          }`}
           role="alert"
         >
           <svg
@@ -82,7 +84,7 @@ const DynamicForm = (props) => {
       {successMessage ? (
         <div
           id="alert-border-1"
-          className="flex items-center p-4 mb-8 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800"
+          className={`flex items-center p-4 mb-8 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800 ${props.addAlertClassName}`}
           role="alert"
         >
           <svg
