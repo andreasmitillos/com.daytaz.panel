@@ -47,6 +47,7 @@ const Input = (props) => {
             : ""
         } ${props.additionalInputClass}`}
         required
+        value={props.value}
         {...props}
       />
       {props.error ? (

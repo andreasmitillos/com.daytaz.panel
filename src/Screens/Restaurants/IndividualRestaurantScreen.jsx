@@ -63,6 +63,9 @@ const IndividualRestaurantScreen = (props) => {
               <h2 className="font-extrabold text-4xl">
                 {currentRestaurant.name}
               </h2>
+              <p className="text-xs mt-1 dark:text-slate-400 text-slate-600 font-mono">
+                {currentRestaurant.id}
+              </p>
             </div>
             <div className="xl:col-span-2 lg:col-span-3 md:col-span-6 col-span-6">
               <GeneralCard

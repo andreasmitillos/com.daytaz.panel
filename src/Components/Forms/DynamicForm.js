@@ -121,7 +121,7 @@ const DynamicForm = (props) => {
                     id={smallerField.key}
                     type={smallerField.type}
                     label={smallerField.label}
-                    value={smallerField.value || values[smallerField.key]}
+                    value={smallerField.value || values[smallerField.key] || ""}
                     onChange={(e) =>
                       onFieldChange(smallerField.key, e.target.value)
                     }
@@ -142,7 +142,7 @@ const DynamicForm = (props) => {
             id={field.key}
             type={field.type}
             label={field.label}
-            value={field.value || values[field.key]}
+            value={field.value || values[field.key] || ""}
             onChange={(e) => onFieldChange(field.key, e.target.value)}
             disabled={buttonLoading || field.disabled}
             labelRight={field.labelRight}

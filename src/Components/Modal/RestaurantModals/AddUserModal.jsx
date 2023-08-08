@@ -47,17 +47,8 @@ const AddUserModal = (props) => {
           <div className="pl-4 w-full">
             <p className="font-semibold ">Add User</p>
             <p className="dark:text-slate-400 text-slate-500 text-sm pt-2">
-              You are about to remove{" "}
-              <strong>
-                {props.user?.firstName} {props.user?.lastName}
-              </strong>{" "}
-              which is{" "}
-              {props.user?.restaurant_users.authLevel == "headAdmin"
-                ? "a Head Administrator"
-                : props.user?.restaurant_users.authLevel === "admin"
-                ? "an Administrator"
-                : "a Manager"}
-              , privellages to <strong>{props.restaurant?.name}</strong>.
+              Add a user to manage this restaurant. Keep in mind, each
+              restaurant can have a maximum of 1 Head Admin.
             </p>
             <div className="mt-8">
               <DynamicForm
