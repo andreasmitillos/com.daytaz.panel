@@ -68,7 +68,9 @@ const RestaurantTemplate = (props) => {
         ) : (
           <>
             <div className="col-span-6">
-              <h2 className="font-black text-4xl">{currentRestaurant?.name}</h2>
+              <h2 className="font-black text-4xl text-indigo-600 dark:text-indigo-400">
+                {currentRestaurant?.name}
+              </h2>
 
               <div className="flex items-center dark:text-slate-400 text-slate-600 mt-1">
                 <svg

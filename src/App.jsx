@@ -19,6 +19,7 @@ import CreateUserScreen from "./Screens/Users/CreateUser";
 import IndividualUserScreen from "./Screens/Users/IndividualUserScreen";
 import MenusRestaurant from "./Screens/Restaurants/MenusRestaurant";
 import PaymentsRestaurant from "./Screens/Restaurants/PaymentsRestaurant";
+import DetailsRestaurant from "./Screens/Restaurants/DetailsRestaurant";
 
 function App() {
   // subscribe(auth.data, (_) => {
@@ -60,6 +61,10 @@ function App() {
         <Route
           path={DRoutes.paymentRestaurantScreen}
           element={<PaymentsRestaurant />}
+        />
+        <Route
+          path={DRoutes.detailsRestaurantScreen}
+          element={<DetailsRestaurant />}
         />
 
         <Route path={DRoutes.listUsersScreen} element={<ListUsersScreen />} />

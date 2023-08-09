@@ -311,7 +311,7 @@ const DashboardPage = (props) => {
             hidden={!menuShow}
           />
           <div className={`p-5 pt-6`}>
-            <nav className="flex" aria-label="Breadcrumb">
+            <nav className="flex overflow-x-scroll" aria-label="Breadcrumb">
               <ol className="inline-flex items-center space-x-1 md:space-x-3">
                 <li className="inline-flex items-center">
                   <a

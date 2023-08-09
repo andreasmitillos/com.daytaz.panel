@@ -2,7 +2,8 @@ import React from "react";
 
 const GeneralCard = (props) => {
   return (
-    <div className="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+    // shadow-sm
+    <div className="p-4 mb-4 bg-white border border-gray-200 rounded  dark:border-gray-700 sm:p-6 dark:bg-gray-800">
       <div className="items-center">
         {/* sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4 */}
         {/* <img

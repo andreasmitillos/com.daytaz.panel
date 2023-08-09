@@ -19,6 +19,7 @@ const routes = {
   individualRestaurantScreen: "/restaurants/:restaurantId",
   paymentRestaurantScreen: "/restaurants/:restaurantId/payments",
   menusRestaurantScreen: "/restaurants/:restaurantId/menus",
+  detailsRestaurantScreen: "/restaurants/:restaurantId/details",
 
   // Users Routes
   listUsersScreen: "/users",
