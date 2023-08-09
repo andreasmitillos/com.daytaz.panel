@@ -21,6 +21,12 @@ const routes = {
   menusRestaurantScreen: "/restaurants/:restaurantId/menus",
   detailsRestaurantScreen: "/restaurants/:restaurantId/details",
 
+  // Menus
+  individualMenu: "/restaurants/:restaurantId/menus/:menuId",
+  itemsMenu: "/restaurants/:restaurantId/menus/:menuId/items",
+  categoriesMenu: "/restaurants/:restaurantId/menus/:menuId/categories",
+  optionListsMenu: "/restaurants/:restaurantId/menus/:menuId/optionLists",
+
   // Users Routes
   listUsersScreen: "/users",
   createUserScreen: "/users/create",

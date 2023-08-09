@@ -78,7 +78,7 @@ const DetailsRestaurant = (props) => {
             </div>
             <p className="text-sm font-semibold h-full">
               <textarea
-                className="outline-none focus:border-b border-dashed bg-transparent w-full h-full"
+                className="outline-none border-b dark:border-slate-600 border-dashed bg-transparent w-full h-full"
                 value={currentRestaurant.description}
               />
               {/* {currentRestaurant.description} */}

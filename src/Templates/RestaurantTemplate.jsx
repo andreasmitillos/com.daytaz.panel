@@ -5,6 +5,7 @@ import { subscribe } from "valtio";
 import DashboardPage from "./DashboardPage";
 import LoadingBox from "../Components/LoadingBox";
 import RestaurantSubMenu from "../Components/Navbar/RestaurantSubMenu";
+import MenuSubMenu from "../Components/Navbar/MenuSubMenu";
 
 const RestaurantTemplate = (props) => {
   const [user, setUser] = useState(auth.data.user);
@@ -60,7 +61,7 @@ const RestaurantTemplate = (props) => {
           : "Individual Restaurant"
       }${props.tabName || ""}`}
     >
-      <div className="grid grid-cols-6 gap-4 mt-5">
+      <div className="grid grid-cols-6 gap-4 mt-5 ">
         {loading || !gotRestaurant ? (
           <div className="col-span-6">
             <LoadingBox />
@@ -90,9 +91,36 @@ const RestaurantTemplate = (props) => {
 
                 <p className="text-xs  font-mono">{currentRestaurant?.id}</p>
               </div>
+
+              {props.isMenu ? (
+                <div className="flex items-center dark:text-slate-400 text-slate-600 mt-1">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={0.8}
+                    stroke="currentColor"
+                    className="w-6 h-6 mr-1"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                    />
+                  </svg>
+
+                  <p className="text-xs font-mono">{currentRestaurant?.name}</p>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             <div className="col-span-6 mb-6">
-              <RestaurantSubMenu tab={props.tab} />
+              {!props.isMenu ? (
+                <RestaurantSubMenu tab={props.tab} />
+              ) : (
+                <MenuSubMenu tab={props.tab} />
+              )}
             </div>
             {props.children}
           </>

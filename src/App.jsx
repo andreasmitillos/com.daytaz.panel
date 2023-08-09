@@ -14,6 +14,11 @@ import ListRestaurantsScreen from "./Screens/Restaurants/ListRestaurants";
 import CreateRestaurantScreen from "./Screens/Restaurants/CreateRestaurant";
 import IndividualRestaurantScreen from "./Screens/Restaurants/IndividualRestaurantScreen";
 
+import IndividualMenuScreen from "./Screens/Menus/IndividualMenu";
+import CategoriesMenu from "./Screens/Menus/CategoriesMenu";
+import ItemsMenu from "./Screens/Menus/ItemsMenu";
+import OptionListsMenu from "./Screens/Menus/OptionListsMenu";
+
 import ListUsersScreen from "./Screens/Users/ListUsers";
 import CreateUserScreen from "./Screens/Users/CreateUser";
 import IndividualUserScreen from "./Screens/Users/IndividualUserScreen";
@@ -66,6 +71,14 @@ function App() {
           path={DRoutes.detailsRestaurantScreen}
           element={<DetailsRestaurant />}
         />
+
+        <Route
+          path={DRoutes.individualMenu}
+          element={<IndividualMenuScreen />}
+        />
+        <Route path={DRoutes.categoriesMenu} element={<CategoriesMenu />} />
+        <Route path={DRoutes.itemsMenu} element={<ItemsMenu />} />
+        <Route path={DRoutes.optionListsMenu} element={<OptionListsMenu />} />
 
         <Route path={DRoutes.listUsersScreen} element={<ListUsersScreen />} />
         <Route path={DRoutes.createUserScreen} element={<CreateUserScreen />} />
