@@ -15,7 +15,10 @@ const routes = {
   // Restaurant Routes
   listRestaurantsScreen: "/restaurants",
   createRestaurantScreen: "/restaurants/create",
+
   individualRestaurantScreen: "/restaurants/:restaurantId",
+  paymentRestaurantScreen: "/restaurants/:restaurantId/payments",
+  menusRestaurantScreen: "/restaurants/:restaurantId/menus",
 
   // Users Routes
   listUsersScreen: "/users",
