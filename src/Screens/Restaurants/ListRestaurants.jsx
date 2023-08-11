@@ -56,19 +56,18 @@ const ListRestaurants = (props) => {
             <LoadingBox />
           ) : (
             <GeneralTable
-              header={["ID", "Name", "Description", "Head Admin", ""]}
+              header={["ID", "Name", "Head Admin", ""]}
               data={restaurantList.map((x) => [
                 <span className="font-mono">{x.id}</span>,
                 x.name,
-                x.description || "-",
                 x.users?.length > 0 ? (
                   x.users.map((y) => {
                     if (y.restaurant_users.authLevel == "headAdmin") {
                       return (
                         <Link to={`/users/${y.id}`}>
-                          <span className="rounded border font-medium px-3 py-1 dark:border-gray-700">
+                          <p className="rounded border font-medium px-3 py-1 dark:border-gray-700 text-center w-fit">
                             {y.firstName} {y.lastName}
-                          </span>
+                          </p>
                         </Link>
                       );
                     }
@@ -80,7 +79,11 @@ const ListRestaurants = (props) => {
                 ),
 
                 <Link to={`/restaurants/${x.id}`}>
-                  <NewButton variant="transparent" addClassName="mb-0">
+                  <NewButton
+                    noMargins
+                    variant="transparent"
+                    addClassName="mb-0"
+                  >
                     View
                   </NewButton>
                 </Link>,

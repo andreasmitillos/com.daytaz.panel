@@ -129,7 +129,11 @@ const ListUsers = (props) => {
                   </svg>
                 ),
                 <Link to={`/users/${x.id}`}>
-                  <NewButton variant="transparent" addClassName="mb-0">
+                  <NewButton
+                    noMargins
+                    variant="transparent"
+                    addClassName="mb-0"
+                  >
                     View
                   </NewButton>
                 </Link>,

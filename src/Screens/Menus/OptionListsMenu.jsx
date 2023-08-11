@@ -94,13 +94,26 @@ const OptionLists = (props) => {
           <div className="grid grid-cols-6 gap-4 mt-3">
             <ItemsMenuItem
               name="Burger Side"
-              description="Choose your side"
+              description="Choose your side (Required)"
               options={[
-                { name: "Truffle Fries" },
+                { name: "Chilli Fries" },
+                { name: "Truffle Fries (+ EUR 0.50)" },
                 { name: "Bone Marrow Mash" },
                 { name: "Vegetables" },
               ]}
             />
+
+            <ItemsMenuItem
+              multiple
+              name="Burger Toppings"
+              description="Choose your toppings (Optional)"
+              options={[
+                { name: "Tomatoe" },
+                { name: "Onion" },
+                { name: "Pickles" },
+              ]}
+            />
+
             <ItemsMenuItem
               multiple
               name="Burger Toppings"

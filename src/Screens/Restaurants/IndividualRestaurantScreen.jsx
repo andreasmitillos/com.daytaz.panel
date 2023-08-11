@@ -58,6 +58,61 @@ const IndividualRestaurantScreen = (props) => {
     <RestaurantTemplate tab="dashboard">
       {currentRestaurant && currentRestaurant.id ? (
         <>
+          <div className="col-span-6">
+            <h2 className="font-extrabold text-2xl mb-4">Insights</h2>
+            <div className="grid grid-cols-6 md:grid-cols-9 lg:grid-cols-12 gap-4">
+              <div className="col-span-3 border p-3 rounded dark:border-slate-600 text-center flex flex-col items-center">
+                <div className="grow flex items-center h-24">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="w-16 h-16 dark:text-green-500 text-green-600"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <p className="dark:text-slate-400 text-slate-500 text-lg">
+                  Ordering Opening
+                </p>
+              </div>
+
+              <div className="col-span-3 border p-3 rounded dark:border-slate-600 text-center flex flex-col items-center">
+                <div className="grow flex items-center h-24 py-16">
+                  <p className="text-5xl sm:text-7xl font-extrabold">3</p>
+                </div>
+                <p className="dark:text-slate-400 text-slate-500 text-lg">
+                  Active Menus
+                </p>
+              </div>
+
+              <div className="col-span-3 border p-3 rounded dark:border-slate-600 text-center flex flex-col items-center">
+                <div className="grow flex items-center h-24 py-16">
+                  <p className="text-5xl sm:text-7xl font-extrabold">132k</p>
+                </div>
+                <p className="dark:text-slate-400 text-slate-500 text-lg">
+                  Revenues this month
+                </p>
+              </div>
+
+              <div className="col-span-3 md:col-span-3 border p-3 rounded dark:border-slate-600 text-center flex flex-col items-center">
+                <div className="flex items-center h-24 py-16">
+                  <p className="text-5xl sm:text-7xl font-extrabold">11k</p>
+                </div>
+                <div className="flex items-center h-full">
+                  <p className="dark:text-slate-400 text-slate-500 text-lg">
+                    Orders this month
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="xl:col-span-2 lg:col-span-3 md:col-span-6 col-span-6">
             <GeneralCard
               title="Restaurant Details"

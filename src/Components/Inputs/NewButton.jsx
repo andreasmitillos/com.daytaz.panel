@@ -12,7 +12,9 @@ const NewButton = (props) => {
   return (
     <button
       href="#"
-      className={`px-3 py-2 mb-3 mr-3 text-sm font-medium text-center focus:ring-4 rounded-lg  ${
+      className={`px-3 py-2 ${
+        props.noMargins ? "" : "mb-3 mr-3"
+      } text-sm font-medium text-center focus:ring-4 rounded-lg  ${
         variants[props.variant] || variants.blue
       } ${props.addClassName}`}
       {...props}
