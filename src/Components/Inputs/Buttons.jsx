@@ -65,6 +65,8 @@ const Button = (props) => {
     <button
       onClick={onClick}
       className={`
+        appearance-none
+        focus:outline-0
         shadow-sm
         border
         ${rounded ? "rounded-full" : "rounded"}

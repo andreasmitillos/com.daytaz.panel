@@ -3,10 +3,27 @@ import { Fragment, useState } from "react";
 import Inputs from "../Inputs/Inputs";
 import Buttons from "../Inputs/Buttons";
 
-export default function MyModal(props) {
+const Modal = (props) => {
   let [isOpen, setIsOpen] = useState(false);
 
-  let { buttonText, buttonVariant, buttonSize } = props;
+  let {
+    buttonText,
+    buttonVariant,
+    buttonSize,
+    triggerComponent,
+    triggerComponentClasses,
+    title,
+    subTitle,
+    children,
+    size,
+  } = props;
+
+  let modalSize = {
+    md: "max-w-md",
+    lg: "max-w-lg",
+    xl: "max-w-xl",
+    "2xl": "max-w-2xl",
+  };
 
   function closeModal() {
     setIsOpen(false);
@@ -18,9 +35,20 @@ export default function MyModal(props) {
 
   return (
     <>
-      <Buttons size={buttonSize} variant={buttonVariant} onClick={openModal}>
-        {buttonText}
-      </Buttons>
+      {/* <span onClick={openModal}> */}
+      {(
+        <div
+          onClick={openModal}
+          className={`appearance-none ${triggerComponentClasses}`}
+        >
+          {triggerComponent}
+        </div>
+      ) || (
+        <Buttons size={buttonSize} variant={buttonVariant}>
+          {buttonText}
+        </Buttons>
+      )}
+      {/* </span> */}
 
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={closeModal}>
@@ -47,22 +75,35 @@ export default function MyModal(props) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-md bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-800">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900 dark:text-white"
-                  >
-                    Invite a User to DaytaZ
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Register a user using their First Name, Last Name and
-                      Email Address. Afterwards, they will receive an email with
-                      a temporary password.
-                    </p>
-                  </div>
+                <Dialog.Panel
+                  className={`w-full ${modalSize[size]} transform overflow-hidden rounded-md bg-white p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-800`}
+                >
+                  {title ? (
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-gray-900 dark:text-white"
+                    >
+                      {title}
+                    </Dialog.Title>
+                  ) : (
+                    ""
+                  )}
 
-                  <div className="grid grid-cols-6 gap-3 mt-8">
+                  {subTitle ? (
+                    <div className={!title ? "" : "mt-2"}>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                        {subTitle ||
+                          "Register a user using their First Name, Last Name and Email Address. Afterwards, they will receive an email with a temporary password."}
+                      </p>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
+                  <div className="mt-4">{children}</div>
+
+                  {/* children */}
+                  {/* <div className="grid grid-cols-6 gap-3 mt-4">
                     <div className="col-span-3">
                       <Inputs
                         isInput
@@ -108,7 +149,7 @@ export default function MyModal(props) {
                         </Buttons>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* <div className="mt-4">
                     <button
@@ -127,4 +168,6 @@ export default function MyModal(props) {
       </Transition>
     </>
   );
-}
+};
+
+export default Modal;

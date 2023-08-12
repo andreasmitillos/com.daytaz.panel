@@ -2,7 +2,7 @@ import React from "react";
 import MenuTemplate from "../../Templates/MenuTemplate";
 import Buttons from "../../Components/Inputs/Buttons";
 import Inputs from "../../Components/Inputs/Inputs";
-import TestModal from "../../Components/Modal/TestModal";
+import Modal from "../../Components/Modal/Modal";
 
 const CategoriesMenu = (props) => {
   return (
@@ -247,11 +247,11 @@ const CategoriesMenu = (props) => {
 
       <div className="col-span-6 my-6">
         <h2 className="text-2xl font-bold mb-2">Modals</h2>
-        <TestModal
+        <Modal
           buttonText="Create new User"
           buttonVariant="indigo"
           buttonSize="md"
-        ></TestModal>
+        ></Modal>
       </div>
     </MenuTemplate>
   );

@@ -13,6 +13,7 @@ const Input = (props) => {
     isInput,
     isTextArea,
     isSelect,
+    value,
   } = props;
 
   return (
@@ -36,6 +37,7 @@ const Input = (props) => {
             placeholder={placeholder || ""}
             disabled={disabled}
             type={type}
+            value={value}
           />
         ) : (
           ""
