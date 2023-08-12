@@ -3,6 +3,7 @@ import MenuTemplate from "../../Templates/MenuTemplate";
 import Buttons from "../../Components/Inputs/Buttons";
 import Inputs from "../../Components/Inputs/Inputs";
 import Modal from "../../Components/Modal/Modal";
+import Alerts from "../../Components/Alerts/Alerts";
 
 const CategoriesMenu = (props) => {
   return (
@@ -252,6 +253,27 @@ const CategoriesMenu = (props) => {
           buttonVariant="indigo"
           buttonSize="md"
         ></Modal>
+      </div>
+
+      <div className="col-span-6 my-6">
+        <h2 className="text-2xl font-bold mb-2">Alerts</h2>
+        <div className="grid grid-cols-6 gap-4">
+          <div className="col-span-4">
+            <Alerts type="error">This is an issue</Alerts>
+          </div>
+
+          <div className="col-span-4">
+            <Alerts type="warning">This is an issue</Alerts>
+          </div>
+
+          <div className="col-span-4">
+            <Alerts type="info">This is an issue</Alerts>
+          </div>
+
+          <div className="col-span-4">
+            <Alerts type="success">This is an issue</Alerts>
+          </div>
+        </div>
       </div>
     </MenuTemplate>
   );

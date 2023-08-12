@@ -28,19 +28,21 @@ const CreateUserScreen = (props) => {
             registered email address.
           </p>
 
-          <DynamicForm
-            fields={[
-              [
-                { key: "firstName", type: "string", label: "First Name" },
-                { key: "lastName", type: "string", label: "Last Name" },
-              ],
-              { key: "email", type: "email", label: "Email Address" },
-            ]}
-            button="Add User to Network"
-            buttonVariant="transparent"
-            buttonCallBack={callBack}
-            buttonOnClick={auth.actions.register}
-          />
+          <div className="px-0.5">
+            <DynamicForm
+              fields={[
+                [
+                  { key: "firstName", type: "string", label: "First Name" },
+                  { key: "lastName", type: "string", label: "Last Name" },
+                ],
+                { key: "email", type: "email", label: "Email Address" },
+              ]}
+              button="Add User to Network"
+              buttonVariant="blue"
+              buttonCallBack={callBack}
+              buttonOnClick={auth.actions.register}
+            />
+          </div>
         </div>
       </div>
     </DashboardPage>

@@ -29,25 +29,27 @@ const CreateRestaurantScreen = (props) => {
             Administrators. Visit the users page to get a User ID.
           </p>
 
-          <DynamicForm
-            fields={[
-              { key: "name", type: "string", label: "Restaurant Name" },
-              {
-                key: "description",
-                type: "string",
-                label: "Restaurat Description",
-              },
-              {
-                key: "userId",
-                type: "string",
-                label: "Head Admin User ID",
-              },
-            ]}
-            button="Create a Restaurant"
-            buttonVariant="transparent"
-            buttonCallBack={callBack}
-            buttonOnClick={restaurants.actions.createRestaurant}
-          />
+          <div className="px-0.5">
+            <DynamicForm
+              fields={[
+                { key: "name", type: "string", label: "Restaurant Name" },
+                {
+                  key: "description",
+                  type: "string",
+                  label: "Restaurat Description",
+                },
+                {
+                  key: "userId",
+                  type: "string",
+                  label: "Head Admin User ID",
+                },
+              ]}
+              button="Create a Restaurant"
+              buttonVariant="blue"
+              buttonCallBack={callBack}
+              buttonOnClick={restaurants.actions.createRestaurant}
+            />
+          </div>
         </div>
       </div>
     </DashboardPage>

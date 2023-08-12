@@ -461,7 +461,7 @@ const ItemsMenu = (props) => {
           </Buttons>
         ) : (
           <Buttons size="md" variant="indigo" onClick={toggleEditLock}>
-            Save Changes
+            Finish
           </Buttons>
         )}
       </div>
