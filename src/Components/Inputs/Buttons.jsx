@@ -71,7 +71,7 @@ const Button = (props) => {
         border
         ${rounded ? "rounded-full" : "rounded"}
         text-sm
-        ${sizes[size]} mr-2
+        ${sizes[size]}
         ${variants[variant]}
         font-semibold
         transition ease-in-out

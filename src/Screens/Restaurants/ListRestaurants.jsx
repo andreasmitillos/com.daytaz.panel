@@ -8,6 +8,7 @@ import LoadingBox from "../../Components/LoadingBox";
 import NewButton from "../../Components/Inputs/NewButton";
 import { Link } from "react-router-dom";
 import routes from "../../Routes";
+import Buttons from "../../Components/Inputs/Buttons";
 
 const ListRestaurants = (props) => {
   const [user, setUser] = useState(auth.data.user);
@@ -56,36 +57,39 @@ const ListRestaurants = (props) => {
             <LoadingBox />
           ) : (
             <GeneralTable
-              header={["ID", "Name", "Head Admin", ""]}
+              model="Restaurants"
+              header={["ID", "Name", "Head Admin", "Actions"]}
               data={restaurantList.map((x) => [
-                <span className="font-mono">{x.id}</span>,
+                x.id,
                 x.name,
                 x.users?.length > 0 ? (
                   x.users.map((y) => {
                     if (y.restaurant_users.authLevel == "headAdmin") {
                       return (
                         <Link to={`/users/${y.id}`}>
-                          <p className="rounded border font-medium px-3 py-1 dark:border-gray-700 text-center w-fit">
+                          {/* <p className="rounded border font-medium px-3 py-1 dark:border-gray-700 text-center w-fit">
                             {y.firstName} {y.lastName}
-                          </p>
+                          </p> */}
+                          <Buttons size="sm" variant="transparent">
+                            {y.firstName} {y.lastName}
+                          </Buttons>
                         </Link>
                       );
                     }
                   })
                 ) : (
-                  <span class="bg-red-100 border border-transparent text-red-800 text-sm font-medium px-3 py-1 rounded dark:bg-red-900 dark:text-red-300">
-                    Unassigned
-                  </span>
+                  // <span class="bg-red-100 border border-transparent text-red-800 text-sm font-medium px-3 py-1 rounded dark:bg-red-900 dark:text-red-300">
+                  //   Unassigned
+                  // </span>
+                  <Buttons size="sm" variant="indigo">
+                    Assign
+                  </Buttons>
                 ),
 
                 <Link to={`/restaurants/${x.id}`}>
-                  <NewButton
-                    noMargins
-                    variant="transparent"
-                    addClassName="mb-0"
-                  >
+                  <Buttons size="sm" variant="transparent">
                     View
-                  </NewButton>
+                  </Buttons>
                 </Link>,
               ])}
             />

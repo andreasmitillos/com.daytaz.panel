@@ -8,6 +8,7 @@ import LoadingBox from "../../Components/LoadingBox";
 import NewButton from "../../Components/Inputs/NewButton";
 import { Link } from "react-router-dom";
 import routes from "../../Routes";
+import Buttons from "../../Components/Inputs/Buttons";
 
 const ListUsers = (props) => {
   const [user, setUser] = useState(auth.data.user);
@@ -52,6 +53,7 @@ const ListUsers = (props) => {
             <LoadingBox />
           ) : (
             <GeneralTable
+              model="Users"
               header={[
                 "ID",
                 "First Name",
@@ -62,7 +64,7 @@ const ListUsers = (props) => {
                 "Actions",
               ]}
               data={usersList.map((x) => [
-                <span className="font-mono">{x.id}</span>,
+                x.id,
                 x.firstName,
                 x.lastName,
                 x.email,
@@ -129,13 +131,9 @@ const ListUsers = (props) => {
                   </svg>
                 ),
                 <Link to={`/users/${x.id}`}>
-                  <NewButton
-                    noMargins
-                    variant="transparent"
-                    addClassName="mb-0"
-                  >
+                  <Buttons size="sm" variant="transparent">
                     View
-                  </NewButton>
+                  </Buttons>
                 </Link>,
               ])}
             />
