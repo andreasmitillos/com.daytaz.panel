@@ -1,10 +1,11 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Inputs from "../Inputs/Inputs";
 import Buttons from "../Inputs/Buttons";
 
 const Modal = (props) => {
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [internalForceClose, setInternalForceClose] = useState(0);
 
   let {
     buttonText,
@@ -16,7 +17,14 @@ const Modal = (props) => {
     subTitle,
     children,
     size,
+    forceClose,
   } = props;
+
+  useEffect(() => {
+    if (internalForceClose !== forceClose && forceClose) {
+      setIsOpen(!isOpen);
+    }
+  }, [forceClose]);
 
   let modalSize = {
     md: "max-w-md",
@@ -36,15 +44,15 @@ const Modal = (props) => {
   return (
     <>
       {/* <span onClick={openModal}> */}
-      {(
+      {triggerComponent ? (
         <div
           onClick={openModal}
           className={`appearance-none ${triggerComponentClasses}`}
         >
           {triggerComponent}
         </div>
-      ) || (
-        <Buttons size={buttonSize} variant={buttonVariant}>
+      ) : (
+        <Buttons size={buttonSize} variant={buttonVariant} onClick={openModal}>
           {buttonText}
         </Buttons>
       )}
@@ -100,7 +108,9 @@ const Modal = (props) => {
                     ""
                   )}
 
-                  <div className="mt-4">{children}</div>
+                  <div className={title || subTitle ? "mt-4" : ""}>
+                    {children}
+                  </div>
 
                   {/* children */}
                   {/* <div className="grid grid-cols-6 gap-3 mt-4">

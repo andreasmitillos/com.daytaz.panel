@@ -14,6 +14,7 @@ const Input = (props) => {
     isTextArea,
     isSelect,
     value,
+    onChange,
   } = props;
 
   return (
@@ -38,6 +39,7 @@ const Input = (props) => {
             disabled={disabled}
             type={type}
             value={value}
+            onChange={onChange}
           />
         ) : (
           ""

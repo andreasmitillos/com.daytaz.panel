@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Input from "../Inputs/Input";
+import Inputs from "../Inputs/Inputs";
 import NewButton from "../Inputs/NewButton";
+import Buttons from "../Inputs/Buttons";
 
 const DynamicForm = (props) => {
   const [values, setValues] = useState({});
@@ -114,20 +116,34 @@ const DynamicForm = (props) => {
                 } `}
               >
                 {smallerField.key ? (
-                  <Input
-                    noMarginBottom
-                    error={errors[smallerField.key]}
+                  // <Input
+                  //   noMarginBottom
+                  //   error={errors[smallerField.key]}
+                  //   key={smallerField.key}
+                  //   id={smallerField.key}
+                  //   type={smallerField.type}
+                  //   label={smallerField.label}
+                  //   value={smallerField.value || values[smallerField.key] || ""}
+                  //   onChange={(e) =>
+                  //     onFieldChange(smallerField.key, e.target.value)
+                  //   }
+                  //   disabled={buttonLoading || smallerField.disabled}
+                  //   labelRight={smallerField.labelRight}
+                  //   additionalInputClass={smallerField.extraClass}
+                  // />
+                  <Inputs
                     key={smallerField.key}
-                    id={smallerField.key}
-                    type={smallerField.type}
-                    label={smallerField.label}
-                    value={smallerField.value || values[smallerField.key] || ""}
+                    error={errors[smallerField.key]}
+                    isInput
                     onChange={(e) =>
                       onFieldChange(smallerField.key, e.target.value)
                     }
-                    disabled={buttonLoading || smallerField.disabled}
-                    labelRight={smallerField.labelRight}
-                    additionalInputClass={smallerField.extraClass}
+                    type={smallerField.type}
+                    label={smallerField.label}
+                    value={smallerField.value || values[smallerField.key] || ""}
+                    disabled={
+                      buttonLoading || smallerField.disabled ? true : false
+                    }
                   />
                 ) : (
                   ""
@@ -136,31 +152,48 @@ const DynamicForm = (props) => {
             ))}
           </div>
         ) : field.key ? (
-          <Input
-            error={errors[field.key]}
-            key={field.key}
-            id={field.key}
-            type={field.type}
-            label={field.label}
-            value={field.value || values[field.key] || ""}
-            onChange={(e) => onFieldChange(field.key, e.target.value)}
-            disabled={buttonLoading || field.disabled}
-            labelRight={field.labelRight}
-            additionalInputClass={field.extraClass}
-          />
+          <>
+            {/* <Input
+              error={errors[field.key]}
+              key={field.key}
+              id={field.key}
+              type={field.type}
+              label={field.label}
+              value={field.value || values[field.key] || ""}
+              onChange={(e) => onFieldChange(field.key, e.target.value)}
+              disabled={buttonLoading || field.disabled}
+              labelRight={field.labelRight}
+              additionalInputClass={field.extraClass}
+            /> */}
+
+            <div className="mb-4">
+              <Inputs
+                key={field.key}
+                error={errors[field.key]}
+                isInput
+                type={field.type}
+                value={field.value || values[field.key] || ""}
+                onChange={(e) => onFieldChange(field.key, e.target.value)}
+                label={field.label}
+                cornerLabel={field.labelRight}
+                disabled={buttonLoading || field.disabled ? true : false}
+              />
+            </div>
+          </>
         ) : (
           ""
         )
       )}
 
-      <NewButton
+      <Buttons
         variant={props.buttonVariant}
-        onClick={buttonLoading ? () => "" : onButtonClick}
+        size="md"
+        full
         loading={buttonLoading}
-        addClassName={`mt-8 w-full ${props.addButtonClassName}`}
+        onClick={buttonLoading ? () => "" : onButtonClick}
       >
         {props.button}
-      </NewButton>
+      </Buttons>
     </div>
   );
 };

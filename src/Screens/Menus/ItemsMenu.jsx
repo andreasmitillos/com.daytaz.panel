@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MenuTemplate from "../../Templates/MenuTemplate";
 import Modal from "../../Components/Modal/Modal";
 import Buttons from "../../Components/Inputs/Buttons";
@@ -447,12 +447,28 @@ const ItemsMenuItem = (props) => {
 };
 
 const ItemsMenu = (props) => {
+  const [editLock, setEditLock] = useState(false);
+
+  // Toggle Edit Lock
+  const toggleEditLock = () => setEditLock(!editLock);
+
   return (
     <MenuTemplate tab="items" tabName="Items">
+      <div className="col-span-6 mb-4">
+        {!editLock ? (
+          <Buttons size="md" variant="transparent" onClick={toggleEditLock}>
+            Edit Menu
+          </Buttons>
+        ) : (
+          <Buttons size="md" variant="indigo" onClick={toggleEditLock}>
+            Save Changes
+          </Buttons>
+        )}
+      </div>
       <div className="col-span-6">
         <div className="flex items-center">
           <h2 className="text-4xl font-extrabold mr-2">Starters</h2>
-          <CategoryControls first />
+          {!editLock ? "" : <CategoryControls first />}
         </div>
         <p className="text-slate-600 text-sm">
           Embark on a culinary journey with our exquisite starters.
@@ -473,20 +489,28 @@ const ItemsMenu = (props) => {
               name="Spaghetti Bolognese"
               description="Delectable blend of hearty meat sauce and perfectly cooked pasta, a timeless Italian masterpiece."
             />
-            <CreateItemModal category="Starters" />
+            {!editLock ? "" : <CreateItemModal category="Starters" />}
           </div>
 
           <div className="grid grid-cols-6 mt-6 gap-4">
-            <CreateCategorySubcategoryModal subCategory="Starters" />
+            {!editLock ? (
+              ""
+            ) : (
+              <CreateCategorySubcategoryModal subCategory="Starters" />
+            )}
           </div>
         </div>
       </div>
 
-      <div className="col-span-6 mt-12 border-t dark:border-slate-600">
+      <div
+        className={`col-span-6 mt-12 ${
+          !editLock ? "" : "border-t"
+        } dark:border-slate-600`}
+      >
         <div className="col-span-6 mt-4">
           <div className="flex items-center">
             <h2 className="text-4xl font-extrabold mr-2">Main Dishes</h2>
-            <CategoryControls />
+            {!editLock ? "" : <CategoryControls first />}
           </div>
           <div className="grid grid-cols-6 gap-4 mt-3">
             <ItemsMenuItem
@@ -514,19 +538,27 @@ const ItemsMenu = (props) => {
               name="Tomahawk Steak"
               description="Show-stopping tomahawk steak, impressive in size, unparalleled in flavor, a carnivore's delight."
             />
-            <CreateItemModal category="Main Dishes" />
+            {!editLock ? "" : <CreateItemModal category="Main Dishes" />}
           </div>
           <div className="grid grid-cols-6 mt-6 gap-4">
-            <CreateCategorySubcategoryModal subCategory="Main Dishes" />
+            {!editLock ? (
+              ""
+            ) : (
+              <CreateCategorySubcategoryModal subCategory="Main Dishes" />
+            )}
           </div>
         </div>
       </div>
 
-      <div className="col-span-6 mt-12 border-t dark:border-slate-600">
+      <div
+        className={`col-span-6 mt-12 ${
+          !editLock ? "" : "border-t"
+        } dark:border-slate-600`}
+      >
         <div className="col-span-6 mt-4">
           <div className="flex items-center">
             <h2 className="text-4xl font-extrabold mr-2">Desserts</h2>
-            <CategoryControls />
+            {!editLock ? "" : <CategoryControls first />}
           </div>
           <div className="grid grid-cols-6 gap-4 mt-3">
             <ItemsMenuItem
@@ -535,26 +567,34 @@ const ItemsMenu = (props) => {
               name="Spaghetti Carbonara"
               description="Indulge in creamy egg, crispy pancetta, and pecorino coated strands of al dente pasta."
             />
-            <CreateItemModal category="Desserts" />
+            {!editLock ? "" : <CreateItemModal category="Desserts" />}
           </div>
           <div className="grid grid-cols-6 mt-6 gap-4">
-            <CreateCategorySubcategoryModal subCategory="Desserts" />
+            {!editLock ? (
+              ""
+            ) : (
+              <CreateCategorySubcategoryModal subCategory="Desserts" />
+            )}
           </div>
         </div>
       </div>
 
-      <div className="col-span-6 mt-12 border-t dark:border-slate-600">
+      <div
+        className={`col-span-6 mt-12 ${
+          !editLock ? "" : "border-t"
+        } dark:border-slate-600`}
+      >
         <div className="col-span-6 mt-4">
           {/* Drinks */}
           <div className="flex items-center">
             <h2 className="text-4xl font-extrabold mr-2">Drinks</h2>
-            <CategoryControls last />
+            {!editLock ? "" : <CategoryControls first />}
           </div>
 
           {/* Subcategory - Cold Drinks */}
           <div className="flex items-center mt-3">
             <h2 className="text-xl font-extrabold mr-2">Cold Drinks</h2>
-            <CategoryControls first subCategory />
+            {!editLock ? "" : <CategoryControls first />}
           </div>
           <div className="grid grid-cols-6 gap-4 mt-3">
             <ItemsMenuItem
@@ -571,12 +611,12 @@ const ItemsMenu = (props) => {
               name="Pepsi"
               description="Lol"
             />
-            <CreateItemModal subCategory="Cold Drinks" />
+            {!editLock ? "" : <CreateItemModal subCategory="Cold Drinks" />}
           </div>
 
           <div className="flex items-center mt-6">
             <h2 className="text-xl font-extrabold mr-2">Hot Drinks</h2>
-            <CategoryControls last subCategory />
+            {!editLock ? "" : <CategoryControls first />}
           </div>
           <div className="grid grid-cols-6 gap-4 mt-3">
             <ItemsMenuItem
@@ -586,17 +626,25 @@ const ItemsMenu = (props) => {
               name="Cyprus Coffee"
               description="Lol"
             />
-            <CreateItemModal subCategory="Hot Drinks" />
+            {!editLock ? "" : <CreateItemModal subCategory="Hot Drinks" />}
           </div>
           <div className="grid grid-cols-6 mt-6 gap-4">
-            <CreateCategorySubcategoryModal subCategory="Drinks" />
+            {!editLock ? (
+              ""
+            ) : (
+              <CreateCategorySubcategoryModal subCategory="Drinks" />
+            )}
           </div>
         </div>
       </div>
 
-      <div className="col-span-6 mt-12 border-t dark:border-slate-600">
+      <div
+        className={`col-span-6 mt-12 ${
+          !editLock ? "" : "border-t"
+        } dark:border-slate-600`}
+      >
         <div className="grid grid-cols-6 gap-4 my-6">
-          <CreateCategorySubcategoryModal category />
+          {!editLock ? "" : <CreateCategorySubcategoryModal category />}
         </div>
       </div>
     </MenuTemplate>
