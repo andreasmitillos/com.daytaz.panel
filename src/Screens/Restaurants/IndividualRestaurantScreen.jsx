@@ -79,7 +79,7 @@ const IndividualRestaurantScreen = (props) => {
                   </svg>
                 </div>
                 <p className="dark:text-slate-400 text-slate-500 text-lg">
-                  Ordering Opening
+                  Ordering Opened
                 </p>
               </div>
 
@@ -113,7 +113,7 @@ const IndividualRestaurantScreen = (props) => {
               </div>
             </div>
           </div>
-          <div className="xl:col-span-2 lg:col-span-3 md:col-span-6 col-span-6">
+          {/* <div className="xl:col-span-2 lg:col-span-3 md:col-span-6 col-span-6">
             <GeneralCard
               title="Restaurant Details"
               subTitle="Find information about the restaurant listed below."
@@ -148,76 +148,82 @@ const IndividualRestaurantScreen = (props) => {
                 </li>
               </ul>
             </GeneralCard>
-          </div>
+          </div> */}
 
-          <div className="xl:col-span-4 lg:col-span-3 md:col-span-6 col-span-6">
-            <GeneralCard
-              title="Linked Users"
-              subTitle="These are the users that are linked to the current restaurant"
-            >
-              <AddUserModal restaurant={currentRestaurant || {}} />
-              <ul className="divide-y divide-gray-200 dark:divide-gray-700 ">
-                {currentRestaurant.users?.map((user) => (
-                  <li className="pt-4 pb-4">
-                    <div className="flex items-center space-x-4">
-                      {/* <div className="flex-shrink-0 relative"></div> */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center">
-                          <Link to={`/users/${user?.id}`}>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={1.5}
-                              stroke="currentColor"
-                              className="w-6 h-6 mr-1 p-1 dark:bg-slate-600 bg-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 transition ease-in-out rounded-md"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                              />
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                              />
-                            </svg>
-                          </Link>
-                          <p className="text-base font-semibold text-gray-900 truncate dark:text-white">
-                            {user?.firstName} {user?.lastName}
-                          </p>
-                        </div>
-                        {/* <p className="text-sm font-normal text-gray-500 truncate dark:text-gray-400">
+          <div className="col-span-6">
+            <h2 className="font-extrabold text-2xl mb-4 mt-8">
+              Registered Users
+            </h2>
+
+            <div className="grid grid-cols-8">
+              <div className="col-span-8 md:col-span-4">
+                <GeneralCard
+                // title="Linked Users"
+                // subTitle="These are the users that are linked to the current restaurant"
+                >
+                  <AddUserModal restaurant={currentRestaurant || {}} />
+                  <ul className="divide-y divide-gray-200 dark:divide-gray-700 ">
+                    {currentRestaurant.users?.map((user) => (
+                      <li className="pt-4 pb-4">
+                        <div className="flex items-center space-x-4">
+                          {/* <div className="flex-shrink-0 relative"></div> */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center">
+                              <Link to={`/users/${user?.id}`}>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth={1.5}
+                                  stroke="currentColor"
+                                  className="w-6 h-6 mr-1 p-1 dark:bg-slate-600 bg-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 transition ease-in-out rounded-md"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                                  />
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                  />
+                                </svg>
+                              </Link>
+                              <p className="text-base font-semibold text-gray-900 truncate dark:text-white">
+                                {user?.firstName} {user?.lastName}
+                              </p>
+                            </div>
+                            {/* <p className="text-sm font-normal text-gray-500 truncate dark:text-gray-400">
                               {device.agent} - {device.ip}
                             </p> */}
-                        <p className="text-sm font-normal text-gray-500 truncate dark:text-gray-400">
-                          {`${
-                            user.restaurant_users?.authLevel == "headAdmin"
-                              ? "Head Administrator"
-                              : ""
-                          }${
-                            user.restaurant_users?.authLevel == "admin"
-                              ? "Administrator"
-                              : ""
-                          }${
-                            user.restaurant_users?.authLevel == "manager"
-                              ? "Manager"
-                              : ""
-                          }`}
-                        </p>
-                      </div>
-                      <div className="inline-flex items-center">
-                        {user.restaurant_users?.authLevel != "headAdmin" ? (
-                          <RemoveUserModal
-                            user={user}
-                            restaurant={currentRestaurant}
-                          />
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                      {/* {currentDeviceId == device.id ? (
+                            <p className="text-sm font-normal text-gray-500 truncate dark:text-gray-400">
+                              {`${
+                                user.restaurant_users?.authLevel == "headAdmin"
+                                  ? "Head Administrator"
+                                  : ""
+                              }${
+                                user.restaurant_users?.authLevel == "admin"
+                                  ? "Administrator"
+                                  : ""
+                              }${
+                                user.restaurant_users?.authLevel == "manager"
+                                  ? "Manager"
+                                  : ""
+                              }`}
+                            </p>
+                          </div>
+                          <div className="inline-flex items-center">
+                            {user.restaurant_users?.authLevel != "headAdmin" ? (
+                              <RemoveUserModal
+                                user={user}
+                                restaurant={currentRestaurant}
+                              />
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                          {/* {currentDeviceId == device.id ? (
                           ""
                         ) : (
                           <div className="inline-flex items-center">
@@ -230,12 +236,16 @@ const IndividualRestaurantScreen = (props) => {
                             </RevokeDeviceModal>
                           </div>
                         )} */}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </GeneralCard>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </GeneralCard>
+              </div>
+            </div>
           </div>
+
+          <div className="xl:col-span-4 lg:col-span-3 md:col-span-6 col-span-6"></div>
         </>
       ) : (
         ""

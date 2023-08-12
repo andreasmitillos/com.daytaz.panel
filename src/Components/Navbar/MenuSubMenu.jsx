@@ -115,7 +115,7 @@ const MenuSubMenu = (props) => {
             />
           </Link>
 
-          <Link
+          {/* <Link
             to={generatePath(routes.categoriesMenu, {
               restaurantId,
               menuId,
@@ -141,7 +141,7 @@ const MenuSubMenu = (props) => {
                 </svg>
               }
             />
-          </Link>
+          </Link> */}
 
           <Link
             to={generatePath(routes.optionListsMenu, {

@@ -12,9 +12,13 @@ const GeneralCard = (props) => {
             alt="Jese picture"
           /> */}
         <div>
-          <h3 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">
-            {props.title || "Card"}
-          </h3>
+          {props.title ? (
+            <h3 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">
+              {props.title || ""}
+            </h3>
+          ) : (
+            ""
+          )}
           {props.subTitle ? (
             <div className="pb-4 text-sm text-gray-500 dark:text-gray-400 dark:border-gray-700 border-b">
               {props.subTitle}
