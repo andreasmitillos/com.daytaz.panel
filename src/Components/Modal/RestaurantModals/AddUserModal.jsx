@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import GeneralModal from "../GeneralModal";
 import DynamicForm from "../../Forms/DynamicForm";
-import { auth, restaurants } from "../../../State";
+import { restaurants } from "../../../State";
 import Modal from "../Modal";
 
 const AddUserModal = (props) => {

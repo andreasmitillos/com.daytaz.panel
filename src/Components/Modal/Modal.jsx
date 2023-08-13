@@ -1,6 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
-import Inputs from "../Inputs/Inputs";
 import Buttons from "../Inputs/Buttons";
 
 const Modal = (props) => {
@@ -111,65 +110,6 @@ const Modal = (props) => {
                   <div className={title || subTitle ? "mt-4" : ""}>
                     {children}
                   </div>
-
-                  {/* children */}
-                  {/* <div className="grid grid-cols-6 gap-3 mt-4">
-                    <div className="col-span-3">
-                      <Inputs
-                        isInput
-                        label="First Name"
-                        // cornerLabel="Required"
-                        placeholder="Andreas"
-                      />
-                    </div>
-                    <div className="col-span-3">
-                      <Inputs
-                        isInput
-                        label="Last Name"
-                        // cornerLabel="Required"
-                        placeholder="Andreas"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="my-4 mb-8">
-                    <Inputs
-                      isInput
-                      label="Email Address"
-                      cornerLabel="Required"
-                      placeholder="pirkettis@daytaz.com"
-                    />
-                  </div>
-
-                  <div className="mt-4">
-                    <div className="grid grid-cols-6 gap-3">
-                      <div className="col-span-3">
-                        <Buttons
-                          onClick={closeModal}
-                          variant="transparent"
-                          size="md"
-                          full
-                        >
-                          Cancel
-                        </Buttons>
-                      </div>
-                      <div className="col-span-3">
-                        <Buttons variant="indigo" size="md" full>
-                          Create
-                        </Buttons>
-                      </div>
-                    </div>
-                  </div> */}
-
-                  {/* <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Got it, thanks!
-                    </button>
-                  </div> */}
                 </Dialog.Panel>
               </Transition.Child>
             </div>

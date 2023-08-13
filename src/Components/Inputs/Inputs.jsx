@@ -54,6 +54,8 @@ const Input = (props) => {
             placeholder={placeholder || ""}
             disabled={disabled}
             type={type}
+            value={value}
+            onChange={onChange}
           />
         ) : (
           ""

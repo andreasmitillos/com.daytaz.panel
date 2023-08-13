@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Inputs from "../Inputs/Inputs";
 import Buttons from "../Inputs/Buttons";
 import Alerts from "../Alerts/Alerts";
@@ -90,25 +90,9 @@ const DynamicForm = (props) => {
                 } `}
               >
                 {smallerField.key ? (
-                  // <Input
-                  //   noMarginBottom
-                  //   error={errors[smallerField.key]}
-                  //   key={smallerField.key}
-                  //   id={smallerField.key}
-                  //   type={smallerField.type}
-                  //   label={smallerField.label}
-                  //   value={smallerField.value || values[smallerField.key] || ""}
-                  //   onChange={(e) =>
-                  //     onFieldChange(smallerField.key, e.target.value)
-                  //   }
-                  //   disabled={buttonLoading || smallerField.disabled}
-                  //   labelRight={smallerField.labelRight}
-                  //   additionalInputClass={smallerField.extraClass}
-                  // />
                   <Inputs
                     key={smallerField.key}
                     error={errors[smallerField.key]}
-                    isInput
                     onChange={(e) =>
                       onFieldChange(smallerField.key, e.target.value)
                     }
@@ -118,6 +102,9 @@ const DynamicForm = (props) => {
                     disabled={
                       buttonLoading || smallerField.disabled ? true : false
                     }
+                    placeholder={smallerField.placeholder}
+                    isInput={smallerField.type != "textarea"}
+                    isTextArea={smallerField.type == "textarea"}
                   />
                 ) : (
                   ""
@@ -127,30 +114,19 @@ const DynamicForm = (props) => {
           </div>
         ) : field.key ? (
           <>
-            {/* <Input
-              error={errors[field.key]}
-              key={field.key}
-              id={field.key}
-              type={field.type}
-              label={field.label}
-              value={field.value || values[field.key] || ""}
-              onChange={(e) => onFieldChange(field.key, e.target.value)}
-              disabled={buttonLoading || field.disabled}
-              labelRight={field.labelRight}
-              additionalInputClass={field.extraClass}
-            /> */}
-
             <div className="mb-4">
               <Inputs
                 key={field.key}
                 error={errors[field.key]}
-                isInput
                 type={field.type}
                 value={field.value || values[field.key] || ""}
                 onChange={(e) => onFieldChange(field.key, e.target.value)}
                 label={field.label}
                 cornerLabel={field.labelRight}
                 disabled={buttonLoading || field.disabled ? true : false}
+                placeholder={field.placeholder}
+                isInput={field.type != "textarea"}
+                isTextArea={field.type == "textarea"}
               />
             </div>
           </>
