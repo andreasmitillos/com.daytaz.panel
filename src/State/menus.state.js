@@ -21,7 +21,7 @@ const actions = {
   // create menu
   createMenu: (values) => {
     return new Promise((resolve, reject) => {
-      fetchApi("post", "/restaurants/menu", values)
+      fetchApi("post", "/restaurants/menus", values)
         .then((response) => {
           let { restaurantId } = values;
           if (
