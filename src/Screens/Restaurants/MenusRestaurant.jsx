@@ -200,7 +200,7 @@ const MenusRestaurant = (props) => {
                 />
               ))}
 
-              {publicMenus.length == 0 ? (
+              {publicMenus.length === 0 ? (
                 <div className="xl:col-span-2 sm:col-span-4 col-span-8 border border-dashed rounded dark:border-slate-500 border-slate-200 p-4  transition ease-in-out">
                   <div className="flex items-center h-full">
                     <div className="grow flex flex-col items-center">

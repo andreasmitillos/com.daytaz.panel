@@ -103,8 +103,9 @@ const DynamicForm = (props) => {
                       buttonLoading || smallerField.disabled ? true : false
                     }
                     placeholder={smallerField.placeholder}
-                    isInput={smallerField.type != "textarea"}
-                    isTextArea={smallerField.type == "textarea"}
+                    isInput={smallerField.type !== "textarea"}
+                    isTextArea={smallerField.type === "textarea"}
+                    icon={smallerField.icon || false}
                   />
                 ) : (
                   ""
@@ -123,16 +124,17 @@ const DynamicForm = (props) => {
                 onChange={(e) => onFieldChange(field.key, e.target.value)}
                 label={field.label}
                 cornerLabel={field.labelRight}
-                disabled={buttonLoading || field.disabled ? true : false}
+                disabled={buttonLoading || field.disabled}
                 placeholder={field.placeholder}
-                isInput={field.type != "textarea"}
-                isTextArea={field.type == "textarea"}
+                isInput={field.type !== "textarea"}
+                isTextArea={field.type === "textarea"}
+                icon={field.icon || false}
               />
             </div>
           </>
         ) : (
           ""
-        )
+        ),
       )}
 
       <Buttons

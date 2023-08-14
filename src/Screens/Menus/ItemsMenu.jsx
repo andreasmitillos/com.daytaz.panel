@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MenuTemplate from "../../Templates/MenuTemplate";
 import Modal from "../../Components/Modal/Modal";
 import Buttons from "../../Components/Inputs/Buttons";
 import Input from "../../Components/Inputs/Inputs";
+import { useParams } from "react-router-dom";
+import { menus } from "../../State";
+import LoadingBox from "../../Components/LoadingBox";
+import { subscribe } from "valtio";
+import Alerts from "../../Components/Alerts/Alerts";
+import DynamicForm from "../../Components/Forms/DynamicForm";
+import { current } from "@reduxjs/toolkit";
 
 // Edit Modal
 const EditModal = (props) => {
@@ -131,11 +138,37 @@ const RemoveModal = (props) => {
 
 // Create Category or Subcategory
 const CreateCategorySubcategoryModal = (props) => {
-  let { category, subCategory } = props;
+  let { category, menu } = props;
+
+  let menuId = menu?.id;
+  let categoryId = category?.id;
+
+  const [loading, setLoading] = useState(false);
+  const [forceClose, setForceClose] = useState(0);
+
+  const toggleModal = () => setForceClose(forceClose + 1);
+
+  const callBack = (response, values) => {
+    if (
+      response.status.code === "category_created" ||
+      response.status.code === "subCategory_created"
+    ) {
+      toggleModal();
+      // menus.actions
+      //   .getRestaurant({ restaurantId: props.restaurant.id })
+      //   .then((res) => {
+      //     toggleModal();
+      //   })
+      //   .catch((error) => {
+      //     toggleModal();
+      //   });
+    }
+  };
 
   return (
     <Modal
-      size="md"
+      forceClose={forceClose}
+      size="lg"
       triggerComponentClasses="col-span-6 sm:col-span-3 lg:col-span-2"
       triggerComponent={
         <div className="col-span-6 sm:col-span-3 lg:col-span-2 border px-3 py-3 rounded h-full border-dashed dark:border-slate-600 p-4 cursor-pointer dark:hover:bg-slate-800 hover:bg-slate-100 transition ease-in-out">
@@ -162,12 +195,12 @@ const CreateCategorySubcategoryModal = (props) => {
 
             <div
               className={`flex flex-col text-left ml-4 ${
-                subCategory ? "text-indigo-600 dark:text-indigo-400" : ""
+                category ? "text-indigo-600 dark:text-indigo-400" : ""
               }`}
             >
               <span className="font-bold text-sm max-w-full">
-                Create new {subCategory ? "Subcategory for " : "Category"}
-                {subCategory || category}
+                Create new{" "}
+                {category ? `Subcategory for ${category.name}` : "Category"}
               </span>
               <span className="text-xs font-light text-slate-600 dark:text-slate-400">
                 E.g., {category ? "Drinks" : "Cold Drinks"}
@@ -192,40 +225,60 @@ const CreateCategorySubcategoryModal = (props) => {
         </svg>
 
         <p className="text-lg font-semibold dark:text-white">
-          Create {subCategory ? `Subcategory for ${subCategory}` : "Category"}
+          Create {category ? `Subcategory for ${category.name}` : " Category"}
         </p>
         <p className="text-sm text-slate-500 dark:text-slate-400 text-center mt-2">
           You are about to create a new
-          {subCategory ? ` Subcategory for ${subCategory} ` : " Category "} for
+          {category ? ` Subcategory for ${category.name}` : ` Category `} of
           your menu.
         </p>
 
-        <div className="w-full mt-6">
-          <Input
-            isInput
-            label={`${subCategory ? "Subcategory" : "Category"} Name`}
-            subLabel="This will be public"
-            placeholder={subCategory ? "E.g., Cold Drinks" : "E.g., Drinks"}
-          />
-        </div>
-
-        <div className="w-full mt-6">
-          <Input
-            isTextArea
-            label={`${subCategory ? "Subcategory" : "Category"} Description`}
-            subLabel="This will be public"
-            placeholder={
-              subCategory
-                ? "E.g., These are the cold drinks"
-                : "E.g., This is the Drink Menu"
-            }
-          />
-        </div>
-
-        <div className="w-full mt-6">
-          <Buttons size="sm" variant="blue" full>
-            Create {subCategory ? "Subcategory" : "Category"}
-          </Buttons>
+        <div className={"w-full mt-6"}>
+          {menuId ? (
+            <DynamicForm
+              button={`Create Category`}
+              buttonVariant="blue"
+              buttonCallBack={callBack}
+              buttonOnClick={menus.actions.createCategory}
+              fields={[
+                {
+                  key: "name",
+                  type: "text",
+                  label: `Category Name`,
+                  placeholder: "E.g., Starters",
+                },
+                {
+                  key: "description",
+                  type: "textarea",
+                  label: "Category Description",
+                  placeholder: "E.g., Enabled at 13:00",
+                },
+              ]}
+              hiddenValues={{ menuId: menuId.toString() }}
+            />
+          ) : (
+            <DynamicForm
+              button={`Create Subcategory`}
+              buttonVariant="blue"
+              buttonCallBack={callBack}
+              buttonOnClick={menus.actions.createSubCategory}
+              fields={[
+                {
+                  key: "name",
+                  type: "text",
+                  label: `Subcategory Name`,
+                  placeholder: "E.g., Cold Drinks",
+                },
+                {
+                  key: "description",
+                  type: "textarea",
+                  label: "Subcategory Description",
+                  placeholder: "E.g., These are the Cold Drinks",
+                },
+              ]}
+              hiddenValues={{ categoryId: categoryId.toString() }}
+            />
+          )}
         </div>
       </div>
     </Modal>
@@ -235,12 +288,26 @@ const CreateCategorySubcategoryModal = (props) => {
 // Create new Item Modal
 const CreateItemModal = (props) => {
   let { category, subCategory } = props;
+  const [loading, setLoading] = useState(false);
+  const [forceClose, setForceClose] = useState(0);
+
+  // Toggle Close Modal
+  const toggleModal = () => setForceClose(forceClose + 1);
+
+  // Callback for Dynamic Form
+  const callBack = (response, values) => {
+    // toggleModal();
+    if (response.status.code === "create_item_success") {
+      toggleModal();
+    }
+  };
 
   return (
     <Modal
       size="xl"
       triggerComponentClasses="col-span-6 sm:col-span-3 lg:col-span-2"
       triggerComponent={<AddMenuItem />}
+      forceClose={forceClose}
     >
       <div className="flex flex-col items-center">
         <svg
@@ -257,59 +324,64 @@ const CreateItemModal = (props) => {
         </svg>
 
         <p className="text-lg font-semibold dark:text-white">
-          Create new item for {subCategory || category}
+          Create new item for {category?.name || subCategory?.name}
         </p>
         <p className="text-sm text-slate-500 dark:text-slate-400 text-center mt-2">
-          Add a new item to {subCategory || category} by completing the fields
-          below.
+          Add a new item to {subCategory?.name || category?.name} by completing
+          the fields below.
         </p>
 
         <div className="w-full mt-6">
           <div className="grid grid-cols-6 gap-4">
-            <div className="col-span-4">
-              <Input
-                isInput
-                label={`Item Name`}
-                placeholder={"E.g., Item Name"}
-              />
-            </div>
-            <div className="col-span-2">
-              <Input
-                isInput
-                type="number"
-                label="Price (EUR)"
-                placeholder="1.50"
-                icon={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="w-4 h-4"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.902 7.098a3.75 3.75 0 013.903-.884.75.75 0 10.498-1.415A5.25 5.25 0 008.005 9.75H7.5a.75.75 0 000 1.5h.054a5.281 5.281 0 000 1.5H7.5a.75.75 0 000 1.5h.505a5.25 5.25 0 006.494 2.701.75.75 0 00-.498-1.415 3.75 3.75 0 01-4.252-1.286h3.001a.75.75 0 000-1.5H9.075a3.77 3.77 0 010-1.5h3.675a.75.75 0 000-1.5h-3c.105-.14.221-.274.348-.402z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                }
+            <div className="col-span-6">
+              <DynamicForm
+                button={"Create Item"}
+                buttonVariant={"indigo"}
+                buttonCallBack={callBack}
+                buttonOnClick={menus.actions.createItem}
+                fields={[
+                  [
+                    {
+                      key: "name",
+                      type: "string",
+                      label: "Item Name",
+                      placeholder: "E.g., Pasta",
+                    },
+                    {
+                      key: "price",
+                      type: "number",
+                      label: "Price (EUR)",
+                      placeholder: "E.g., 13.50",
+                      icon: (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="w-4 h-4"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.902 7.098a3.75 3.75 0 013.903-.884.75.75 0 10.498-1.415A5.25 5.25 0 008.005 9.75H7.5a.75.75 0 000 1.5h.054a5.281 5.281 0 000 1.5H7.5a.75.75 0 000 1.5h.505a5.25 5.25 0 006.494 2.701.75.75 0 00-.498-1.415 3.75 3.75 0 01-4.252-1.286h3.001a.75.75 0 000-1.5H9.075a3.77 3.77 0 010-1.5h3.675a.75.75 0 000-1.5h-3c.105-.14.221-.274.348-.402z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      ),
+                    },
+                  ],
+                  {
+                    key: "description",
+                    type: "textarea",
+                    label: "Item Description",
+                    placeholder: "E.g., Nice Pasta",
+                  },
+                ]}
+                hiddenValues={{
+                  categoryId: category?.id.toString(),
+                  subCategoryId: subCategory?.id.toString(),
+                }}
               />
             </div>
           </div>
-        </div>
-
-        <div className="w-full mt-6">
-          <Input
-            isTextArea
-            label={`Item Description`}
-            placeholder="E.g., this is the new menu item"
-          />
-        </div>
-
-        <div className="w-full mt-6">
-          <Buttons size="sm" variant="indigo" full>
-            Create Item
-          </Buttons>
         </div>
       </div>
     </Modal>
@@ -447,206 +519,414 @@ const ItemsMenuItem = (props) => {
 };
 
 const ItemsMenu = (props) => {
+  let { menuId } = useParams();
+  const [state, setState] = useState({ value: 10 });
   const [editLock, setEditLock] = useState(false);
+  const [currentMenu, setCurrentMenu] = useState(menus.data.menu[menuId] || {});
+  const [loading, setLoading] = useState(
+    !(menus.data.menu[menuId] && menus.data.menu[menuId].id),
+  );
+  const [update, setUpdate] = useState(0);
+
+  // Subscribe to menu changes
+  subscribe(menus.data, () => {
+    setCurrentMenu(menus.data.menu[menuId]);
+    setUpdate(update + 1);
+  });
+
+  // Get Menu
+  useEffect(() => {
+    // if menu has been retrieved, remove loading bar
+    if (currentMenu.id) setLoading(false);
+
+    // get menu
+    menus.actions
+      .getItems({ menuId })
+      .then((res) => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
+  }, []);
 
   // Toggle Edit Lock
   const toggleEditLock = () => setEditLock(!editLock);
 
   return (
     <MenuTemplate tab="items" tabName="Items">
-      <div className="col-span-6 mb-4">
-        {!editLock ? (
-          <Buttons size="md" variant="transparent" onClick={toggleEditLock}>
-            Edit Menu
-          </Buttons>
-        ) : (
-          <Buttons size="md" variant="indigo" onClick={toggleEditLock}>
-            Finish
-          </Buttons>
-        )}
-      </div>
-      <div className="col-span-6">
-        <div className="flex items-center">
-          <h2 className="text-4xl font-extrabold mr-2">Starters</h2>
-          {!editLock ? "" : <CategoryControls first />}
-        </div>
-        <p className="text-slate-600 text-sm">
-          Embark on a culinary journey with our exquisite starters.
-        </p>
-
-        <div className="col-span-6 mt-4">
-          <div className="grid grid-cols-6 gap-4 mt-3">
-            <ItemsMenuItem
-              currency="EUR"
-              price="12.50"
-              name="Spaghetti Carbonara"
-              description="Indulge in creamy egg, crispy pancetta, and pecorino coated strands of al dente pasta."
-            />
-            <ItemsMenuItem
-              available={true}
-              currency="EUR"
-              price="13.50"
-              name="Spaghetti Bolognese"
-              description="Delectable blend of hearty meat sauce and perfectly cooked pasta, a timeless Italian masterpiece."
-            />
-            {!editLock ? "" : <CreateItemModal category="Starters" />}
-          </div>
-
-          <div className="grid grid-cols-6 mt-6 gap-4">
+      {loading || !currentMenu.id ? (
+        <LoadingBox />
+      ) : (
+        <>
+          <div className="col-span-6 mb-4">
             {!editLock ? (
-              ""
+              <Buttons size="md" variant="transparent" onClick={toggleEditLock}>
+                Edit Menu
+              </Buttons>
             ) : (
-              <CreateCategorySubcategoryModal subCategory="Starters" />
+              <Buttons size="md" variant="indigo" onClick={toggleEditLock}>
+                Finish
+              </Buttons>
             )}
           </div>
-        </div>
-      </div>
 
-      <div
-        className={`col-span-6 mt-12 ${
-          !editLock ? "" : "border-t"
-        } dark:border-slate-600`}
-      >
-        <div className="col-span-6 mt-4">
-          <div className="flex items-center">
-            <h2 className="text-4xl font-extrabold mr-2">Main Dishes</h2>
-            {!editLock ? "" : <CategoryControls first />}
-          </div>
-          <div className="grid grid-cols-6 gap-4 mt-3">
-            <ItemsMenuItem
-              currency="EUR"
-              price="12.50"
-              name="Spaghetti Carbonara"
-              description="Indulge in creamy egg, crispy pancetta, and pecorino coated strands of al dente pasta."
-            />
-            <ItemsMenuItem
-              available={true}
-              currency="EUR"
-              price="13.50"
-              name="Spaghetti Bolognese"
-              description="Delectable blend of hearty meat sauce and perfectly cooked pasta, a timeless Italian masterpiece."
-            />
-            <ItemsMenuItem
-              currency="EUR"
-              price="18.50"
-              name="Sirloin Steak"
-              description="Juicy sirloin steak, seared to perfection, a carnivore's dream on a plate."
-            />
-            <ItemsMenuItem
-              currency="EUR"
-              price="21.50"
-              name="Tomahawk Steak"
-              description="Show-stopping tomahawk steak, impressive in size, unparalleled in flavor, a carnivore's delight."
-            />
-            {!editLock ? "" : <CreateItemModal category="Main Dishes" />}
-          </div>
-          <div className="grid grid-cols-6 mt-6 gap-4">
-            {!editLock ? (
-              ""
-            ) : (
-              <CreateCategorySubcategoryModal subCategory="Main Dishes" />
-            )}
-          </div>
-        </div>
-      </div>
+          {!editLock && currentMenu?.categories?.length === 0 ? (
+            <div className={"max-w-lg"}>
+              <Alerts type={"info"} title={"Menu is Empty"}>
+                This menu is empty. In order to start seeing this, click "Edit
+                Menu" and start adding categories, to give you the ability to
+                start creating items.
+              </Alerts>
+            </div>
+          ) : (
+            ""
+          )}
 
-      <div
-        className={`col-span-6 mt-12 ${
-          !editLock ? "" : "border-t"
-        } dark:border-slate-600`}
-      >
-        <div className="col-span-6 mt-4">
-          <div className="flex items-center">
-            <h2 className="text-4xl font-extrabold mr-2">Desserts</h2>
-            {!editLock ? "" : <CategoryControls first />}
-          </div>
-          <div className="grid grid-cols-6 gap-4 mt-3">
-            <ItemsMenuItem
-              currency="EUR"
-              price="12.50"
-              name="Spaghetti Carbonara"
-              description="Indulge in creamy egg, crispy pancetta, and pecorino coated strands of al dente pasta."
-            />
-            {!editLock ? "" : <CreateItemModal category="Desserts" />}
-          </div>
-          <div className="grid grid-cols-6 mt-6 gap-4">
-            {!editLock ? (
-              ""
-            ) : (
-              <CreateCategorySubcategoryModal subCategory="Desserts" />
-            )}
-          </div>
-        </div>
-      </div>
+          {currentMenu?.categories?.map((category, index) => (
+            <div
+              className={`col-span-6 pb-12 ${
+                !editLock ? "" : "border-b"
+              } dark:border-slate-600 ${editLock && index > 0 ? "mt-8" : ""}`}
+            >
+              {/* Name of Category and Category Controls */}
+              <div className="flex items-center">
+                <h2 className="text-4xl font-extrabold mr-2">
+                  {category.name}
+                </h2>
+                {!editLock ? (
+                  ""
+                ) : (
+                  //   Category controls - remove, change position and edit
+                  <CategoryControls
+                    first={index === 0}
+                    last={index === currentMenu.categories.length - 1}
+                  />
+                )}
+              </div>
 
-      <div
-        className={`col-span-6 mt-12 ${
-          !editLock ? "" : "border-t"
-        } dark:border-slate-600`}
-      >
-        <div className="col-span-6 mt-4">
-          {/* Drinks */}
-          <div className="flex items-center">
-            <h2 className="text-4xl font-extrabold mr-2">Drinks</h2>
-            {!editLock ? "" : <CategoryControls first />}
-          </div>
+              {/* Description of Category */}
+              <p className="text-slate-600 dark:text-slate-400 text-sm">
+                {category.description}
+              </p>
 
-          {/* Subcategory - Cold Drinks */}
-          <div className="flex items-center mt-3">
-            <h2 className="text-xl font-extrabold mr-2">Cold Drinks</h2>
-            {!editLock ? "" : <CategoryControls first />}
-          </div>
-          <div className="grid grid-cols-6 gap-4 mt-3">
-            <ItemsMenuItem
-              available
-              currency="EUR"
-              price="2.50"
-              name="Coca Cola"
-              description="Not Pepsi"
-            />
-            <ItemsMenuItem
-              available
-              currency="EUR"
-              price="2.50"
-              name="Pepsi"
-              description="Lol"
-            />
-            {!editLock ? "" : <CreateItemModal subCategory="Cold Drinks" />}
-          </div>
+              <div className="col-span-6 mt-4">
+                <div className="grid grid-cols-6 gap-4 mt-3">
+                  {!editLock && category.items.length === 0 ? (
+                    <div className="col-span-6 sm:col-span-3 lg:col-span-2 border px-3 py-3 rounded h-full dark:border-slate-600">
+                      <div className="flex flex-col items-center text-sm py-4 text-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.0}
+                          stroke="currentColor"
+                          className="w-10 h-10 text-slate-500 mb-4"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                          />
+                        </svg>
 
-          <div className="flex items-center mt-6">
-            <h2 className="text-xl font-extrabold mr-2">Hot Drinks</h2>
-            {!editLock ? "" : <CategoryControls first />}
-          </div>
-          <div className="grid grid-cols-6 gap-4 mt-3">
-            <ItemsMenuItem
-              available={false}
-              currency="EUR"
-              price="3.50"
-              name="Cyprus Coffee"
-              description="Lol"
-            />
-            {!editLock ? "" : <CreateItemModal subCategory="Hot Drinks" />}
-          </div>
-          <div className="grid grid-cols-6 mt-6 gap-4">
-            {!editLock ? (
-              ""
-            ) : (
-              <CreateCategorySubcategoryModal subCategory="Drinks" />
-            )}
-          </div>
-        </div>
-      </div>
+                        <p className="font-semibold">No Items</p>
+                        <p className="font-normal text-slate-600 dark:text-slate-400 mt-1">
+                          We found no items under the category named{" "}
+                          {category.name}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {category.items.map((categoryItem) => (
+                    <ItemsMenuItem
+                      currency="EUR"
+                      price={categoryItem.price}
+                      name={categoryItem.name}
+                      description={categoryItem.description}
+                      available={categoryItem.available}
+                    />
+                  ))}
+                  {!editLock ? "" : <CreateItemModal category={category} />}
+                </div>
 
-      <div
-        className={`col-span-6 mt-12 ${
-          !editLock ? "" : "border-t"
-        } dark:border-slate-600`}
-      >
-        <div className="grid grid-cols-6 gap-4 my-6">
-          {!editLock ? "" : <CreateCategorySubcategoryModal category />}
-        </div>
-      </div>
+                {category.subCategories.map((subCat, index) => (
+                  <>
+                    <div className="flex items-center mt-6">
+                      <h2 className="text-xl font-extrabold mr-2">
+                        {subCat.name}
+                      </h2>
+                      {!editLock ? (
+                        ""
+                      ) : (
+                        <CategoryControls
+                          first={index === 0}
+                          last={index === category.subCategories.length - 1}
+                        />
+                      )}
+                    </div>
+
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">
+                      {subCat.description}
+                    </p>
+
+                    <div className="grid grid-cols-6 gap-4 mt-3">
+                      {!editLock && subCat.items.length === 0 ? (
+                        <div className="col-span-6 sm:col-span-3 lg:col-span-2 border px-3 py-3 rounded h-full dark:border-slate-600">
+                          <div className="flex flex-col items-center text-sm py-4 text-center">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.0}
+                              stroke="currentColor"
+                              className="w-10 h-10 text-slate-500 mb-4 dark:text-slate-400"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                              />
+                            </svg>
+
+                            <p className="font-semibold">No Items</p>
+                            <p className="font-normal text-slate-600 dark:text-slate-400 mt-1">
+                              We found no items under the subcategory named{" "}
+                              {subCat.name}
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+
+                      {subCat.items.map((item) => (
+                        <ItemsMenuItem
+                          available={item.available}
+                          currency="EUR"
+                          price={item.price}
+                          name={item.name}
+                          description={item.description}
+                        />
+                      ))}
+                      {!editLock ? (
+                        ""
+                      ) : (
+                        <CreateItemModal subCategory={subCat} />
+                      )}
+                    </div>
+                  </>
+                ))}
+
+                <div className="grid grid-cols-6 mt-6 gap-4">
+                  {!editLock || !category.id ? (
+                    ""
+                  ) : (
+                    <CreateCategorySubcategoryModal category={category} />
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <div className={`col-span-6`}>
+            <div className="grid grid-cols-6 gap-4 my-6">
+              {!editLock || !currentMenu.id ? (
+                ""
+              ) : (
+                <CreateCategorySubcategoryModal menu={currentMenu} />
+              )}
+            </div>
+          </div>
+        </>
+      )}
+
+      {/*<div className={"h-96"}></div>*/}
+
+      {/*<div className="col-span-6">*/}
+      {/*  <div className="flex items-center">*/}
+      {/*    <h2 className="text-4xl font-extrabold mr-2">Starters</h2>*/}
+      {/*    {!editLock ? "" : <CategoryControls first />}*/}
+      {/*  </div>*/}
+      {/*  <p className="text-slate-600 text-sm">*/}
+      {/*    Embark on a culinary journey with our exquisite starters.*/}
+      {/*  </p>*/}
+
+      {/*  <div className="col-span-6 mt-4">*/}
+      {/*    <div className="grid grid-cols-6 gap-4 mt-3">*/}
+      {/*      <ItemsMenuItem*/}
+      {/*        currency="EUR"*/}
+      {/*        price="12.50"*/}
+      {/*        name="Spaghetti Carbonara"*/}
+      {/*        description="Indulge in creamy egg, crispy pancetta, and pecorino coated strands of al dente pasta."*/}
+      {/*      />*/}
+      {/*      <ItemsMenuItem*/}
+      {/*        available={true}*/}
+      {/*        currency="EUR"*/}
+      {/*        price="13.50"*/}
+      {/*        name="Spaghetti Bolognese"*/}
+      {/*        description="Delectable blend of hearty meat sauce and perfectly cooked pasta, a timeless Italian masterpiece."*/}
+      {/*      />*/}
+      {/*      {!editLock ? "" : <CreateItemModal category="Starters" />}*/}
+      {/*    </div>*/}
+
+      {/*    <div className="grid grid-cols-6 mt-6 gap-4">*/}
+      {/*      {!editLock ? (*/}
+      {/*        ""*/}
+      {/*      ) : (*/}
+      {/*        <CreateCategorySubcategoryModal subCategory="Starters" />*/}
+      {/*      )}*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
+
+      {/*<div*/}
+      {/*  className={`col-span-6 mt-12 ${*/}
+      {/*    !editLock ? "" : "border-t"*/}
+      {/*  } dark:border-slate-600`}*/}
+      {/*>*/}
+      {/*  <div className="col-span-6 mt-4">*/}
+      {/*    <div className="flex items-center">*/}
+      {/*      <h2 className="text-4xl font-extrabold mr-2">Main Dishes</h2>*/}
+      {/*      {!editLock ? "" : <CategoryControls first />}*/}
+      {/*    </div>*/}
+      {/*    <div className="grid grid-cols-6 gap-4 mt-3">*/}
+      {/*      <ItemsMenuItem*/}
+      {/*        currency="EUR"*/}
+      {/*        price="12.50"*/}
+      {/*        name="Spaghetti Carbonara"*/}
+      {/*        description="Indulge in creamy egg, crispy pancetta, and pecorino coated strands of al dente pasta."*/}
+      {/*      />*/}
+      {/*      <ItemsMenuItem*/}
+      {/*        available={true}*/}
+      {/*        currency="EUR"*/}
+      {/*        price="13.50"*/}
+      {/*        name="Spaghetti Bolognese"*/}
+      {/*        description="Delectable blend of hearty meat sauce and perfectly cooked pasta, a timeless Italian masterpiece."*/}
+      {/*      />*/}
+      {/*      <ItemsMenuItem*/}
+      {/*        currency="EUR"*/}
+      {/*        price="18.50"*/}
+      {/*        name="Sirloin Steak"*/}
+      {/*        description="Juicy sirloin steak, seared to perfection, a carnivore's dream on a plate."*/}
+      {/*      />*/}
+      {/*      <ItemsMenuItem*/}
+      {/*        currency="EUR"*/}
+      {/*        price="21.50"*/}
+      {/*        name="Tomahawk Steak"*/}
+      {/*        description="Show-stopping tomahawk steak, impressive in size, unparalleled in flavor, a carnivore's delight."*/}
+      {/*      />*/}
+      {/*      {!editLock ? "" : <CreateItemModal category="Main Dishes" />}*/}
+      {/*    </div>*/}
+      {/*    <div className="grid grid-cols-6 mt-6 gap-4">*/}
+      {/*      {!editLock ? (*/}
+      {/*        ""*/}
+      {/*      ) : (*/}
+      {/*        <CreateCategorySubcategoryModal subCategory="Main Dishes" />*/}
+      {/*      )}*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
+
+      {/*<div*/}
+      {/*  className={`col-span-6 mt-12 ${*/}
+      {/*    !editLock ? "" : "border-t"*/}
+      {/*  } dark:border-slate-600`}*/}
+      {/*>*/}
+      {/*  <div className="col-span-6 mt-4">*/}
+      {/*    <div className="flex items-center">*/}
+      {/*      <h2 className="text-4xl font-extrabold mr-2">Desserts</h2>*/}
+      {/*      {!editLock ? "" : <CategoryControls first />}*/}
+      {/*    </div>*/}
+      {/*    <div className="grid grid-cols-6 gap-4 mt-3">*/}
+      {/*      <ItemsMenuItem*/}
+      {/*        currency="EUR"*/}
+      {/*        price="12.50"*/}
+      {/*        name="Spaghetti Carbonara"*/}
+      {/*        description="Indulge in creamy egg, crispy pancetta, and pecorino coated strands of al dente pasta."*/}
+      {/*      />*/}
+      {/*      {!editLock ? "" : <CreateItemModal category="Desserts" />}*/}
+      {/*    </div>*/}
+      {/*    <div className="grid grid-cols-6 mt-6 gap-4">*/}
+      {/*      {!editLock ? (*/}
+      {/*        ""*/}
+      {/*      ) : (*/}
+      {/*        <CreateCategorySubcategoryModal subCategory="Desserts" />*/}
+      {/*      )}*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
+
+      {/*<div*/}
+      {/*  className={`col-span-6 mt-12 ${*/}
+      {/*    !editLock ? "" : "border-t"*/}
+      {/*  } dark:border-slate-600`}*/}
+      {/*>*/}
+      {/*  <div className="col-span-6 mt-4">*/}
+      {/*    /!* Drinks *!/*/}
+      {/*    <div className="flex items-center">*/}
+      {/*      <h2 className="text-4xl font-extrabold mr-2">Drinks</h2>*/}
+      {/*      {!editLock ? "" : <CategoryControls first />}*/}
+      {/*    </div>*/}
+
+      {/*    /!* Subcategory - Cold Drinks *!/*/}
+      {/*    <div className="flex items-center mt-3">*/}
+      {/*      <h2 className="text-xl font-extrabold mr-2">Cold Drinks</h2>*/}
+      {/*      {!editLock ? "" : <CategoryControls first />}*/}
+      {/*    </div>*/}
+      {/*    <div className="grid grid-cols-6 gap-4 mt-3">*/}
+      {/*      <ItemsMenuItem*/}
+      {/*        available*/}
+      {/*        currency="EUR"*/}
+      {/*        price="2.50"*/}
+      {/*        name="Coca Cola"*/}
+      {/*        description="Not Pepsi"*/}
+      {/*      />*/}
+      {/*      <ItemsMenuItem*/}
+      {/*        available*/}
+      {/*        currency="EUR"*/}
+      {/*        price="2.50"*/}
+      {/*        name="Pepsi"*/}
+      {/*        description="Lol"*/}
+      {/*      />*/}
+      {/*      {!editLock ? "" : <CreateItemModal subCategory="Cold Drinks" />}*/}
+      {/*    </div>*/}
+
+      {/*    <div className="flex items-center mt-6">*/}
+      {/*      <h2 className="text-xl font-extrabold mr-2">Hot Drinks</h2>*/}
+      {/*      {!editLock ? "" : <CategoryControls first />}*/}
+      {/*    </div>*/}
+      {/*    <div className="grid grid-cols-6 gap-4 mt-3">*/}
+      {/*      <ItemsMenuItem*/}
+      {/*        available={false}*/}
+      {/*        currency="EUR"*/}
+      {/*        price="3.50"*/}
+      {/*        name="Cyprus Coffee"*/}
+      {/*        description="Lol"*/}
+      {/*      />*/}
+      {/*      {!editLock ? "" : <CreateItemModal subCategory="Hot Drinks" />}*/}
+      {/*    </div>*/}
+      {/*    <div className="grid grid-cols-6 mt-6 gap-4">*/}
+      {/*      {!editLock ? (*/}
+      {/*        ""*/}
+      {/*      ) : (*/}
+      {/*        <CreateCategorySubcategoryModal subCategory="Drinks" />*/}
+      {/*      )}*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
+
+      {/*<div*/}
+      {/*  className={`col-span-6 mt-12 ${*/}
+      {/*    !editLock ? "" : "border-t"*/}
+      {/*  } dark:border-slate-600`}*/}
+      {/*>*/}
+      {/*  <div className="grid grid-cols-6 gap-4 my-6">*/}
+      {/*    {!editLock ? "" : <CreateCategorySubcategoryModal category />}*/}
+      {/*  </div>*/}
+      {/*</div>*/}
     </MenuTemplate>
   );
 };

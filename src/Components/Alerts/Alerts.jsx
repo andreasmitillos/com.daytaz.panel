@@ -8,7 +8,7 @@ const Alerts = (props) => {
       className={`shadow rounded w-full overflow-hidden flex bg-white dark:bg-slate-800`}
     >
       <div
-        className={`flex items-center w-12 justify-center ${
+        className={`flex items-center px-3 justify-center ${
           type == "error" ? "bg-red-500 dark:bg-red-600" : ""
         } ${type == "warning" ? "bg-yellow-400 dark:bg-yellow-500" : ""} ${
           type == "info" ? "bg-blue-600 dark:bg-blue-700" : ""
@@ -92,7 +92,7 @@ const Alerts = (props) => {
             type == "success" ? "text-green-600 dark:text-green-500" : ""
           }`}
         >
-          Something went wrong
+          {title || "Something went wrong"}
         </h3>
         <p className="text-slate-700 dark:text-slate-400 text-sm">{children}</p>
       </div>

@@ -17,7 +17,7 @@ const GeneralTable = (props) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.0}
                 stroke="currentColor"
-                className="w-10 h-10 text-slate-500 mb-4"
+                className="w-10 h-10 text-slate-500 dark:text-slate-400 mb-4"
               >
                 <path
                   strokeLinecap="round"
@@ -27,7 +27,7 @@ const GeneralTable = (props) => {
               </svg>
 
               <p className="font-semibold">No {props.model || ""}</p>
-              <p className="font-normal text-slate-600 mt-1">
+              <p className="font-normal text-slate-600 dark:text-slate-400 mt-1">
                 We found no {props.model || ""}
               </p>
             </div>
