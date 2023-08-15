@@ -54,12 +54,36 @@ const AddUserModal = (props) => {
             buttonVariant="indigo"
             buttonCallBack={callBack}
             buttonOnClick={restaurants.actions.addUser}
+            dark={true}
             fields={[
               { key: "userId", type: "text", label: "User ID" },
               {
                 key: "authLevel",
-                type: "text",
-                label: "Auth Level (headAdmin, admin, manager)",
+                name: "authLevel",
+                label: "Permission Level",
+                subLabel: "Choose 1 of the above",
+                labelRight: "Required",
+                isRadio: true,
+                options: [
+                  {
+                    value: "headAdmin",
+                    text: "Head Admin",
+                    subText:
+                      "Same permissions as an Administrator, but can also modify the permission level of the Administrators.",
+                  },
+                  {
+                    value: "admin",
+                    text: "Admin",
+                    subText:
+                      "Full access to the restaurant, including adding managers.",
+                  },
+                  {
+                    value: "manager",
+                    text: "Manager",
+                    subText:
+                      "Access to the operational side of the restaurant.",
+                  },
+                ],
               },
             ]}
             hiddenValues={{

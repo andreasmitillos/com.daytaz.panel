@@ -106,6 +106,7 @@ const DynamicForm = (props) => {
                     isInput={smallerField.type !== "textarea"}
                     isTextArea={smallerField.type === "textarea"}
                     icon={smallerField.icon || false}
+                    subLabel={smallerField.subLabel}
                   />
                 ) : (
                   ""
@@ -119,6 +120,9 @@ const DynamicForm = (props) => {
               <Inputs
                 key={field.key}
                 error={errors[field.key]}
+                dark={props.dark}
+                isMultiselect={field.isMultiselect}
+                fieldSelectLimit={field.fieldSelectLimit}
                 type={field.type}
                 value={field.value || values[field.key] || ""}
                 onChange={(e) => onFieldChange(field.key, e.target.value)}
@@ -126,9 +130,13 @@ const DynamicForm = (props) => {
                 cornerLabel={field.labelRight}
                 disabled={buttonLoading || field.disabled}
                 placeholder={field.placeholder}
-                isInput={field.type !== "textarea"}
+                isInput={field.type !== "textarea" && field.type}
                 isTextArea={field.type === "textarea"}
                 icon={field.icon || false}
+                isRadio={field.isRadio}
+                options={field.options}
+                name={field.name}
+                subLabel={field.subLabel}
               />
             </div>
           </>

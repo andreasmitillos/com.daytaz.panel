@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import MenuTemplate from "../../Templates/MenuTemplate";
+import Inputs from "../../Components/Inputs/Inputs";
 
 const AddMenuItem = (props) => {
   return (
@@ -25,6 +26,8 @@ const AddMenuItem = (props) => {
 };
 
 const ItemsMenuItem = (props) => {
+  const [update, setUpdate] = useState(0);
+
   return (
     <div className="col-span-6 md:col-span-3 border px-3 py-3 rounded h-full dark:border-slate-600">
       {/* Top Row */}
@@ -38,47 +41,32 @@ const ItemsMenuItem = (props) => {
         </div>
 
         {/* Description */}
-        <div className="pt-2 pb-2 font-light grow">
+        <div className="pt-0 pb-2 font-light grow">
           <p className="text-slate-600 dark:text-slate-400">
             {props.description}
           </p>
-          <div className="pl-2">
-            {props.options.map((option) => (
-              <div className="flex items-center mt-2">
-                <input
-                  type={props.multiple ? "checkbox" : "radio"}
-                  className="rounded-2xl mr-3 w-4 h-4 outline-none accent-indigo-500"
-                />
-                <span>{option.name}</span>
-              </div>
-            ))}
+          <div className={"pt-4"}>
+            <Inputs
+              isMultiselect={props.multiple}
+              isRadio={!props.multiple}
+              name={props.name}
+              fieldSelectLimit={props.fieldSelectLimit}
+              onChange={() => {
+                setUpdate(update + 1);
+              }}
+              options={[
+                ...props.options?.map((option) => {
+                  return {
+                    limit: option.limit,
+                    value: option.value,
+                    text: option.text,
+                    subText: option.subText,
+                  };
+                }),
+              ]}
+            />
           </div>
         </div>
-
-        {/* <div className="flex items-center pt-3 border-t dark:border-slate-600">
-          <div className="grow">
-            <div className="text-xs flex bg-indigo-100 dark:bg-indigo-300 p-1 px-2.5 rounded-full font-semibold text-indigo-800 w-fit">
-              {props.currency} {props.price}
-            </div>
-          </div>
-
-          <div
-            className={`text-xs flex p-1 pl-2.5 rounded-full font-semibold ${
-              props.available
-                ? "bg-green-100 dark:bg-green-400 text-green-900"
-                : "bg-slate-100 dark:bg-slate-400 text-slate-900"
-            } `}
-          >
-            {props.available ? "Available" : "Unavailable"}
-            <span
-              className={`flex ml-2 ${
-                props.available
-                  ? "bg-green-400 dark:bg-green-600"
-                  : "bg-slate-400 dark:bg-slate-600"
-              } w-4 h-4 rounded-full`}
-            ></span>
-          </div>
-        </div> */}
       </div>
     </div>
   );
@@ -93,13 +81,29 @@ const OptionLists = (props) => {
         <div className="col-span-6 mt-4">
           <div className="grid grid-cols-6 gap-4 mt-3">
             <ItemsMenuItem
-              name="Burger Side"
-              description="Choose your side (Required)"
+              multiple
+              name="Burger Toppings"
+              description="Choose your toppings (Optional)"
+              fieldSelectLimit={2}
               options={[
-                { name: "Chilli Fries" },
-                { name: "Truffle Fries (+ EUR 0.50)" },
-                { name: "Bone Marrow Mash" },
-                { name: "Vegetables" },
+                {
+                  limit: 2,
+                  value: "tomato",
+                  text: "Tomato",
+                  subText: "Add tomato to your burger",
+                },
+                {
+                  limit: 2,
+                  value: "onion",
+                  text: "Onion",
+                  subText: "Add onion to your burger",
+                },
+                {
+                  limit: 2,
+                  value: "pickle",
+                  text: "Pickle",
+                  subText: "Add pickle to your burger",
+                },
               ]}
             />
 
@@ -107,23 +111,51 @@ const OptionLists = (props) => {
               multiple
               name="Burger Toppings"
               description="Choose your toppings (Optional)"
+              fieldSelectLimit={2}
               options={[
-                { name: "Tomatoe" },
-                { name: "Onion" },
-                { name: "Pickles" },
+                {
+                  limit: 1,
+                  value: "tomato2",
+                  text: "Tomato",
+                  subText: "Add tomato to your burger",
+                },
+                {
+                  limit: 1,
+                  value: "onion2",
+                  text: "Onion",
+                  subText: "Add onion to your burger",
+                },
+                {
+                  limit: 1,
+                  value: "pickle2",
+                  text: "Pickle",
+                  subText: "Add pickle to your burger",
+                },
               ]}
             />
 
             <ItemsMenuItem
-              multiple
               name="Burger Toppings"
               description="Choose your toppings"
               options={[
-                { name: "Tomatoe" },
-                { name: "Onion" },
-                { name: "Pickles" },
+                {
+                  value: "cheese",
+                  text: "Bacon",
+                  subText: "Add tomato to your burger",
+                },
+                {
+                  value: "bacon",
+                  text: "Bacon",
+                  subText: "Add onion to your burger",
+                },
+                {
+                  value: "ketchup",
+                  text: "Ketchup",
+                  subText: "Add pickle to your burger",
+                },
               ]}
             />
+
             <AddMenuItem />
           </div>
         </div>

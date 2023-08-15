@@ -10,6 +10,7 @@ import { subscribe } from "valtio";
 import Alerts from "../../Components/Alerts/Alerts";
 import DynamicForm from "../../Components/Forms/DynamicForm";
 import { current } from "@reduxjs/toolkit";
+import { type } from "@testing-library/user-event/dist/type";
 
 // Edit Modal
 const EditModal = (props) => {
@@ -530,22 +531,26 @@ const ItemsMenu = (props) => {
 
   // Subscribe to menu changes
   subscribe(menus.data, () => {
-    setCurrentMenu(menus.data.menu[menuId]);
-    setUpdate(update + 1);
+    if (typeof menus.data.menu[menuId] !== "undefined") {
+      setCurrentMenu(menus.data.menu[menuId]);
+      setUpdate(update + 1);
+    }
   });
 
   // Get Menu
   useEffect(() => {
     // if menu has been retrieved, remove loading bar
-    if (currentMenu.id) setLoading(false);
-
+    if (currentMenu?.id) setLoading(false);
+    console.log("ran");
     // get menu
     menus.actions
       .getItems({ menuId })
       .then((res) => {
+        console.log("done");
         setLoading(false);
       })
       .catch((error) => {
+        console.log(error);
         setLoading(false);
       });
   }, []);

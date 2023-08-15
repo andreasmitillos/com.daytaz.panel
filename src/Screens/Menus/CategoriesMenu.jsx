@@ -4,8 +4,13 @@ import Buttons from "../../Components/Inputs/Buttons";
 import Inputs from "../../Components/Inputs/Inputs";
 import Modal from "../../Components/Modal/Modal";
 import Alerts from "../../Components/Alerts/Alerts";
+import Input from "../../Components/Inputs/Inputs";
+import DynamicForm from "../../Components/Forms/DynamicForm";
+import { menus } from "../../State";
 
 const CategoriesMenu = (props) => {
+  const onChange = (e) => {};
+
   return (
     <MenuTemplate tab="categories" tabName="Categories">
       <div className="col-span-6">
@@ -252,7 +257,49 @@ const CategoriesMenu = (props) => {
           buttonText="Create new User"
           buttonVariant="indigo"
           buttonSize="md"
-        ></Modal>
+          size={"lg"}
+        >
+          <DynamicForm
+            button={"Create"}
+            buttonVariant={"indigo"}
+            fields={[
+              // {
+              //   key: "firstName",
+              //   type: "string",
+              //   label: "First Name",
+              //   responsive: true,
+              // },
+              {
+                key: "authLevel",
+                name: "authLevel",
+                label: "Permission Level",
+                subLabel: "Choose 1 of the above",
+                labelRight: "Required",
+                isRadio: true,
+                options: [
+                  {
+                    value: "headAdmin",
+                    text: "Head Admin",
+                    subText:
+                      "Same permissions as an Administrator, but can also modify the permission level of the Administrators.",
+                  },
+                  {
+                    value: "admin",
+                    text: "Admin",
+                    subText:
+                      "Full access to the restaurant, including adding managers.",
+                  },
+                  {
+                    value: "manager",
+                    text: "Manager",
+                    subText:
+                      "Access to the operational side of the restaurant.",
+                  },
+                ],
+              },
+            ]}
+          />
+        </Modal>
       </div>
 
       <div className="col-span-6 my-6">
@@ -272,6 +319,89 @@ const CategoriesMenu = (props) => {
 
           <div className="col-span-4">
             <Alerts type="success">This is an issue</Alerts>
+          </div>
+        </div>
+      </div>
+
+      <div className="col-span-4 my-6">
+        <h2 className="text-2xl font-bold mb-2">Radio Groups</h2>
+
+        <div className="grid grid-cols-6 gap-4">
+          <div className="col-span-4">
+            <h3 className={"text-lg font-semibold"}>Burger Side</h3>
+            <p className={"text-sm mb-2 text-slate-600"}>
+              Please choose 1 side dish for your burger from the following:
+            </p>
+            <Inputs
+              isRadio
+              name={"optionList1"}
+              onChange={onChange}
+              options={[
+                {
+                  value: "cheese",
+                  text: "Cheesy Fries",
+                  subText: "These are regular fries with melted cheese",
+                },
+                {
+                  value: "cheeseBacon",
+                  text: "Cheesy Bacon BBQ Fries",
+                  subText:
+                    "Our signature fries with bacon, cheese and BBQ sauce",
+                },
+              ]}
+            />
+          </div>
+
+          <div className="col-span-6 md:col-span-4">
+            <h3 className={"text-lg font-semibold"}>Burger Side</h3>
+            <p className={"text-sm mb-2 text-slate-600"}>
+              Please choose 1 side dish for your burger from the following:
+            </p>
+            <DynamicForm
+              button={"Create"}
+              buttonVariant={"indigo"}
+              buttonOnClick={menus.actions.createItem}
+              fields={[
+                {
+                  key: "authLevel",
+                  name: "authLevel",
+                  label: "Permission Level",
+                  subLabel: "Choose 1 of the above",
+                  labelRight: "Required",
+                  isMultiselect: true,
+                  fieldSelectLimit: 2,
+                  options: [
+                    {
+                      limit: 3,
+                      value: "test1",
+                      text: "Cheesy Fries",
+                      subText: "These are regular fries with melted cheese",
+                    },
+                    {
+                      limit: 3,
+                      value: "test2",
+                      text: "Cheesy Bacon BBQ Fries",
+                      subText:
+                        "Our signature fries with bacon, cheese and BBQ sauce",
+                    },
+                    {
+                      limit: 3,
+                      value: "test3",
+                      text: "Cheesy Bacon BBQ Fries",
+                      subText:
+                        "Our signature fries with bacon, cheese and BBQ sauce",
+                    },
+                    {
+                      limit: 3,
+                      value: "test4",
+                      text: "Cheesy Bacon BBQ Fries",
+                      subText:
+                        "Our signature fries with bacon, cheese and BBQ sauce",
+                    },
+                  ],
+                },
+              ]}
+            />
           </div>
         </div>
       </div>
