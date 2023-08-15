@@ -183,7 +183,7 @@ const Input = (props) => {
                       <div className={"text-sm flex"}>
                         <div
                           className={
-                            "py-2 bg-white dark:bg-slate-700 dark:border-slate-600 hover:dark:bg-slate-800 px-1.5 border rounded-tl rounded-bl flex items-center hover:bg-gray-50 transition ease-in-out"
+                            "py-2 bg-white dark:bg-slate-700 dark:border-slate-600 hover:dark:bg-slate-800 px-1.5 border rounded-tl-lg rounded-bl-lg flex items-center hover:bg-gray-50 transition ease-in-out"
                           }
                           onClick={() =>
                             multiSelectOnChange({
@@ -218,7 +218,7 @@ const Input = (props) => {
                           </p>
                         </div>
                         <div
-                          className={`flex items-center py-1 bg-white dark:bg-slate-700 hover:dark:bg-slate-800 dark:border-slate-600 hover:bg-gray-50 transition ease-in-out px-1.5 border rounded-tr rounded-br`}
+                          className={`flex items-center py-1 bg-white dark:bg-slate-700 hover:dark:bg-slate-800 dark:border-slate-600 hover:bg-gray-50 transition ease-in-out px-1.5 border rounded-tr-lg rounded-br-lg`}
                           onClick={() =>
                             multiSelectOnChange({
                               name: option.value,
