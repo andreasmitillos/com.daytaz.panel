@@ -1,7 +1,7 @@
 import { proxy } from "valtio";
 import fetchApi from "./fetch";
 
-const data = proxy({ restaurants: {}, menu: {} });
+const data = proxy({ restaurants: {}, menu: {}, menuInsights: {} });
 
 const actions = {
   // get menus
@@ -37,6 +37,21 @@ const actions = {
             data.restaurants[restaurantId].draft = [response.data?.menu];
           }
 
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
+  // get menu insights
+  getMenuInsights: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("get", "/restaurants/menus/insights", values)
+        .then((response) => {
+          let { menu } = response.data;
+          data.menuInsights[menu.id] = menu;
           resolve(response.data);
         })
         .catch((error) => {

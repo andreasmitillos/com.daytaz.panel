@@ -4,7 +4,7 @@ import routes from "../../Routes";
 
 const MenuSubMenuItem = (props) => {
   return (
-    <li class="mr-2">
+    <li class="mr-2 whitespace-nowrap">
       <a
         href="#"
         // rounded-t-lg

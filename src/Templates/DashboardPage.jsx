@@ -16,11 +16,11 @@ const DashboardPage = (props) => {
   const [menuShow, toggleMenuShow] = useState(false);
   const [user, setUser] = useState(auth.data.user);
   const [finishedGettingUser, setFinishGettingUser] = useState(
-    auth.data.finishedGettingUser
+    auth.data.finishedGettingUser,
   );
   const [loggedIn, setLoggedIn] = useState(auth.data.loggedIn);
   const [onLaunchGotUser, setOnLaunchGotUser] = useState(
-    auth.data.onLaunchGotUser
+    auth.data.onLaunchGotUser,
   );
 
   const [logoutLoading, setLogoutLoading] = useState(false);
@@ -55,7 +55,7 @@ const DashboardPage = (props) => {
         }
       }
     },
-    [onLaunchGotUser, loggedIn, finishedGettingUser]
+    [onLaunchGotUser, loggedIn, finishedGettingUser],
   );
 
   const onClickLogout = (_) => {
@@ -310,8 +310,11 @@ const DashboardPage = (props) => {
             className="h-screen w-screen fixed dark:bg-gray-950/[0.8] bg-gray-200/[0.8] z-30"
             hidden={!menuShow}
           />
-          <div className={`p-5 pt-6`}>
-            <nav className="flex overflow-x-scroll" aria-label="Breadcrumb">
+          <div className={`p-5 pt-6 no-scrollbar`}>
+            <nav
+              className="flex overflow-x-scroll no-scrollbar whitespace-nowrap"
+              aria-label="Breadcrumb"
+            >
               <ol className="inline-flex items-center space-x-1 md:space-x-3">
                 <li className="inline-flex items-center">
                   <a
@@ -335,7 +338,7 @@ const DashboardPage = (props) => {
                   ? props.currentTab.split("/").map((value, index) =>
                       index === props.currentTab.split("/").length - 1 ? (
                         <li aria-current="page" key={value}>
-                          <div className="flex items-center">
+                          <div className="flex items-center whitespace-nowrap">
                             <svg
                               className="w-3 h-3 text-gray-400 mx-1"
                               aria-hidden="true"
@@ -351,7 +354,7 @@ const DashboardPage = (props) => {
                                 d="m1 9 4-4-4-4"
                               />
                             </svg>
-                            <span className="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400 capitalize">
+                            <span className="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400 capitalize w-fit">
                               {value}
                             </span>
                           </div>
@@ -382,7 +385,7 @@ const DashboardPage = (props) => {
                             </a>
                           </div>
                         </li>
-                      )
+                      ),
                     )
                   : ""}
 

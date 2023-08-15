@@ -118,13 +118,13 @@ const MenusRestaurantItem = (props) => {
           </p>
         </div>
 
-        <Link
-          to={generatePath(routes.individualMenu, {
-            restaurantId,
-            menuId: props.id,
-          })}
-        >
-          <div className="cursor-pointer transition ease-in-out hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md mt-2">
+        <div className="cursor-pointer transition ease-in-out hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md mt-2">
+          <Link
+            to={generatePath(routes.individualMenu, {
+              restaurantId,
+              menuId: props.id,
+            })}
+          >
             <p className="text-sm flex items-center text-indigo-600 dark:text-indigo-400 w-fit mx-auto py-2 px-4">
               Manage{" "}
               <svg
@@ -142,8 +142,8 @@ const MenusRestaurantItem = (props) => {
                 />
               </svg>
             </p>
-          </div>
-        </Link>
+          </Link>
+        </div>
       </div>
     </div>
   );
