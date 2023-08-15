@@ -84,7 +84,7 @@ const DashboardPage = (props) => {
   };
 
   return (
-    <div className="dark:bg-gray-900 dark:text-white min-h-screen">
+    <div className="dark:bg-gray-900 dark:text-white min-h-screen no-scrollbar">
       {/* {menuShow ? ( */}
       <div
         className={`dark:bg-gray-900 bg-white border-r dark:border-gray-700 w-72 p-6 h-screen fixed z-40 pt-4 overflow-y-auto pb-72 ${
@@ -193,7 +193,7 @@ const DashboardPage = (props) => {
       )} */}
       {!menuShow ? (
         <div
-          className={`dark:bg-gray-900 bg-white border-r dark:border-gray-700 w-18 p-4 h-screen fixed z-40 overflow-y-auto pb-72 md:block`}
+          className={`dark:bg-gray-900 bg-white border-r dark:border-gray-700 w-18 p-4 h-screen fixed z-40 overflow-y-auto pb-72 md:block overflow-x-hidden no-scrollbar`}
         >
           <div
             onClick={() => toggleMenu()}

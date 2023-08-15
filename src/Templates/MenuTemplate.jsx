@@ -44,7 +44,7 @@ const MenuTemplate = (props) => {
     <RestaurantTemplate
       isMenu={currentMenu || {}}
       tab={props.tab}
-      tabName={`/Menus${currentMenu.id ? `/${currentMenu.name}` : "/Menu"}${
+      tabName={`/Menus${currentMenu?.id ? `/${currentMenu.name}` : "/Menu"}${
         props.tabName ? `/${props.tabName}` : ""
       }`}
     >
