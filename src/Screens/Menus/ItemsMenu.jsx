@@ -648,7 +648,7 @@ const ItemsMenu = (props) => {
                   {category.items.map((categoryItem) => (
                     <ItemsMenuItem
                       currency={<>&euro;</>}
-                      price={categoryItem.price}
+                      price={Number(categoryItem.price).toFixed(2)}
                       name={categoryItem.name}
                       description={categoryItem.description}
                       available={categoryItem.available}
@@ -711,7 +711,7 @@ const ItemsMenu = (props) => {
                         <ItemsMenuItem
                           available={item.available}
                           currency={<>&euro;</>}
-                          price={item.price}
+                          price={Number(item.price).toFixed(2)}
                           name={item.name}
                           description={item.description}
                         />

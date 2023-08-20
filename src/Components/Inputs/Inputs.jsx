@@ -251,7 +251,7 @@ const Input = (props) => {
                   </div>
                   <label
                     htmlFor={option.value}
-                    className="ml-4 w-full hover:cursor-pointer"
+                    className="pl-4 w-full hover:cursor-pointer"
                   >
                     <span className="block text-sm font-semibold text-gray-800 dark:text-gray-300">
                       {option.text}

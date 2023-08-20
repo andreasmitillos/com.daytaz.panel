@@ -56,6 +56,11 @@ const ItemsMenuItem = (props) => {
           <p className={"w-full text-xs"}>{props.name || ""}</p>
         </div>
 
+        <p className={"text-xs dark:text-slate-500 text-slate-400 my-1.5"}>
+          Maximum Options: {props.optionList?.maxSelectLimit} | Minimum Options:{" "}
+          {props.optionList?.minSelectLimit}
+        </p>
+
         <div className="flex items-center">
           {/* Item Name */}
 
@@ -70,6 +75,7 @@ const ItemsMenuItem = (props) => {
           <p className="text-slate-600 dark:text-slate-400">
             {props.description}
           </p>
+
           <div className={"pt-4"}>
             <Inputs
               isMultiselect={props.multiple}
@@ -80,12 +86,70 @@ const ItemsMenuItem = (props) => {
                 setUpdate(update + 1);
               }}
               options={[
-                ...props.options?.map((option) => {
+                ...props.options?.map((option, index) => {
                   return {
                     limit: option.limit,
                     value: option.value,
                     text: option.text,
                     subText: option.subText,
+                    right: (
+                      <div className={"flex items-center"}>
+                        {index !== 0 ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-6 h-6 mr-1 hover:bg-slate-200 dark:hover:bg-slate-700 p-0.5 rounded-lg transition ease-in-out"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M4.5 15.75l7.5-7.5 7.5 7.5"
+                            />
+                          </svg>
+                        ) : (
+                          ""
+                        )}
+
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className={`w-6 h-6 ${
+                            index !== props.options.length - 1 ? "mr-1" : "mr-7"
+                          } text-red-500 hover:bg-slate-200 dark:hover:bg-slate-700 p-0.5 rounded-lg transition ease-in-out`}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+
+                        {index !== props.options.length - 1 ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-6 h-6 hover:bg-slate-200 dark:hover:bg-slate-700 p-0.5 rounded-lg transition ease-in-out"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                            />
+                          </svg>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    ),
                   };
                 }),
               ]}
@@ -672,7 +736,7 @@ const OptionLists = (props) => {
       <div className="col-span-6">
         <div className="flex items-center">
           <h2 className="text-2xl font-extrabold mr-4">Option Lists</h2>
-          <AddOptionListModal />
+          {/*<AddOptionListModal />*/}
         </div>
 
         {loading ? (
@@ -700,7 +764,7 @@ const OptionLists = (props) => {
                         text: (
                           <>
                             {item.title}{" "}
-                            {item.price !== 0 ? (
+                            {item.price !== 0.0 ? (
                               <span className={"font-light text-xs"}>
                                 (
                                 {item.freeAllowance > 0
