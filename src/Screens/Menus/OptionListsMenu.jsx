@@ -800,18 +800,22 @@ const OptionLists = (props) => {
                 Done
               </Buttons>
             )}
-            <div className={"mt-4"}>
-              {!edit && optionLists?.length === 0 ? (
+
+            {!edit &&
+            (optionLists?.length === 0 ||
+              typeof optionLists === "undefined") ? (
+              <div className={"mt-4"}>
                 <div className={"max-w-lg"}>
                   <Alerts type={"info"} title={"No Option Lists"}>
                     You currently have no option lists. In order to start seeing
                     this, click "Edit" and start adding option lists.
                   </Alerts>
                 </div>
-              ) : (
-                ""
-              )}
-            </div>
+              </div>
+            ) : (
+              ""
+            )}
+
             <div className="grid grid-cols-6 gap-4 mt-3 max-w-2xl">
               {edit ? <CreateOptionListModal menu={currentMenu} /> : ""}
               {optionLists?.map((optionList) => {
