@@ -289,8 +289,37 @@ const CreateCategorySubcategoryModal = (props) => {
 // Create new Item Modal
 const CreateItemModal = (props) => {
   let { category, subCategory, menu } = props;
-  const [loading, setLoading] = useState(false);
   const [forceClose, setForceClose] = useState(0);
+  const { menuId } = useParams();
+
+  const [loading, setLoading] = useState(
+    !(
+      menus.data.menuOptionLists[menuId] &&
+      typeof menus.data.menuOptionLists[menuId] !== "undefined"
+    ),
+  );
+
+  // set current optionLists
+  const [optionLists, setOptionLists] = useState(
+    menus.data.menuOptionLists[menuId] || [],
+  );
+
+  // retrieve optionLists
+  useEffect(() => {
+    menus.actions
+      .getOptionLists({ menuId })
+      .then((res) => {
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  }, []);
+
+  // subscribe to changes
+  subscribe(menus.data, () => {
+    setOptionLists(menus.data.menuOptionLists[menuId]);
+  });
 
   // Toggle Close Modal
   const toggleModal = () => setForceClose(forceClose + 1);
@@ -331,72 +360,75 @@ const CreateItemModal = (props) => {
           Add a new item to {subCategory?.name || category?.name} by completing
           the fields below.
         </p>
-
-        <div className="w-full mt-6">
-          <div className="grid grid-cols-6 gap-4">
-            <div className="col-span-6">
-              <DynamicForm
-                button={"Create Item"}
-                buttonVariant={"indigo"}
-                buttonCallBack={callBack}
-                buttonOnClick={menus.actions.createItem}
-                fields={[
-                  [
+        {loading ? (
+          <LoadingBox />
+        ) : (
+          <div className="w-full mt-6">
+            <div className="grid grid-cols-6 gap-4">
+              <div className="col-span-6">
+                <DynamicForm
+                  button={"Create Item"}
+                  buttonVariant={"indigo"}
+                  buttonCallBack={callBack}
+                  buttonOnClick={menus.actions.createItem}
+                  fields={[
+                    [
+                      {
+                        key: "name",
+                        type: "string",
+                        label: "Item Name",
+                        placeholder: "E.g., Pasta",
+                      },
+                      {
+                        key: "price",
+                        type: "number",
+                        label: "Price (EUR)",
+                        placeholder: "E.g., 13.50",
+                        icon: (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            className="w-4 h-4"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.902 7.098a3.75 3.75 0 013.903-.884.75.75 0 10.498-1.415A5.25 5.25 0 008.005 9.75H7.5a.75.75 0 000 1.5h.054a5.281 5.281 0 000 1.5H7.5a.75.75 0 000 1.5h.505a5.25 5.25 0 006.494 2.701.75.75 0 00-.498-1.415 3.75 3.75 0 01-4.252-1.286h3.001a.75.75 0 000-1.5H9.075a3.77 3.77 0 010-1.5h3.675a.75.75 0 000-1.5h-3c.105-.14.221-.274.348-.402z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        ),
+                      },
+                    ],
                     {
-                      key: "name",
-                      type: "string",
-                      label: "Item Name",
+                      key: "description",
+                      type: "textarea",
+                      label: "Item Description",
+                      placeholder: "E.g., Nice Pasta",
+                    },
+                    {
+                      key: "optionLists",
+                      isSelect: true,
+                      multiple: true,
+                      label: "Option Lists",
                       placeholder: "E.g., Pasta",
+                      options: optionLists?.map((o) => {
+                        return {
+                          value: o.id,
+                          label: o.name,
+                        };
+                      }),
                     },
-                    {
-                      key: "price",
-                      type: "number",
-                      label: "Price (EUR)",
-                      placeholder: "E.g., 13.50",
-                      icon: (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="w-4 h-4"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.902 7.098a3.75 3.75 0 013.903-.884.75.75 0 10.498-1.415A5.25 5.25 0 008.005 9.75H7.5a.75.75 0 000 1.5h.054a5.281 5.281 0 000 1.5H7.5a.75.75 0 000 1.5h.505a5.25 5.25 0 006.494 2.701.75.75 0 00-.498-1.415 3.75 3.75 0 01-4.252-1.286h3.001a.75.75 0 000-1.5H9.075a3.77 3.77 0 010-1.5h3.675a.75.75 0 000-1.5h-3c.105-.14.221-.274.348-.402z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      ),
-                    },
-                  ],
-                  {
-                    key: "description",
-                    type: "textarea",
-                    label: "Item Description",
-                    placeholder: "E.g., Nice Pasta",
-                  },
-                  {
-                    key: "optionLists",
-                    isSelect: true,
-                    multiple: true,
-                    label: "Option Lists",
-                    placeholder: "E.g., Pasta",
-                    options: menu?.optionLists?.map((o) => {
-                      return {
-                        value: o.id,
-                        label: o.name,
-                      };
-                    }),
-                  },
-                ]}
-                hiddenValues={{
-                  categoryId: category?.id.toString(),
-                  subCategoryId: subCategory?.id.toString(),
-                }}
-              />
+                  ]}
+                  hiddenValues={{
+                    categoryId: category?.id.toString(),
+                    subCategoryId: subCategory?.id.toString(),
+                  }}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </Modal>
   );
@@ -487,7 +519,7 @@ const ItemsMenuItem = (props) => {
         {props.item?.optionLists?.length > 0 ? (
           <div
             className={
-              "w-full text-xs text-slate-500 dark:text-slate-400  mr-1.5"
+              "w-full text-xs text-slate-500 dark:text-slate-400 mr-1.5"
             }
           >
             {props.item?.optionLists?.map((optionList) => (
