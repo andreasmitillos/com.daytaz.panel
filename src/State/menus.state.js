@@ -6,6 +6,8 @@ const data = proxy({
   menu: {},
   menuInsights: {},
   menuOptionLists: {},
+  menuAllergyTags: {},
+  menuDietaryRestrictions: {},
 });
 
 const actions = {
@@ -238,6 +240,81 @@ const actions = {
                 ];
               }
             });
+          }
+
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
+  // get allergy tags
+  getAllergyTags: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("get", "/restaurants/menus/allergyTags", values)
+        .then((response) => {
+          data.menuAllergyTags[values.menuId] = response.data?.allergyTags;
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
+  // get dietary restrictions
+  getDietaryRestrictions: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("get", "/restaurants/menus/dietaryRestrictions", values)
+        .then((response) => {
+          data.menuDietaryRestrictions[values.menuId] =
+            response.data?.dietaryRestrictions;
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
+  // çreate dietary restrictions
+  createDietaryRestriction: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/restaurants/menus/dietaryRestriction", values)
+        .then((response) => {
+          if (data.menuDietaryRestrictions[values.menuId]) {
+            data.menuDietaryRestrictions[values.menuId] = [
+              ...data.menuDietaryRestrictions[values.menuId],
+              response.data.dietaryRestriction,
+            ];
+          } else {
+            data.menuDietaryRestrictions[values.menuId] = [
+              response.data.dietaryRestriction,
+            ];
+          }
+
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
+  // çreate allergy tags
+  createAllergyTag: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/restaurants/menus/allergyTag", values)
+        .then((response) => {
+          if (data.menuAllergyTags[values.menuId]) {
+            data.menuAllergyTags[values.menuId] = [
+              ...data.menuAllergyTags[values.menuId],
+              response.data.allergyTag,
+            ];
+          } else {
+            data.menuAllergyTags[values.menuId] = [response.data.allergyTag];
           }
 
           resolve(response.data);

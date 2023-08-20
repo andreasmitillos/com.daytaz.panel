@@ -18,6 +18,7 @@ import IndividualMenuScreen from "./Screens/Menus/IndividualMenu";
 import CategoriesMenu from "./Screens/Menus/CategoriesMenu";
 import ItemsMenu from "./Screens/Menus/ItemsMenu";
 import OptionListsMenu from "./Screens/Menus/OptionListsMenu";
+import OtherMenu from "./Screens/Menus/OtherMenu";
 
 import ListUsersScreen from "./Screens/Users/ListUsers";
 import CreateUserScreen from "./Screens/Users/CreateUser";
@@ -79,6 +80,7 @@ function App() {
         <Route path={DRoutes.categoriesMenu} element={<CategoriesMenu />} />
         <Route path={DRoutes.itemsMenu} element={<ItemsMenu />} />
         <Route path={DRoutes.optionListsMenu} element={<OptionListsMenu />} />
+        <Route path={DRoutes.otherMenu} element={<OtherMenu />} />
 
         <Route path={DRoutes.listUsersScreen} element={<ListUsersScreen />} />
         <Route path={DRoutes.createUserScreen} element={<CreateUserScreen />} />

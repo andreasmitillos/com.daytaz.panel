@@ -99,7 +99,7 @@ const ItemsMenuItem = (props) => {
           | Minimum Options: {props.optionList?.minSelectLimit}
         </p>
 
-        <div className="flex items-center">
+        <div className="flex items-center border-t dark:border-slate-600 pt-3">
           {/* Item Name */}
 
           <p className="font-bold grow">{props.title}</p>
@@ -816,7 +816,7 @@ const OptionLists = (props) => {
               ""
             )}
 
-            <div className="grid grid-cols-6 gap-4 mt-3 max-w-2xl">
+            <div className="grid grid-cols-6 gap-4 mt-3 max-w-2xl ">
               {edit ? <CreateOptionListModal menu={currentMenu} /> : ""}
               {optionLists?.map((optionList) => {
                 return (
