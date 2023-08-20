@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Select from "react-tailwindcss-select";
 
 const Input = (props) => {
   let {
@@ -7,6 +8,7 @@ const Input = (props) => {
     subLabel,
     placeholder,
     disabled,
+    multiple,
     error,
     type,
     icon,
@@ -57,6 +59,10 @@ const Input = (props) => {
     if (typeof onChange === "function") {
       onChange({ target: { value: JSON.stringify(sCounts) } });
     }
+  };
+
+  const selectOnChange = (e) => {
+    onChange(e);
   };
 
   return (
@@ -272,35 +278,53 @@ const Input = (props) => {
         {/* Is Select */}
         {isSelect ? (
           <>
-            <select
-              className={`appearance-none dark:bg-slate-800 rounded shadow px-3 py-2 text-sm outline outline-1 focus:outline-2 w-full ${
-                !error
-                  ? "outline-slate-200 dark:outline-slate-600 focus:outline-indigo-600 dark:focus:outline-indigo-500"
-                  : "outline-red-300 focus:outline-red-600 dark:outline-red-500 pr-11 text-red-800 dark:text-red-400"
-              } ${disabled ? "cursor-not-allowed" : ""} ${icon ? "pl-12" : ""}`}
-              placeholder={placeholder || ""}
-              disabled={disabled}
-              type={type}
-            >
-              <option>Andreas</option>
-              <option>Mitillos</option>
-            </select>
-            <div className="absolute right-0 ml-3 text-slate-400 pr-2 dark:text-slate-500 dark:border-slate-500">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                />
-              </svg>
-            </div>
+            <Select
+              onChange={selectOnChange}
+              value={value}
+              isMultiple={multiple}
+              options={
+                options
+                // [
+                //   { value: "burger-toppings", label: "burger-toppings" },
+                //   { value: "burger-sides", label: "burger-sides" },
+                //   { value: "steak-sides", label: "steak-sides" },
+                // ]
+              }
+              placeholder={placeholder}
+              primaryColor={"indigo"}
+              label={"Option Lists"}
+              isClearable={true}
+              isSearchable={multiple}
+              isDisabled={disabled}
+              classNames={{
+                searchContainer: "flex items-center px-3 mb-2.5 mt-1",
+                searchBox:
+                  "appearance-none py-1 dark:bg-slate-800 rounded px-2 pl-8 text-sm outline outline-1 focus:outline-2 w-full outline-slate-200 dark:outline-slate-600 focus:outline-indigo-600 dark:focus:outline-indigo-500 text-slate-500 dark:text-slate-400",
+                searchIcon: "absolute w-3.5 h-3.5 ml-2 text-gray-500",
+                menu: "dark:bg-slate-800 border dark:border-slate-700 rounded mt-2 py-2 text-sm w-full z-10",
+                listDisabledItem:
+                  "list-none text-slate-400 dark:text-slate-500 px-4 cursor-not-allowed transition ease-in-out rounded select-none",
+                listItem: () =>
+                  "list-none text-slate-500 dark:text-slate-400 px-2 py-1 cursor-pointer hover:bg-slate-100 transition ease-in-out rounded dark:hover:bg-slate-700 select-none",
+                tagItem: (value) => {
+                  let x = value.isDisabled;
+                  if (x) {
+                    return "flex text-xs rounded items-center bg-slate-100 dark:bg-slate-700 pr-2 mr-2 text-slate-500 dark:text-slate-400 select-none";
+                  }
+                  return "flex text-xs rounded items-center bg-slate-100 dark:bg-slate-700 mr-2 text-slate-500 dark:text-slate-400 select-none";
+                },
+                tagItemIconContainer:
+                  "ml-1 mr-0.5 dark:hover:bg-slate-800 hover:bg-slate-200 rounded p-0.5 transition ease-in-out cursor-pointer select-none",
+                tagItemText: "pl-2",
+                menuButton: (value) => {
+                  let x = value.isDisabled;
+                  if (x) {
+                    return "appearance-none dark:bg-slate-800 bg-gray-50 rounded shadow pl-0.5 text-sm outline outline-1 focus:outline-1 w-full outline-slate-200 dark:outline-slate-600 text-slate-400 dark:text-slate-400 flex cursor-not-allowed select-none";
+                  }
+                  return "appearance-none dark:bg-slate-800 rounded shadow pl-0.5 text-sm outline outline-1 focus:outline-2 w-full outline-slate-200 dark:outline-slate-600 focus:outline-indigo-600 dark:focus:outline-indigo-500 text-slate-400 dark:text-slate-400 flex cursor-pointer select-none";
+                },
+              }}
+            />
           </>
         ) : (
           ""

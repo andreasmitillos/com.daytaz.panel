@@ -122,11 +122,19 @@ const DynamicForm = (props) => {
                 key={field.key}
                 error={errors[field.key]}
                 dark={props.dark}
+                multiple={field.multiple}
+                isSelect={field.isSelect}
                 isMultiselect={field.isMultiselect}
                 fieldSelectLimit={field.fieldSelectLimit}
                 type={field.type}
-                value={field.value || values[field.key] || ""}
-                onChange={(e) => onFieldChange(field.key, e.target.value)}
+                value={field.value || values[field.key] || null}
+                onChange={(e) => {
+                  if (field.isSelect) {
+                    onFieldChange(field.key, e);
+                  } else {
+                    onFieldChange(field.key, e.target.value);
+                  }
+                }}
                 label={field.label}
                 cornerLabel={field.labelRight}
                 disabled={buttonLoading || field.disabled}

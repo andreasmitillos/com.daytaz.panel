@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MenuTemplate from "../../Templates/MenuTemplate";
 import Buttons from "../../Components/Inputs/Buttons";
 import Inputs from "../../Components/Inputs/Inputs";
@@ -8,8 +8,15 @@ import Input from "../../Components/Inputs/Inputs";
 import DynamicForm from "../../Components/Forms/DynamicForm";
 import { menus } from "../../State";
 
+import Select from "react-tailwindcss-select";
+
 const CategoriesMenu = (props) => {
   const onChange = (e) => {};
+
+  const [selectItem, setSelectItem] = useState(null);
+  const selectChange = (value) => {
+    setSelectItem(value);
+  };
 
   return (
     <MenuTemplate tab="categories" tabName="Categories">
@@ -403,6 +410,28 @@ const CategoriesMenu = (props) => {
               ]}
             />
           </div>
+        </div>
+      </div>
+
+      <div className="col-span-4 my-6 mb-36">
+        <h2 className="text-2xl font-bold mb-2">Multi Select</h2>
+
+        <div className={"max-w-lg"}>
+          <Inputs isInput={true} placeholder={"Email"} />
+          <div className={"my-4"}>
+            <Inputs
+              isSelect={true}
+              onChange={selectChange}
+              value={selectItem}
+              placeholder={"Select option lists"}
+              label={"Select Item Option Lists"}
+              multiple={true}
+              // disabled={true}
+              cornerLabel={"Optional"}
+              subLabel={"You may select more than 1"}
+            />
+          </div>
+          <Inputs isInput={true} placeholder={"Email"} full />
         </div>
       </div>
     </MenuTemplate>

@@ -288,7 +288,7 @@ const CreateCategorySubcategoryModal = (props) => {
 
 // Create new Item Modal
 const CreateItemModal = (props) => {
-  let { category, subCategory } = props;
+  let { category, subCategory, menu } = props;
   const [loading, setLoading] = useState(false);
   const [forceClose, setForceClose] = useState(0);
 
@@ -374,6 +374,19 @@ const CreateItemModal = (props) => {
                     type: "textarea",
                     label: "Item Description",
                     placeholder: "E.g., Nice Pasta",
+                  },
+                  {
+                    key: "optionLists",
+                    isSelect: true,
+                    multiple: true,
+                    label: "Option Lists",
+                    placeholder: "E.g., Pasta",
+                    options: menu?.optionLists?.map((o) => {
+                      return {
+                        value: o.id,
+                        label: o.name,
+                      };
+                    }),
                   },
                 ]}
                 hiddenValues={{
@@ -471,6 +484,25 @@ const ItemsMenuItem = (props) => {
     <div className="col-span-6 sm:col-span-3 lg:col-span-2 border px-3 py-3 rounded h-full dark:border-slate-600">
       {/* Top Row */}
       <div className="flex flex-col h-full">
+        {props.item?.optionLists?.length > 0 ? (
+          <div
+            className={
+              "w-full text-xs text-slate-500 dark:text-slate-400  mr-1.5"
+            }
+          >
+            {props.item?.optionLists?.map((optionList) => (
+              <span
+                className={
+                  "bg-slate-100 dark:bg-slate-700 rounded px-1 py-0.5 mr-1 inline-block mb-0.5"
+                }
+              >
+                {optionList.name}
+              </span>
+            ))}
+          </div>
+        ) : (
+          ""
+        )}
         <div className="flex items-center">
           {/* Item Name */}
           <p className="font-bold grow">{props.name}</p>
@@ -652,9 +684,14 @@ const ItemsMenu = (props) => {
                       name={categoryItem.name}
                       description={categoryItem.description}
                       available={categoryItem.available}
+                      item={categoryItem}
                     />
                   ))}
-                  {!editLock ? "" : <CreateItemModal category={category} />}
+                  {!editLock ? (
+                    ""
+                  ) : (
+                    <CreateItemModal menu={currentMenu} category={category} />
+                  )}
                 </div>
 
                 {category.subCategories.map((subCat, index) => (
@@ -714,12 +751,16 @@ const ItemsMenu = (props) => {
                           price={Number(item.price).toFixed(2)}
                           name={item.name}
                           description={item.description}
+                          item={item}
                         />
                       ))}
                       {!editLock ? (
                         ""
                       ) : (
-                        <CreateItemModal subCategory={subCat} />
+                        <CreateItemModal
+                          menu={currentMenu}
+                          subCategory={subCat}
+                        />
                       )}
                     </div>
                   </>
