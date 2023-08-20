@@ -38,7 +38,7 @@ const Input = (props) => {
       sCounts = { ...counts, [countName]: 1 };
     } else if (
       !sCounts[countName] &&
-      Object.keys(sCounts).length < fieldLimit
+      (Object.keys(sCounts).length < fieldLimit || fieldLimit === -1)
     ) {
       sCounts = { ...counts, [countName]: 1 };
     } else if (sCounts[countName] > 0 && add) {
@@ -84,6 +84,7 @@ const Input = (props) => {
             type={type}
             value={value}
             onChange={onChange}
+            name={name}
           />
         ) : (
           ""
@@ -99,6 +100,7 @@ const Input = (props) => {
             disabled={disabled}
             value={value}
             onChange={onChange}
+            name={name}
           />
         ) : (
           ""
@@ -152,11 +154,11 @@ const Input = (props) => {
                 <div
                   className={`relative hover:cursor-pointer flex items-center bg-slate-100 ${
                     dark ? "dark:bg-slate-700" : "dark:bg-slate-800"
-                  } transition ease-in-out pl-3 pr-6 py-2 rounded-lg ${
+                  } transition ease-in-out pl-3 pr-3 py-2 rounded-lg ${
                     error ? "outline outline-red-300 dark:outline-red-500" : ""
                   }`}
                 >
-                  <div className="flex items-center h-5 ml-1">
+                  <div className="flex items-center h-8 ml-1">
                     {!counts[option.value] || option.limit === 1 ? (
                       <input
                         id={option.value}
@@ -167,7 +169,8 @@ const Input = (props) => {
                           disabled ||
                           (!counts[option.value] &&
                             Object.keys(counts).length >=
-                              props.fieldSelectLimit)
+                              props.fieldSelectLimit &&
+                            props.fieldSelectLimit !== -1)
                         }
                         onChange={() =>
                           multiSelectOnChange({
@@ -257,6 +260,7 @@ const Input = (props) => {
                       {option.subText}
                     </span>
                   </label>
+                  <span className={"ml-3"}>{option.right}</span>
                 </div>
               </div>
             ))}

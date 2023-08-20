@@ -107,6 +107,7 @@ const DynamicForm = (props) => {
                     isTextArea={smallerField.type === "textarea"}
                     icon={smallerField.icon || false}
                     subLabel={smallerField.subLabel}
+                    cornerLabel={smallerField.labelRight}
                   />
                 ) : (
                   ""

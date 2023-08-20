@@ -1,7 +1,12 @@
 import { proxy } from "valtio";
 import fetchApi from "./fetch";
 
-const data = proxy({ restaurants: {}, menu: {}, menuInsights: {} });
+const data = proxy({
+  restaurants: {},
+  menu: {},
+  menuInsights: {},
+  menuOptionLists: {},
+});
 
 const actions = {
   // get menus
@@ -171,6 +176,68 @@ const actions = {
                 }
               });
             }
+          }
+
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
+  // retrieve orderLists
+  getOptionLists: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("get", "/restaurants/menus/optionLists", values)
+        .then((response) => {
+          let { menuId } = values;
+          data.menuOptionLists[menuId] = response.data.optionLists;
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
+  // create orderLists
+  createOptionList: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/restaurants/menus/optionList", values)
+        .then((response) => {
+          let { menuId } = values;
+          if (data.menuOptionLists[menuId]) {
+            data.menuOptionLists[menuId] = [
+              { ...response.data.optionList, optionListItems: [] },
+              ...data.menuOptionLists[menuId],
+            ];
+          }
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
+  // create orderListItems
+  createOptionListItem: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("post", "/restaurants/menus/optionListItem", values)
+        .then((response) => {
+          let menuId = response.data.optionList?.menuId;
+          let optionListId = response.data.optionList?.id;
+
+          if (data.menuOptionLists[menuId]) {
+            data.menuOptionLists[menuId]?.forEach((optionList, index) => {
+              if (optionList.id === optionListId) {
+                data.menuOptionLists[menuId][index].optionListItems = [
+                  ...data.menuOptionLists[menuId][index]?.optionListItems,
+                  response.data?.optionListItem,
+                ];
+              }
+            });
           }
 
           resolve(response.data);

@@ -17,7 +17,14 @@ const Modal = (props) => {
     children,
     size,
     forceClose,
+    onClose,
   } = props;
+
+  useEffect(() => {
+    if (typeof onClose === "function") {
+      onClose();
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (internalForceClose !== forceClose && forceClose) {
@@ -58,7 +65,12 @@ const Modal = (props) => {
       {/* </span> */}
 
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={closeModal}>
+        <Dialog
+          as="div"
+          className="relative z-50"
+          onClose={closeModal}
+          unmount={true}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

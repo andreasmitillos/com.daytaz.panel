@@ -647,7 +647,7 @@ const ItemsMenu = (props) => {
                   )}
                   {category.items.map((categoryItem) => (
                     <ItemsMenuItem
-                      currency="EUR"
+                      currency={<>&euro;</>}
                       price={categoryItem.price}
                       name={categoryItem.name}
                       description={categoryItem.description}
@@ -710,7 +710,7 @@ const ItemsMenu = (props) => {
                       {subCat.items.map((item) => (
                         <ItemsMenuItem
                           available={item.available}
-                          currency="EUR"
+                          currency={<>&euro;</>}
                           price={item.price}
                           name={item.name}
                           description={item.description}
@@ -747,191 +747,6 @@ const ItemsMenu = (props) => {
           </div>
         </>
       )}
-
-      {/*<div className={"h-96"}></div>*/}
-
-      {/*<div className="col-span-6">*/}
-      {/*  <div className="flex items-center">*/}
-      {/*    <h2 className="text-4xl font-extrabold mr-2">Starters</h2>*/}
-      {/*    {!editLock ? "" : <CategoryControls first />}*/}
-      {/*  </div>*/}
-      {/*  <p className="text-slate-600 text-sm">*/}
-      {/*    Embark on a culinary journey with our exquisite starters.*/}
-      {/*  </p>*/}
-
-      {/*  <div className="col-span-6 mt-4">*/}
-      {/*    <div className="grid grid-cols-6 gap-4 mt-3">*/}
-      {/*      <ItemsMenuItem*/}
-      {/*        currency="EUR"*/}
-      {/*        price="12.50"*/}
-      {/*        name="Spaghetti Carbonara"*/}
-      {/*        description="Indulge in creamy egg, crispy pancetta, and pecorino coated strands of al dente pasta."*/}
-      {/*      />*/}
-      {/*      <ItemsMenuItem*/}
-      {/*        available={true}*/}
-      {/*        currency="EUR"*/}
-      {/*        price="13.50"*/}
-      {/*        name="Spaghetti Bolognese"*/}
-      {/*        description="Delectable blend of hearty meat sauce and perfectly cooked pasta, a timeless Italian masterpiece."*/}
-      {/*      />*/}
-      {/*      {!editLock ? "" : <CreateItemModal category="Starters" />}*/}
-      {/*    </div>*/}
-
-      {/*    <div className="grid grid-cols-6 mt-6 gap-4">*/}
-      {/*      {!editLock ? (*/}
-      {/*        ""*/}
-      {/*      ) : (*/}
-      {/*        <CreateCategorySubcategoryModal subCategory="Starters" />*/}
-      {/*      )}*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
-
-      {/*<div*/}
-      {/*  className={`col-span-6 mt-12 ${*/}
-      {/*    !editLock ? "" : "border-t"*/}
-      {/*  } dark:border-slate-600`}*/}
-      {/*>*/}
-      {/*  <div className="col-span-6 mt-4">*/}
-      {/*    <div className="flex items-center">*/}
-      {/*      <h2 className="text-4xl font-extrabold mr-2">Main Dishes</h2>*/}
-      {/*      {!editLock ? "" : <CategoryControls first />}*/}
-      {/*    </div>*/}
-      {/*    <div className="grid grid-cols-6 gap-4 mt-3">*/}
-      {/*      <ItemsMenuItem*/}
-      {/*        currency="EUR"*/}
-      {/*        price="12.50"*/}
-      {/*        name="Spaghetti Carbonara"*/}
-      {/*        description="Indulge in creamy egg, crispy pancetta, and pecorino coated strands of al dente pasta."*/}
-      {/*      />*/}
-      {/*      <ItemsMenuItem*/}
-      {/*        available={true}*/}
-      {/*        currency="EUR"*/}
-      {/*        price="13.50"*/}
-      {/*        name="Spaghetti Bolognese"*/}
-      {/*        description="Delectable blend of hearty meat sauce and perfectly cooked pasta, a timeless Italian masterpiece."*/}
-      {/*      />*/}
-      {/*      <ItemsMenuItem*/}
-      {/*        currency="EUR"*/}
-      {/*        price="18.50"*/}
-      {/*        name="Sirloin Steak"*/}
-      {/*        description="Juicy sirloin steak, seared to perfection, a carnivore's dream on a plate."*/}
-      {/*      />*/}
-      {/*      <ItemsMenuItem*/}
-      {/*        currency="EUR"*/}
-      {/*        price="21.50"*/}
-      {/*        name="Tomahawk Steak"*/}
-      {/*        description="Show-stopping tomahawk steak, impressive in size, unparalleled in flavor, a carnivore's delight."*/}
-      {/*      />*/}
-      {/*      {!editLock ? "" : <CreateItemModal category="Main Dishes" />}*/}
-      {/*    </div>*/}
-      {/*    <div className="grid grid-cols-6 mt-6 gap-4">*/}
-      {/*      {!editLock ? (*/}
-      {/*        ""*/}
-      {/*      ) : (*/}
-      {/*        <CreateCategorySubcategoryModal subCategory="Main Dishes" />*/}
-      {/*      )}*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
-
-      {/*<div*/}
-      {/*  className={`col-span-6 mt-12 ${*/}
-      {/*    !editLock ? "" : "border-t"*/}
-      {/*  } dark:border-slate-600`}*/}
-      {/*>*/}
-      {/*  <div className="col-span-6 mt-4">*/}
-      {/*    <div className="flex items-center">*/}
-      {/*      <h2 className="text-4xl font-extrabold mr-2">Desserts</h2>*/}
-      {/*      {!editLock ? "" : <CategoryControls first />}*/}
-      {/*    </div>*/}
-      {/*    <div className="grid grid-cols-6 gap-4 mt-3">*/}
-      {/*      <ItemsMenuItem*/}
-      {/*        currency="EUR"*/}
-      {/*        price="12.50"*/}
-      {/*        name="Spaghetti Carbonara"*/}
-      {/*        description="Indulge in creamy egg, crispy pancetta, and pecorino coated strands of al dente pasta."*/}
-      {/*      />*/}
-      {/*      {!editLock ? "" : <CreateItemModal category="Desserts" />}*/}
-      {/*    </div>*/}
-      {/*    <div className="grid grid-cols-6 mt-6 gap-4">*/}
-      {/*      {!editLock ? (*/}
-      {/*        ""*/}
-      {/*      ) : (*/}
-      {/*        <CreateCategorySubcategoryModal subCategory="Desserts" />*/}
-      {/*      )}*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
-
-      {/*<div*/}
-      {/*  className={`col-span-6 mt-12 ${*/}
-      {/*    !editLock ? "" : "border-t"*/}
-      {/*  } dark:border-slate-600`}*/}
-      {/*>*/}
-      {/*  <div className="col-span-6 mt-4">*/}
-      {/*    /!* Drinks *!/*/}
-      {/*    <div className="flex items-center">*/}
-      {/*      <h2 className="text-4xl font-extrabold mr-2">Drinks</h2>*/}
-      {/*      {!editLock ? "" : <CategoryControls first />}*/}
-      {/*    </div>*/}
-
-      {/*    /!* Subcategory - Cold Drinks *!/*/}
-      {/*    <div className="flex items-center mt-3">*/}
-      {/*      <h2 className="text-xl font-extrabold mr-2">Cold Drinks</h2>*/}
-      {/*      {!editLock ? "" : <CategoryControls first />}*/}
-      {/*    </div>*/}
-      {/*    <div className="grid grid-cols-6 gap-4 mt-3">*/}
-      {/*      <ItemsMenuItem*/}
-      {/*        available*/}
-      {/*        currency="EUR"*/}
-      {/*        price="2.50"*/}
-      {/*        name="Coca Cola"*/}
-      {/*        description="Not Pepsi"*/}
-      {/*      />*/}
-      {/*      <ItemsMenuItem*/}
-      {/*        available*/}
-      {/*        currency="EUR"*/}
-      {/*        price="2.50"*/}
-      {/*        name="Pepsi"*/}
-      {/*        description="Lol"*/}
-      {/*      />*/}
-      {/*      {!editLock ? "" : <CreateItemModal subCategory="Cold Drinks" />}*/}
-      {/*    </div>*/}
-
-      {/*    <div className="flex items-center mt-6">*/}
-      {/*      <h2 className="text-xl font-extrabold mr-2">Hot Drinks</h2>*/}
-      {/*      {!editLock ? "" : <CategoryControls first />}*/}
-      {/*    </div>*/}
-      {/*    <div className="grid grid-cols-6 gap-4 mt-3">*/}
-      {/*      <ItemsMenuItem*/}
-      {/*        available={false}*/}
-      {/*        currency="EUR"*/}
-      {/*        price="3.50"*/}
-      {/*        name="Cyprus Coffee"*/}
-      {/*        description="Lol"*/}
-      {/*      />*/}
-      {/*      {!editLock ? "" : <CreateItemModal subCategory="Hot Drinks" />}*/}
-      {/*    </div>*/}
-      {/*    <div className="grid grid-cols-6 mt-6 gap-4">*/}
-      {/*      {!editLock ? (*/}
-      {/*        ""*/}
-      {/*      ) : (*/}
-      {/*        <CreateCategorySubcategoryModal subCategory="Drinks" />*/}
-      {/*      )}*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
-
-      {/*<div*/}
-      {/*  className={`col-span-6 mt-12 ${*/}
-      {/*    !editLock ? "" : "border-t"*/}
-      {/*  } dark:border-slate-600`}*/}
-      {/*>*/}
-      {/*  <div className="grid grid-cols-6 gap-4 my-6">*/}
-      {/*    {!editLock ? "" : <CreateCategorySubcategoryModal category />}*/}
-      {/*  </div>*/}
-      {/*</div>*/}
     </MenuTemplate>
   );
 };

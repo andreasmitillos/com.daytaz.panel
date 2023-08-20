@@ -19,14 +19,6 @@ const CreateMenuModal = (props) => {
   const callBack = (response, values) => {
     if (response.status.code === "menu_created") {
       toggleModal();
-      // menus.actions
-      //   .getRestaurant({ restaurantId: props.restaurant.id })
-      //   .then((res) => {
-      //     toggleModal();
-      //   })
-      //   .catch((error) => {
-      //     toggleModal();
-      //   });
     }
   };
 
@@ -158,7 +150,6 @@ const MenusRestaurant = (props) => {
   const [publicMenus, setPublicMenus] = useState([]);
 
   subscribe(menus.data, () => {
-    console.log("asd");
     setDraftMenus(menus.data.restaurants[restaurantId]?.draft);
     setPublicMenus(menus.data.restaurants[restaurantId]?.public);
   });
