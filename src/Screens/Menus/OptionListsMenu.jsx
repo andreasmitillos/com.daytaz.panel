@@ -515,7 +515,7 @@ const CreateOptionListModal = (props) => {
 
         <div className="w-full mt-6">
           <DynamicForm
-            button="Create Order List"
+            button="Create Option List"
             buttonVariant="blue"
             buttonCallBack={callBack}
             buttonOnClick={menus.actions.createOptionList}
@@ -633,7 +633,7 @@ const AddOptionListItemModal = (props) => {
 
         <div className="w-full mt-6">
           <DynamicForm
-            button="Create Order List"
+            button="Create an Option"
             buttonVariant="blue"
             buttonCallBack={callBack}
             buttonOnClick={menus.actions.createOptionListItem}
