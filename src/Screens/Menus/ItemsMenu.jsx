@@ -292,6 +292,9 @@ const CreateItemModal = (props) => {
   const [forceClose, setForceClose] = useState(0);
   const { menuId } = useParams();
 
+  let dietaryRestrictions = menu.dietaryRestrictions;
+  let allergyTags = menu.allergyTags;
+
   const [loading, setLoading] = useState(
     !(
       menus.data.menuOptionLists[menuId] &&
@@ -410,12 +413,41 @@ const CreateItemModal = (props) => {
                       key: "optionLists",
                       isSelect: true,
                       multiple: true,
+                      labelRight: "Optional",
                       label: "Option Lists",
                       placeholder: "E.g., Pasta",
                       options: optionLists?.map((o) => {
                         return {
                           value: o.id,
                           label: o.name,
+                        };
+                      }),
+                    },
+                    {
+                      key: "allergyTags",
+                      isSelect: true,
+                      multiple: true,
+                      labelRight: "Optional",
+                      label: "Allergy Tags",
+                      placeholder: "E.g., Peanuts",
+                      options: allergyTags?.map((o) => {
+                        return {
+                          value: o.id,
+                          label: o.name,
+                        };
+                      }),
+                    },
+                    {
+                      key: "dietaryRestrictions",
+                      isSelect: true,
+                      multiple: true,
+                      labelRight: "Optional",
+                      label: "Dietary Restrictions",
+                      placeholder: "E.g., Vegan",
+                      options: dietaryRestrictions?.map((o) => {
+                        return {
+                          value: o.id,
+                          label: `${o.acronym} - ${o.name}`,
                         };
                       }),
                     },
@@ -512,6 +544,7 @@ const AddMenuItem = (props) => {
 };
 
 const ItemsMenuItem = (props) => {
+  let { item } = props;
   return (
     <div className="col-span-6 sm:col-span-3 lg:col-span-2 border px-3 py-3 rounded h-full dark:border-slate-600">
       {/* Top Row */}
@@ -549,6 +582,49 @@ const ItemsMenuItem = (props) => {
             {props.description}
           </p>
         </div>
+
+        {item?.allergyTags?.length > 0 ||
+        item?.dietaryRestrictions?.length > 0 ? (
+          <div className={"text-slate-500 dark:text-slate-400 my-2"}>
+            {item?.dietaryRestrictions?.length > 0 ? (
+              <div className={"text-xs"}>
+                <p>
+                  <span className={"font-semibold"}>
+                    Dietary Restrictions:{" "}
+                  </span>
+                  {item.dietaryRestrictions?.map(
+                    (d, index) =>
+                      `${
+                        index > 0 && item?.dietaryRestrictions.length > 1
+                          ? `, ${d.acronym} - ${d.name}`
+                          : `${d.acronym} - ${d.name}`
+                      }`,
+                  )}
+                </p>
+              </div>
+            ) : (
+              ""
+            )}
+
+            {item?.allergyTags?.length > 0 ? (
+              <div className={"text-xs"}>
+                <p>
+                  <span className={"font-semibold"}>Allergy Tags: </span>
+                  {item.allergyTags?.map(
+                    (d, index) =>
+                      `${
+                        index > 0 && item?.allergyTags.length > 1 ? ", " : ""
+                      }${d.name}`,
+                  )}
+                </p>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        ) : (
+          ""
+        )}
 
         {/* Bottom Row */}
         <div className="flex items-center pt-3 border-t dark:border-slate-600">
