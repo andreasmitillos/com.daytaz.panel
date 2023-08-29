@@ -62,6 +62,48 @@ const actions = {
     });
   },
 
+  // edit menu
+  editMenu: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("patch", "/restaurants/menus", values)
+        .then((response) => {
+          let menuId = response.data.menu?.id;
+          if (data.menu[menuId]?.id) {
+            if (data.menu[menuId].name) {
+              data.menu[menuId].name = response.data.menu?.name;
+            }
+
+            if (data.menu[menuId].description) {
+              data.menu[menuId].description = response.data.menu?.description;
+            }
+
+            if (data.menu[menuId].draft) {
+              data.menu[menuId].draft = response.data.menu?.draft;
+            }
+          }
+
+          if (data.menuInsights[menuId]?.id) {
+            if (data.menuInsights[menuId].name) {
+              data.menuInsights[menuId].name = response.data.menu?.name;
+            }
+
+            if (data.menuInsights[menuId].description) {
+              data.menuInsights[menuId].description =
+                response.data.menu?.description;
+            }
+
+            if (typeof data.menuInsights[menuId].draft !== "undefined") {
+              data.menuInsights[menuId].draft = response.data.menu?.draft;
+            }
+          }
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
   // get menu insights
   getMenuInsights: (values) => {
     return new Promise((resolve, reject) => {
@@ -153,7 +195,7 @@ const actions = {
   // create subcategory
   createSubCategory: (values) => {
     return new Promise((resolve, reject) => {
-      fetchApi("patch", "/restaurants/menus/subCategories", values)
+      fetchApi("post", "/restaurants/menus/subCategories", values)
         .then((response) => {
           let subCategory = response.data.subCategory;
           let category = response.data.category;

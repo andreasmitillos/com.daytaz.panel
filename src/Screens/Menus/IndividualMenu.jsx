@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MenuTemplate from "../../Templates/MenuTemplate";
 import { useParams } from "react-router-dom";
 import { menus } from "../../State";
 import { subscribe } from "valtio";
 import { current } from "@reduxjs/toolkit";
+import IconForm from "../../Components/Forms/IconForm";
 
 const MetricCard = (props) => {
   return (
@@ -64,6 +65,7 @@ const MetricCard = (props) => {
 const IndividualMenu = (props) => {
   // get current menu id
   const { menuId } = useParams();
+  const [update, setUpdate] = useState(0);
 
   // set current menu
   const [currentMenu, setCurrentMenu] = useState(
@@ -73,7 +75,11 @@ const IndividualMenu = (props) => {
   // subscribe to changes
   subscribe(menus.data, () => {
     setCurrentMenu(menus.data.menuInsights[menuId]);
+    setUpdate(update + 1);
   });
+
+  // toggle menu visibility callBack
+  const callBack = (response, values) => {};
 
   return (
     <MenuTemplate tab="insights" tabName="Insights">
@@ -88,13 +94,73 @@ const IndividualMenu = (props) => {
             icon={"boolean"}
             title={"Menu Visibility"}
             metric={
-              !currentMenu.draft
-                ? "Public"
-                : // <span className={"dark:text-green-500 text-green-600"}>
-                  //   Yes
-                  // </span>
-                  "Draft"
-              // <span className={"dark:text-red-500 text-red-600"}>No</span>
+              !currentMenu.draft ? (
+                <span className={"flex"}>
+                  <span className={"mr-2"}>Public</span>{" "}
+                  <IconForm
+                    callBack={callBack}
+                    action={menus.actions.editMenu}
+                    values={{ menuId, draft: true }}
+                    closeCode={"edit_menu_success"}
+                    icon={
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className={`w-6 h-6 text-slate-600 dark:text-slate-400 p-1 rounded hover:bg-slate-100 transition ease-in-out cursor-pointer dark:hover:bg-slate-800`}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                        />
+                      </svg>
+                    }
+                    containerClass={`mr-2`}
+                    loadingIconClass={
+                      "text-blue-600 dark:text-blue-400 w-5 h-5"
+                    }
+                    loadingIconContainerClass={
+                      "p-1 rounded bg-slate-100 transition ease-in-out dark:bg-slate-800 cursor-not-allowed"
+                    }
+                  />
+                </span>
+              ) : (
+                <span className={"flex"}>
+                  <span className={"mr-2"}>Draft</span>{" "}
+                  <IconForm
+                    callBack={callBack}
+                    action={menus.actions.editMenu}
+                    values={{ menuId, draft: false }}
+                    closeCode={"edit_menu_success"}
+                    icon={
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className={`w-6 h-6 text-slate-600 dark:text-slate-400 p-1 rounded hover:bg-slate-100 transition ease-in-out cursor-pointer dark:hover:bg-slate-800`}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                        />
+                      </svg>
+                    }
+                    containerClass={`mr-2`}
+                    loadingIconClass={
+                      "text-blue-600 dark:text-blue-400 w-5 h-5"
+                    }
+                    loadingIconContainerClass={
+                      "p-1 rounded bg-slate-100 transition ease-in-out dark:bg-slate-800 cursor-not-allowed"
+                    }
+                  />
+                </span>
+              )
             }
             details={
               "If your menu is not published, the public will not be able to access it."
