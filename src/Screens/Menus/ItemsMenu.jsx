@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import MenuTemplate from "../../Templates/MenuTemplate";
 import Modal from "../../Components/Modal/Modal";
 import Buttons from "../../Components/Inputs/Buttons";
-import Input from "../../Components/Inputs/Inputs";
 import { useParams } from "react-router-dom";
 import { menus } from "../../State";
 import LoadingBox from "../../Components/LoadingBox";
@@ -881,6 +880,7 @@ const ItemsMenu = (props) => {
                   )}
                   {category.items?.map((categoryItem) => (
                     <ItemsMenuItem
+                      key={categoryItem.id}
                       currency={<>&euro;</>}
                       price={Number(categoryItem.price).toFixed(2)}
                       name={categoryItem.name}
@@ -950,6 +950,7 @@ const ItemsMenu = (props) => {
 
                       {subCat.items?.map((item) => (
                         <ItemsMenuItem
+                          key={item.id}
                           available={item.available}
                           currency={<>&euro;</>}
                           price={Number(item.price).toFixed(2)}

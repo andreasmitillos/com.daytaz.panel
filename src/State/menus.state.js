@@ -180,8 +180,6 @@ const actions = {
               data.menu[menuId].categories.sort((a, b) => {
                 return a.orderNumber - b.orderNumber;
               });
-
-              console.log(data.menu[menuId].categories);
             });
           }
           resolve(response.data);

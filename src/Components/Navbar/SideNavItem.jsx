@@ -76,7 +76,7 @@ const SideNavItem = (props) => {
             )}
           </div>
         ) : (
-          ""
+          ``
         )}
       </div>
 

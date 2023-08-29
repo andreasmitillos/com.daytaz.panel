@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DashboardPage from "../../Templates/DashboardPage";
 import GeneralCard from "../../Components/Card/GeneralCard";
-import NewButton from "../../Components/Inputs/NewButton";
 
 import { auth } from "../../State/index";
 import { subscribe } from "valtio";
@@ -11,7 +10,7 @@ import MfaModal from "../../Components/Modal/MfaModal";
 const ProfileScreen = (props) => {
   const [user, setUser] = useState(auth.data.user);
   const [currentDeviceId, setCurrentDeviceId] = useState(
-    auth.data.currentDeviceId
+    auth.data.currentDeviceId,
   );
 
   subscribe(auth.data, () => {
@@ -35,7 +34,7 @@ const ProfileScreen = (props) => {
             title="My Profile"
             subTitle="Find information about your profile listed below."
           >
-            {user.authLevel == "superAdmin" ? (
+            {user.authLevel === "superAdmin" ? (
               <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded mr-2 dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +111,7 @@ const ProfileScreen = (props) => {
 
                     <label
                       className="relative inline-flex items-center cursor-not-allowed"
-                      onClick={(_) => console.log("2fa")}
+                      onClick={(_) => {}}
                     >
                       <input
                         type="checkbox"
@@ -163,7 +162,7 @@ const ProfileScreen = (props) => {
                 <li className="pt-4 pb-4">
                   <div className="flex items-center space-x-4">
                     <div className="flex-shrink-0 relative">
-                      {device.deviceType == "phone" ? (
+                      {device.deviceType === "phone" ? (
                         <svg
                           className="w-6 h-6 dark:text-white"
                           fill="none"
@@ -182,7 +181,7 @@ const ProfileScreen = (props) => {
                         ""
                       )}
 
-                      {device.deviceType == "desktop" ? (
+                      {device.deviceType === "desktop" ? (
                         <svg
                           className="w-6 h-6 dark:text-white"
                           fill="none"
@@ -200,7 +199,7 @@ const ProfileScreen = (props) => {
                       ) : (
                         ""
                       )}
-                      {currentDeviceId == device.id ? (
+                      {currentDeviceId === device.id ? (
                         <span className="w-4 h-4 absolute -top-2 -right-1.5 bg-green-500 rounded-full border-white dark:border-gray-800 border-4 "></span>
                       ) : (
                         ""
@@ -216,15 +215,15 @@ const ProfileScreen = (props) => {
                               {device.agent} - {device.ip}
                             </p> */}
                       <p className="text-sm font-normal text-gray-500 truncate dark:text-gray-400">
-                        {currentDeviceId == device.id
+                        {currentDeviceId === device.id
                           ? "Current Device"
                           : `Last Accessed: ${new Date(
-                              device.updatedAt
+                              device.updatedAt,
                             ).toDateString()} at${" "}
                         ${new Date(device.updatedAt).toLocaleTimeString()}`}
                       </p>
                     </div>
-                    {currentDeviceId == device.id ? (
+                    {currentDeviceId === device.id ? (
                       ""
                     ) : (
                       <div className="inline-flex items-center">

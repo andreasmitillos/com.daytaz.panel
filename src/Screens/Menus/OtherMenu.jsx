@@ -244,8 +244,6 @@ const OtherMenu = (props) => {
     setUpdate(update + 1);
   });
 
-  console.log(allergyTags);
-
   return (
     <MenuTemplate tab="other" tabName="Other">
       <div className="col-span-6">

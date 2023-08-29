@@ -4,11 +4,10 @@ import routes from "../../Routes";
 
 const RestaurantSubMenuItem = (props) => {
   return (
-    <li class="mr-2">
-      <a
-        href="#"
+    <li className="mr-2">
+      <span
         // rounded-t-lg
-        class={`inline-flex items-center justify-center px-3 py-2   group rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition ease-in-out ${
+        className={`inline-flex items-center justify-center px-3 py-2   group rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition ease-in-out ${
           // border-b-2 border-indigo-600 rounded-t-lg
           props.active
             ? "text-indigo-600 dark:text-indigo-400 rounded active dark:border-indigo-400 active bg-slate-100 dark:bg-slate-800"
@@ -18,7 +17,7 @@ const RestaurantSubMenuItem = (props) => {
       >
         <span className="mr-2">{props.icon}</span>
         {props.text}
-      </a>
+      </span>
     </li>
   );
 };
@@ -29,8 +28,8 @@ const RestaurantSubMenu = (props) => {
   return (
     <>
       {/* border-b border-gray-200 */}
-      <div class=" dark:border-gray-700 overflow-x-scroll no-scrollbar overflow-y-hidden">
-        <ul class="flex -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
+      <div className=" dark:border-gray-700 overflow-x-scroll no-scrollbar overflow-y-hidden">
+        <ul className="flex -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
           <Link
             to={generatePath(routes.individualRestaurantScreen, {
               restaurantId,
@@ -41,7 +40,7 @@ const RestaurantSubMenu = (props) => {
               text="Dashboard"
               icon={
                 <svg
-                  class="w-4 h-4"
+                  className="w-4 h-4"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -117,7 +116,7 @@ const RestaurantSubMenu = (props) => {
               text="Details"
               icon={
                 <svg
-                  class="w-4 h-4"
+                  className="w-4 h-4"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -128,6 +127,7 @@ const RestaurantSubMenu = (props) => {
               }
             />
           </Link>
+
           {/* <li>
             <a class="inline-block p-2 text-gray-400 rounded-t-lg cursor-not-allowed dark:text-gray-500">
               Disabled

@@ -185,6 +185,7 @@ const MenusRestaurant = (props) => {
             <div className="grid grid-cols-8 gap-8">
               {publicMenus.map((menu) => (
                 <MenusRestaurantItem
+                  key={menu.id}
                   title={menu.name}
                   text={menu.description}
                   id={menu.id}
@@ -230,6 +231,7 @@ const MenusRestaurant = (props) => {
             <div className="grid grid-cols-8 gap-8">
               {draftMenus.map((menu) => (
                 <MenusRestaurantItem
+                  key={menu.id}
                   title={menu.name}
                   text={menu.description}
                   id={menu.id}
