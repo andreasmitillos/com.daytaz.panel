@@ -44,8 +44,8 @@ const DynamicForm = (props) => {
           onButtonClickParent(error, tempValues);
           setButtonLoading(false);
           if (
-            error.status?.validationErrors &&
-            error.status?.validationErrors[0]
+            error?.status?.validationErrors &&
+            error?.status?.validationErrors[0]
           ) {
             let errorKey = error.status?.validationErrors[0].context.key;
             let errorMessage = error.status?.validationErrors[0]?.message;

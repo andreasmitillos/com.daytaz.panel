@@ -9,13 +9,39 @@ import LoadingBox from "../../Components/LoadingBox";
 import { subscribe } from "valtio";
 import Alerts from "../../Components/Alerts/Alerts";
 import DynamicForm from "../../Components/Forms/DynamicForm";
-import { current } from "@reduxjs/toolkit";
-import { type } from "@testing-library/user-event/dist/type";
+import IconForm from "../../Components/Forms/IconForm";
 
 // Edit Modal
 const EditModal = (props) => {
+  let { subCategory, category, menuId } = props;
+
+  const [forceClose, setForceClose] = useState(0);
+
+  const [update, setUpdate] = useState(0);
+
+  // Callback for Dynamic Form
+  const callBack = (response, values) => {
+    // toggleModal();
+    setUpdate(update + 1);
+    if (response.status.code === "edit_category_success") {
+      toggleModal();
+    }
+
+    if (response.status.code === "edit_subcategory_success") {
+      toggleModal();
+    }
+  };
+
+  let toggleModal = () => setForceClose(forceClose + 1);
+
+  let fields = {};
+
+  if (category?.id) fields.categoryId = category?.id.toString();
+  if (subCategory?.id) fields.subCategoryId = subCategory?.id.toString();
+
   return (
     <Modal
+      forceClose={forceClose}
       size="md"
       triggerComponent={
         <svg
@@ -43,7 +69,7 @@ const EditModal = (props) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-12 h-12 text-blue-600 mb-4"
+          className="w-12 h-12 text-indigo-600 mb-4"
         >
           <path
             strokeLinecap="round"
@@ -61,20 +87,31 @@ const EditModal = (props) => {
         </p>
 
         <div className="w-full mt-6">
-          <Input
-            isInput
-            label={`${props.subCategory ? "Subcategory" : "Category"} Name`}
-            subLabel="This change will be public"
-            placeholder="Cold Drinks"
-            value="Very Cold Drinks"
-            disabled
+          <DynamicForm
+            button={`Edit ${subCategory ? "Subcategory" : "Category"}`}
+            buttonVariant="indigo"
+            buttonCallBack={callBack}
+            buttonOnClick={
+              props.subCategory
+                ? menus.actions.editSubcategory
+                : menus.actions.editCategory
+            }
+            fields={[
+              {
+                key: "name",
+                type: "text",
+                label: `${subCategory ? "Subcategory" : "Category"} Name`,
+                placeholder: subCategory?.name || category?.name,
+              },
+              {
+                key: "description",
+                type: "textarea",
+                label: `${subCategory ? "Subcategory" : "Category"} Name`,
+                placeholder: subCategory?.description || category?.description,
+              },
+            ]}
+            hiddenValues={fields}
           />
-        </div>
-
-        <div className="w-full mt-6">
-          <Buttons size="sm" variant="blue" full loading>
-            Edit {props.subCategory ? "Subcategory" : "Category"}
-          </Buttons>
         </div>
       </div>
     </Modal>
@@ -467,52 +504,110 @@ const CreateItemModal = (props) => {
 };
 
 const CategoryControls = (props) => {
+  const [update, setUpdate] = useState(0);
+
+  let fields = {};
+  if (props.subCategory)
+    fields.subCategoryId = props.subCategory?.id.toString();
+  if (props.category) fields.categoryId = props.category?.id.toString();
+
+  let callBack = () => {
+    setUpdate(update + 1);
+  };
+
   return (
     <div className="flex items-center ml-2">
+      {/*<DynamicForm />*/}
       {props.first || props.single ? (
         ""
       ) : (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className={`${
-            props.subCategory ? "w-6 h-6" : "w-7 h-7"
-          } mr-2 text-slate-600 dark:text-slate-400 p-1 rounded hover:bg-slate-100 transition ease-in-out cursor-pointer dark:hover:bg-slate-800`}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M4.5 15.75l7.5-7.5 7.5 7.5"
-          />
-        </svg>
+        <IconForm
+          callBack={callBack}
+          action={
+            props.subCategory
+              ? menus.actions.editSubcategory
+              : menus.actions.editCategory
+          }
+          values={{ ...fields, moveUp: true }}
+          closeCode={
+            props.subCategory
+              ? "edit_subcategory_success"
+              : "edit_category_success"
+          }
+          icon={
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className={`${
+                props.subCategory ? "w-6 h-6" : "w-7 h-7"
+              } text-slate-600 dark:text-slate-400 p-1 rounded hover:bg-slate-100 transition ease-in-out cursor-pointer dark:hover:bg-slate-800`}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4.5 15.75l7.5-7.5 7.5 7.5"
+              />
+            </svg>
+          }
+          containerClass={`mr-2`}
+          loadingIconClass={"text-blue-600 dark:text-blue-400 w-5 h-5"}
+          loadingIconContainerClass={
+            "p-1 rounded bg-slate-100 transition ease-in-out dark:bg-slate-800 cursor-not-allowed"
+          }
+        />
       )}
 
       {props.last || props.single ? (
         ""
       ) : (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className={`${
-            props.subCategory ? "w-6 h-6" : "w-7 h-7"
-          } mr-2 text-slate-600 dark:text-slate-400 p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition ease-in-out cursor-pointer`}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-          />
-        </svg>
+        <IconForm
+          callBack={callBack}
+          icon={
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className={`${
+                props.subCategory ? "w-6 h-6" : "w-7 h-7"
+              } mr-2 text-slate-600 dark:text-slate-400 p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition ease-in-out cursor-pointer`}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+              />
+            </svg>
+          }
+          action={
+            props.subCategory
+              ? menus.actions.editSubcategory
+              : menus.actions.editCategory
+          }
+          values={{ ...fields, moveDown: true }}
+          closeCode={
+            props.subCategory
+              ? "edit_subcategory_success"
+              : "edit_category_success"
+          }
+          containerClass={`mr-2`}
+          loadingIconClass={"text-blue-600 dark:text-blue-400 w-5 h-5"}
+          loadingIconContainerClass={
+            "p-1 rounded bg-slate-100 transition ease-in-out dark:bg-slate-800 cursor-not-allowed"
+          }
+        />
       )}
 
       {/* Edit */}
-      <EditModal subCategory={props.subCategory ? true : false} />
+      <EditModal
+        subCategory={props.subCategory}
+        category={props.category}
+        menuId={props.menuId}
+      />
 
       {/* Delete */}
       <RemoveModal subCategory={props.subCategory ? true : false} />
@@ -595,7 +690,7 @@ const ItemsMenuItem = (props) => {
                   {item.dietaryRestrictions?.map(
                     (d, index) =>
                       `${
-                        index > 0 && item?.dietaryRestrictions.length > 1
+                        index > 0 && item?.dietaryRestrictions?.length > 1
                           ? `, ${d.acronym} - ${d.name}`
                           : `${d.acronym} - ${d.name}`
                       }`,
@@ -681,16 +776,13 @@ const ItemsMenu = (props) => {
   useEffect(() => {
     // if menu has been retrieved, remove loading bar
     if (currentMenu?.id) setLoading(false);
-    console.log("ran");
     // get menu
     menus.actions
       .getItems({ menuId })
       .then((res) => {
-        console.log("done");
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
         setLoading(false);
       });
   }, []);
@@ -745,7 +837,9 @@ const ItemsMenu = (props) => {
                   //   Category controls - remove, change position and edit
                   <CategoryControls
                     first={index === 0}
-                    last={index === currentMenu.categories.length - 1}
+                    last={index === currentMenu.categories?.length - 1}
+                    category={category}
+                    menuId={menuId}
                   />
                 )}
               </div>
@@ -757,7 +851,7 @@ const ItemsMenu = (props) => {
 
               <div className="col-span-6 mt-4">
                 <div className="grid grid-cols-6 gap-4 mt-3">
-                  {!editLock && category.items.length === 0 ? (
+                  {!editLock && category.items?.length === 0 ? (
                     <div className="col-span-6 sm:col-span-3 lg:col-span-2 border px-3 py-3 rounded h-full dark:border-slate-600">
                       <div className="flex flex-col items-center text-sm py-4 text-center">
                         <svg
@@ -785,7 +879,7 @@ const ItemsMenu = (props) => {
                   ) : (
                     ""
                   )}
-                  {category.items.map((categoryItem) => (
+                  {category.items?.map((categoryItem) => (
                     <ItemsMenuItem
                       currency={<>&euro;</>}
                       price={Number(categoryItem.price).toFixed(2)}
@@ -802,7 +896,7 @@ const ItemsMenu = (props) => {
                   )}
                 </div>
 
-                {category.subCategories.map((subCat, index) => (
+                {category.subCategories?.map((subCat, index) => (
                   <>
                     <div className="flex items-center mt-6">
                       <h2 className="text-xl font-extrabold mr-2">
@@ -813,7 +907,9 @@ const ItemsMenu = (props) => {
                       ) : (
                         <CategoryControls
                           first={index === 0}
-                          last={index === category.subCategories.length - 1}
+                          last={index === category.subCategories?.length - 1}
+                          subCategory={subCat}
+                          menuId={menuId}
                         />
                       )}
                     </div>
@@ -823,7 +919,7 @@ const ItemsMenu = (props) => {
                     </p>
 
                     <div className="grid grid-cols-6 gap-4 mt-3">
-                      {!editLock && subCat.items.length === 0 ? (
+                      {!editLock && subCat.items?.length === 0 ? (
                         <div className="col-span-6 sm:col-span-3 lg:col-span-2 border px-3 py-3 rounded h-full dark:border-slate-600">
                           <div className="flex flex-col items-center text-sm py-4 text-center">
                             <svg
@@ -852,7 +948,7 @@ const ItemsMenu = (props) => {
                         ""
                       )}
 
-                      {subCat.items.map((item) => (
+                      {subCat.items?.map((item) => (
                         <ItemsMenuItem
                           available={item.available}
                           currency={<>&euro;</>}

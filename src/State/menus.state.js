@@ -1,6 +1,16 @@
 import { proxy } from "valtio";
 import fetchApi from "./fetch";
 
+function orderObjects(a, aKey, b, bKey) {
+  if (a.aKey < b.bKey) {
+    return -1;
+  }
+  if (a.aKey > b.bKey) {
+    return 1;
+  }
+  return 0;
+}
+
 const data = proxy({
   restaurants: {},
   menu: {},
@@ -101,10 +111,49 @@ const actions = {
     });
   },
 
+  // edit category
+  editCategory: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("patch", "/restaurants/menus/category", values)
+        .then((response) => {
+          let menuId = response.data.category?.menuId;
+          if (data.menu[menuId]?.id) {
+            data.menu[menuId]?.categories.forEach((category, index) => {
+              if (category?.id === response.data?.category?.id) {
+                data.menu[menuId].categories[index].name =
+                  response.data.category.name;
+
+                data.menu[menuId].categories[index].description =
+                  response.data.category.description;
+
+                data.menu[menuId].categories[index].orderNumber =
+                  response.data.category.orderNumber;
+              }
+
+              if (category?.id === response.data?.swapCategory?.id) {
+                data.menu[menuId].categories[index].orderNumber =
+                  response.data.swapCategory.orderNumber;
+              }
+
+              data.menu[menuId].categories.sort((a, b) => {
+                return a.orderNumber - b.orderNumber;
+              });
+
+              console.log(data.menu[menuId].categories);
+            });
+          }
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
   // create subcategory
   createSubCategory: (values) => {
     return new Promise((resolve, reject) => {
-      fetchApi("post", "/restaurants/menus/subCategories", values)
+      fetchApi("patch", "/restaurants/menus/subCategories", values)
         .then((response) => {
           let subCategory = response.data.subCategory;
           let category = response.data.category;
@@ -119,6 +168,57 @@ const actions = {
                       .subCategories,
                     subCategory,
                   ];
+              }
+            });
+          }
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error?.response?.data);
+        });
+    });
+  },
+
+  // edit category
+  editSubcategory: (values) => {
+    return new Promise((resolve, reject) => {
+      fetchApi("patch", "/restaurants/menus/subCategory", values)
+        .then((response) => {
+          let menuId = response.data.subCategory?.category?.menuId;
+          if (data.menu[menuId]?.id) {
+            data.menu[menuId]?.categories.forEach((category, index) => {
+              // check if this category is the subcategory's category
+              if (category.id === response.data?.subCategory?.categoryId) {
+                data.menu[menuId]?.categories[index].subCategories?.map(
+                  (subCat, sIndex) => {
+                    // check if we have found the subcategory
+                    if (subCat.id === response.data?.subCategory?.id) {
+                      data.menu[menuId].categories[index].subCategories[
+                        sIndex
+                      ].name = response.data.subCategory?.name;
+
+                      data.menu[menuId].categories[index].subCategories[
+                        sIndex
+                      ].description = response.data.subCategory?.description;
+
+                      data.menu[menuId].categories[index].subCategories[
+                        sIndex
+                      ].orderNumber = response.data.subCategory?.orderNumber;
+                    }
+
+                    if (subCat?.id === response.data?.swapSubcategory?.id) {
+                      data.menu[menuId].categories[index].subCategories[
+                        sIndex
+                      ].orderNumber = response.data.swapSubcategory.orderNumber;
+                    }
+
+                    data.menu[menuId].categories[index].subCategories.sort(
+                      (a, b) => {
+                        return a.orderNumber - b.orderNumber;
+                      },
+                    );
+                  },
+                );
               }
             });
           }
